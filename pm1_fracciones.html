@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PM1 – Fracciones | Mtra. Adriana Arroyo</title>
+
+  <!-- Si ya usas un CSS común, puedes enlazarlo aquí.
+       Si no, este estilo interno funciona bien por sí solo. -->
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #050816;
+      color: #f9fafb;
+      margin: 0;
+      padding: 0;
+    }
+    .app-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.3rem;
+      text-transform: uppercase;
+    }
+    .subtitle {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-bottom: 0.5rem;
+    }
+    .description {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      margin-bottom: 1rem;
+    }
+    .card {
+      background: #020617;
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 0 0 1px #111827;
+    }
+    label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #374151;
+      background: #020617;
+      color: #f9fafb;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .btn-primary {
+      background: #22c55e;
+      color: #020617;
+    }
+    .btn-secondary {
+      background: #1f2937;
+      color: #e5e7eb;
+    }
+    .btn-primary:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    .question-text {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+    .feedback {
+      font-size: 0.9rem;
+      margin-top: 6px;
+    }
+    .feedback.ok {
+      color: #4ade80;
+    }
+    .feedback.error {
+      color: #f97373;
+    }
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 0.9rem;
+    }
+    .summary-table th,
+    .summary-table td {
+      border: 1px solid #1f2937;
+      padding: 6px 8px;
+      text-align: left;
+    }
+    .pill-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .pill-tab {
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      border: 1px solid #1f2937;
+      background: #020617;
+      text-decoration: none;
+      color: #e5e7eb;
+    }
+    .pill-tab.active {
+      background: #22c55e;
+      color: #020617;
+      border-color: #22c55e;
+      font-weight: 600;
+    }
+    .timer-label {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- Menú de apps (igual idea que en las otras) -->
+    <div class="pill-tabs">
+      <a href="pm1_mcm_mcd_quiz_OFFLINE.html" class="pill-tab">MCM / MCD</a>
+      <a href="pm1_fracciones.html" class="pill-tab active">Fracciones</a>
+      <a href="pm1_razones_prop_porcent_OFFLINE.html" class="pill-tab">Razones y porcentajes</a>
+      <a href="pm1_regla_de_tres_OFFLINE.html" class="pill-tab">Regla de 3</a>
+      <a href="pm1_exponentes_OFFLINE (2).html" class="pill-tab">Exp. básicos</a>
+      <a href="pm1_exponentes_avanzados_OFFLINE_RESET.html" class="pill-tab">Exp. intermedios</a>
+      <a href="pm1_exponentes_especiales_OFFLINE.html" class="pill-tab">Exp. especiales</a>
+      <a href="operaciones_combinadas.html" class="pill-tab">Operaciones combinadas</a>
+    </div>
+
+    <h1>PM1 FRACCIONES</h1>
+    <p class="subtitle">by Mtra. Adriana Arroyo • Versión offline • 10 ítems por sesión</p>
+    <p class="description">
+      Practica fracciones equivalentes, amplificación, simplificación y fracción irreductible.
+      Al final podrás ver tu puntuación y tomar una captura de pantalla con tus datos.
+    </p>
+
+    <!-- Datos del estudiante y configuración -->
+    <div class="card">
+      <label for="nombre">Nombre (opcional)</label>
+      <input id="nombre" type="text" placeholder="Nombre y apellidos" />
+
+      <label for="grupo">Grupo (opcional)</label>
+      <input id="grupo" type="text" placeholder="p. ej., 1°A" />
+
+      <label for="modo">Modo</label>
+      <select id="modo">
+        <option value="mixto">Mixto (todas las habilidades)</option>
+        <option value="equivalentes">Fracciones equivalentes</option>
+        <option value="amplificacion">Amplificación</option>
+        <option value="simplificacion">Simplificación / irreductible</option>
+      </select>
+
+      <label for="temporizador">Temporizador (minutos, opcional)</label>
+      <input id="temporizador" type="number" min="1" step="1" placeholder="Sin tiempo" />
+
+      <button id="btnIniciar" class="btn-primary">Iniciar (10 ítems)</button>
+      <span id="timer" class="timer-label"></span>
+    </div>
+
+    <!-- Área de preguntas -->
+    <div id="quizCard" class="card" style="display:none;">
+      <div id="counter" style="font-size:0.9rem; opacity:0.8; margin-bottom:6px;"></div>
+      <div id="questionText" class="question-text"></div>
+
+      <label for="respuesta">Respuesta</label>
+      <input id="respuesta" type="text" placeholder="Escribe la fracción (p. ej., 3/4)" />
+
+      <button id="btnResponder" class="btn-primary">Responder</button>
+      <button id="btnSaltar" class="btn-secondary" style="margin-left:8px;">Saltar</button>
+
+      <div id="feedback" class="feedback"></div>
+    </div>
+
+    <!-- Resultados de la sesión -->
+    <div id="resultadoSesion" class="card" style="display:none;">
+      <h2 style="margin-top:0;">Resumen de la sesión</h2>
+      <p style="font-size:0.9rem;">
+        Toma una captura de pantalla donde se vean claramente tus datos y resultados.
+      </p>
+      <table class="summary-table">
+        <tbody>
+          <tr><th>Nombre</th><td id="resNombre"></td></tr>
+          <tr><th>Grupo</th><td id="resGrupo"></td></tr>
+          <tr><th>Modo</th><td id="resModo"></td></tr>
+          <tr><th>Aciertos</th><td id="resAciertos"></td></tr>
+          <tr><th>Reactivos totales</th><td id="resTotal"></td></tr>
+          <tr><th>Porcentaje</th><td id="resPorcentaje"></td></tr>
+          <tr><th>Fecha y hora</th><td id="resFecha"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <script>
+  // ---------- Utilidades de fracciones ----------
+  function gcd(a, b) {
+    a = Math.abs(a); b = Math.abs(b);
+    while (b !== 0) {
+      const t = b;
+      b = a % b;
+      a = t;
+    }
+    return a || 1;
+  }
+
+  function simplificar(num, den) {
+    const g = gcd(num, den);
+    const sDen = den / g;
+    const sNum = num / g;
+    if (sDen < 0) {
+      return { num: -sNum, den: -sDen };
+    }
+    return { num: sNum, den: sDen };
+  }
+
+  function fraccionAString(num, den) {
+    return num + "/" + den;
+  }
+
+  function generarEquivalente() {
+    const baseDen = [2,3,4,5,6,7,8,9][Math.floor(Math.random()*8)];
+    let baseNum = 1 + Math.floor(Math.random()*(baseDen-1));
+    const simp = simplificar(baseNum, baseDen);
+    baseNum = simp.num;
+    const den = simp.den;
+    const k = 2 + Math.floor(Math.random()*3); // 2–4
+    return {
+      tipo: "equivalentes",
+      enunciado: `Escribe una fracción equivalente a ${fraccionAString(baseNum, den)}.`,
+      respuestaCorrecta: fraccionAString(baseNum*k, den*k),
+      baseNum,
+      baseDen: den
+    };
+  }
+
+  function generarAmplificacion() {
+    const den = [2,3,4,5,6,8,10][Math.floor(Math.random()*7)];
+    let num = 1 + Math.floor(Math.random()*(den-1));
+    const simp = simplificar(num, den);
+    num = simp.num;
+    const sDen = simp.den;
+    const k = 2 + Math.floor(Math.random()*4); // 2–5
+    return {
+      tipo: "amplificacion",
+      enunciado: `Amplifica la fracción ${fraccionAString(num, sDen)} por el factor ${k}.`,
+      respuestaCorrecta: fraccionAString(num*k, sDen*k),
+      num, den: sDen
+    };
+  }
+
+  function generarSimplificacion() {
+    const baseDen = [2,3,4,5,6,7,8,9][Math.floor(Math.random()*8)];
+    let baseNum = 1 + Math.floor(Math.random()*(baseDen-1));
+    const simp = simplificar(baseNum, baseDen);
+    baseNum = simp.num;
+    const den = simp.den;
+    const k = 2 + Math.floor(Math.random()*3); // 2–4
+    const num = baseNum * k;
+    const denGrande = den * k;
+
+    return {
+      tipo: "simplificacion",
+      enunciado: `Simplifica la fracción ${fraccionAString(num, denGrande)} hasta obtener una fracción irreductible.`,
+      respuestaCorrecta: fraccionAString(baseNum, den),
+      num, den: denGrande
+    };
+  }
+
+  function generarReactivo(modo) {
+    if (modo === "equivalentes") return generarEquivalente();
+    if (modo === "amplificacion") return generarAmplificacion();
+    if (modo === "simplificacion") return generarSimplificacion();
+
+    const tipos = ["equivalentes","amplificacion","simplificacion"];
+    const elegido = tipos[Math.floor(Math.random()*tipos.length)];
+    return generarReactivo(elegido);
+  }
+
+  function normalizarEntrada(entrada) {
+    entrada = entrada.trim();
+    if (!entrada.includes("/")) return null;
+    const partes = entrada.split("/");
+    if (partes.length !== 2) return null;
+    const n = parseInt(partes[0].trim(), 10);
+    const d = parseInt(partes[1].trim(), 10);
+    if (Number.isNaN(n) || Number.isNaN(d) || d === 0) return null;
+    const simp = simplificar(n, d);
+    return fraccionAString(simp.num, simp.den);
+  }
+
+  // ---------- Lógica del quiz ----------
+  const btnIniciar = document.getElementById("btnIniciar");
+  const btnResponder = document.getElementById("btnResponder");
+  const btnSaltar = document.getElementById("btnSaltar");
+  const quizCard = document.getElementById("quizCard");
+  const counterEl = document.getElementById("counter");
+  const questionText = document.getElementById("questionText");
+  const respuestaInput = document.getElementById("respuesta");
+  const feedbackEl = document.getElementById("feedback");
+  const timerEl = document.getElementById("timer");
+
+  const resNombre = document.getElementById("resNombre");
+  const resGrupo = document.getElementById("resGrupo");
+  const resModo = document.getElementById("resModo");
+  const resAciertos = document.getElementById("resAciertos");
+  const resTotal = document.getElementById("resTotal");
+  const resPorcentaje = document.getElementById("resPorcentaje");
+  const resFecha = document.getElementById("resFecha");
+  const resultadoSesion = document.getElementById("resultadoSesion");
+
+  const nombreInput = document.getElementById("nombre");
+  const grupoInput = document.getElementById("grupo");
+  const modoSelect = document.getElementById("modo");
+  const temporizadorInput = document.getElementById("temporizador");
+
+  let estado = {
+    enCurso: false,
+    total: 10,
+    indice: 0,
+    aciertos: 0,
+    reactivoActual: null,
+    timerId: null,
+    segundosRestantes: null,
+    esperandoContinuar: false
+  };
+
+  function actualizarTimer() {
+    if (estado.segundosRestantes == null) return;
+    if (estado.segundosRestantes <= 0) {
+      timerEl.textContent = "Tiempo agotado.";
+      finalizarSesion(true);
+      return;
+    }
+    const min = Math.floor(estado.segundosRestantes / 60);
+    const seg = estado.segundosRestantes % 60;
+    timerEl.textContent = `Tiempo restante: ${min}:${seg.toString().padStart(2,"0")}`;
+    estado.segundosRestantes -= 1;
+  }
+
+  function iniciarTemporizador() {
+    const minutos = parseInt(temporizadorInput.value, 10);
+    if (!Number.isNaN(minutos) && minutos > 0) {
+      estado.segundosRestantes = minutos * 60;
+      actualizarTimer();
+      estado.timerId = setInterval(actualizarTimer, 1000);
+    } else {
+      estado.segundosRestantes = null;
+      timerEl.textContent = "";
+    }
+  }
+
+  function iniciarSesion() {
+    estado.enCurso = true;
+    estado.indice = 0;
+    estado.aciertos = 0;
+    estado.esperandoContinuar = false;
+    feedbackEl.textContent = "";
+    resultadoSesion.style.display = "none";
+    quizCard.style.display = "block";
+    btnIniciar.disabled = true;
+    iniciarTemporizador();
+    siguienteReactivo();
+  }
+
+  function prepararParaResponder() {
+    estado.esperandoContinuar = false;
+    btnResponder.textContent = "Responder";
+    btnSaltar.disabled = false;
+    respuestaInput.disabled = false;
+  }
+
+  function prepararParaSiguiente() {
+    estado.esperandoContinuar = true;
+    btnResponder.textContent = "Siguiente";
+    btnSaltar.disabled = true;
+    respuestaInput.disabled = true;
+  }
+
+  function siguienteReactivo() {
+    if (estado.indice >= estado.total) {
+      finalizarSesion(false);
+      return;
+    }
+    const modo = modoSelect.value;
+    const reactivo = generarReactivo(modo);
+    estado.reactivoActual = reactivo;
+    estado.indice += 1;
+
+    counterEl.textContent = `Reactivo ${estado.indice} de ${estado.total}`;
+    questionText.textContent = reactivo.enunciado;
+    respuestaInput.value = "";
+    respuestaInput.focus();
+    feedbackEl.textContent = "";
+    feedbackEl.className = "feedback";
+    prepararParaResponder();
+  }
+
+  function evaluarRespuesta(saltado) {
+    if (!estado.enCurso || !estado.reactivoActual || estado.esperandoContinuar) return;
+
+    if (saltado) {
+      feedbackEl.textContent =
+        `Se registró como omitido. Una respuesta posible es, por ejemplo: ${estado.reactivoActual.respuestaCorrecta}.`;
+      feedbackEl.className = "feedback error";
+      prepararParaSiguiente();
+      return;
+    }
+
+    const entrada = respuestaInput.value;
+    const normalizada = normalizarEntrada(entrada);
+    if (!normalizada) {
+      feedbackEl.textContent = "Por favor escribe una fracción válida, por ejemplo 3/4 o 6/8.";
+      feedbackEl.className = "feedback error";
+      return;
+    }
+
+    const r = estado.reactivoActual;
+
+    if (r.tipo === "equivalentes" || r.tipo === "amplificacion") {
+      const simpBase = simplificar(r.baseNum ?? r.num, r.baseDen ?? r.den);
+      const baseNorm = fraccionAString(simpBase.num, simpBase.den);
+
+      const partes = normalizada.split("/");
+      const simpEst = simplificar(
+        parseInt(partes[0],10),
+        parseInt(partes[1],10)
+      );
+      const estNorm = fraccionAString(simpEst.num, simpEst.den);
+
+      if (estNorm === baseNorm) {
+        estado.aciertos += 1;
+        feedbackEl.textContent = "Correcto. Tu fracción es equivalente a la fracción base.";
+        feedbackEl.className = "feedback ok";
+      } else {
+        feedbackEl.textContent =
+          `Incorrecto. Una respuesta posible sería ${r.respuestaCorrecta}, equivalente a la fracción base.`;
+        feedbackEl.className = "feedback error";
+      }
+    } else {
+      const simpCorrecta = normalizarEntrada(r.respuestaCorrecta);
+      if (normalizada === simpCorrecta) {
+        estado.aciertos += 1;
+        feedbackEl.textContent = "Correcto. La fracción ya está en su forma irreductible.";
+        feedbackEl.className = "feedback ok";
+      } else {
+        feedbackEl.textContent =
+          `Incorrecto. La forma irreductible esperada es ${r.respuestaCorrecta}.`;
+        feedbackEl.className = "feedback error";
+      }
+    }
+
+    // No cambiamos de reactivo automáticamente: el mensaje se queda
+    prepararParaSiguiente();
+  }
+
+  function finalizarSesion(porTiempo) {
+    estado.enCurso = false;
+    estado.reactivoActual = null;
+    quizCard.style.display = "none";
+    btnIniciar.disabled = false;
+
+    if (estado.timerId) {
+      clearInterval(estado.timerId);
+      estado.timerId = null;
+    }
+
+    const nombre = nombreInput.value.trim() || "(sin nombre)";
+    const grupo = grupoInput.value.trim() || "(sin grupo)";
+    const modoTexto = {
+      mixto: "Mixto",
+      equivalentes: "Fracciones equivalentes",
+      amplificacion: "Amplificación",
+      simplificacion: "Simplificación / irreductible"
+    }[modoSelect.value] || modoSelect.value;
+
+    const porcentaje = (estado.aciertos / estado.total) * 100;
+    const ahora = new Date();
+    const fecha = ahora.toLocaleString("es-MX", { dateStyle: "short", timeStyle: "short" });
+
+    resNombre.textContent = nombre;
+    resGrupo.textContent = grupo;
+    resModo.textContent = modoTexto + (porTiempo ? " (tiempo agotado)" : "");
+    resAciertos.textContent = estado.aciertos;
+    resTotal.textContent = estado.total;
+    resPorcentaje.textContent = porcentaje.toFixed(1) + " %";
+    resFecha.textContent = fecha;
+
+    resultadoSesion.style.display = "block";
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  }
+
+  // Eventos
+  btnIniciar.addEventListener("click", iniciarSesion);
+
+  btnResponder.addEventListener("click", () => {
+    if (estado.esperandoContinuar) {
+      siguienteReactivo();
+    } else {
+      evaluarRespuesta(false);
+    }
+  });
+
+  btnSaltar.addEventListener("click", () => {
+    if (!estado.esperandoContinuar) {
+      evaluarRespuesta(true);
+    }
+  });
+
+  respuestaInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      if (estado.esperandoContinuar) {
+        siguienteReactivo();
+      } else {
+        evaluarRespuesta(false);
+      }
+    }
+  });
+</script>
+</body>
+</html>

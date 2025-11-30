@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pensamiento Matemático 1 — Exponentes especiales — Mtra. Adriana Arroyo</title>
+<link rel="manifest" href="manifest.json">
+<style>
+  :root{
+    --bg:#0b1117;
+    --card:#0f172a;
+    --ink:#f8fafc;
+    --muted:#cbd5e1;
+    --border:#1e293b;
+    --pill:#0b1220;
+    --accent:#22c55e;
+    --accent-soft:#064e3b;
+    --error:#ef4444;
+    --error-soft:#451a1a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    padding:16px;
+    background:radial-gradient(circle at top,#020617,#0b1117 55%);
+    color:var(--ink);
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  }
+
+  /* Barra de navegación */
+  nav{
+    padding:8px 0 14px 0;
+    border-bottom:1px solid var(--border);
+    margin-bottom:12px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  nav a{
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:#020617;
+    color:var(--muted);
+  }
+  nav a.active{
+    background:#22c55e;
+    color:#020617;
+    border-color:#16a34a;
+  }
+  /* Esta app: color diferente para Exp. especiales */
+  nav a.special-active{
+    background:#f59e0b;
+    color:#020617;
+    border-color:#d97706;
+  }
+
+  h1{
+    margin:0 0 6px 0;
+    font-size:22px;
+  }
+  .credit{
+    margin:4px 0 10px 0;
+    color:var(--muted);
+    font-size:14px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:12px;
+    margin-bottom:12px;
+  }
+  label{
+    display:block;
+    margin-bottom:4px;
+    color:var(--muted);
+    font-size:14px;
+  }
+  input,select,button{
+    width:100%;
+    padding:12px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:#020617;
+    color:var(--ink);
+    font-size:16px;
+  }
+  select{cursor:pointer;}
+  input::placeholder{color:#64748b;}
+  button{
+    cursor:pointer;
+    font-weight:600;
+  }
+  button.primary{
+    background:#22c55e;
+    color:#020617;
+    border-color:#16a34a;
+  }
+  button.muted{
+    background:#0b1220;
+    color:var(--muted);
+  }
+  button:disabled{
+    opacity:0.5;
+    cursor:not-allowed;
+  }
+  .pill{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:var(--pill);
+    font-size:13px;
+    margin-right:6px;
+  }
+  .op{
+    font-weight:700;
+    font-size:18px;
+    line-height:1.45;
+    min-height:90px;
+    margin:8px 0 10px 0;
+  }
+  .hint{
+    color:var(--muted);
+    font-size:14px;
+    margin-top:4px;
+  }
+  .btns{
+    display:flex;
+    gap:8px;
+    margin-top:8px;
+  }
+  .btns button{flex:1;}
+  .box{
+    border-radius:12px;
+    padding:10px;
+    margin-top:8px;
+  }
+  .box.ok{
+    background:var(--accent-soft);
+    border:1px solid var(--accent);
+  }
+  .box.error{
+    background:var(--error-soft);
+    border:1px solid var(--error);
+  }
+  .meta{
+    margin-top:6px;
+    color:var(--muted);
+    font-size:13px;
+  }
+  @media (min-width:640px){
+    body{max-width:720px;margin:0 auto;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="pm1_razones_prop_porcent_OFFLINE.html">Razones</a>
+  <a href="pm1_regla_de_tres_OFFLINE.html">Regla 3</a>
+  <a href="pm1_mcm_mcd_quiz_OFFLINE.html">MCM/MCD</a>
+  <a href="pm1_exponentes_OFFLINE (2).html">Exponentes</a>
+  <a href="pm1_exponentes_avanzados_OFFLINE_RESET.html">Exp. avanzados</a>
+  <a href="pm1_exponentes_especiales_OFFLINE.html" class="special-active">Exp. especiales</a>
+</nav>
+
+<div class="card">
+  <h1>EXPONENTES ESPECIALES (NEGATIVOS Y FRACCIONARIOS)</h1>
+  <p class="credit">
+    by Mtra. Adriana Arroyo • Versión offline • 15 ítems por sesión<br>
+    Practica exponentes negativos y exponentes fraccionarios con retroalimentación inmediata.
+  </p>
+</div>
+
+<div class="card">
+  <label>Nombre (opcional)</label>
+  <input id="studentName" placeholder="Nombre y apellidos" type="text" inputmode="text">
+  <label>Grupo (opcional)</label>
+  <input id="studentGroup" placeholder="p. ej., 1°A" type="text" inputmode="text">
+  <label>Modo</label>
+  <select id="mode">
+    <option value="mixed" selected>Mixto (negativos y fraccionarios)</option>
+    <option value="neg">Solo exponentes negativos</option>
+    <option value="frac">Solo exponentes fraccionarios</option>
+  </select>
+  <button id="startBtn" class="primary">Iniciar (15 ítems)</button>
+  <p class="hint">
+    Puedes responder con fracciones, decimales o expresiones con potencias.<br>
+    Ejemplos válidos: <code>1/25</code>, <code>0.04</code>, <code>5^-2</code>, <code>9^(1/2)</code>.
+  </p>
+</div>
+
+<div class="card">
+  <div id="operation" class="op">Da clic en <strong>Iniciar</strong> para comenzar.</div>
+  <input id="answer" type="text" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false"
+         placeholder="Escribe tu resultado (expresión, fracción o decimal)">
+  <div class="btns">
+    <button id="checkBtn" class="primary">Comprobar</button>
+    <button id="nextBtn" class="muted">Siguiente</button>
+  </div>
+  <div id="feedback" style="min-height:120px;margin-top:10px;"></div>
+</div>
+
+<div class="card">
+  <span id="counter" class="pill">Ítem —/15</span>
+  <span id="score" class="pill">Aciertos 0</span>
+  <span id="streak" class="pill">Racha 0</span>
+</div>
+
+<script>
+(function(){
+  function $(sel){ return document.querySelector(sel); }
+  function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+  function choice(arr){ return arr[randInt(0,arr.length-1)]; }
+  function fixed2(x){ return parseFloat(x.toFixed(2)); }
+
+  // Evalúa expresión del alumno (permite ^, fracciones, etc.)
+  function evalUserExpression(raw){
+    if(!raw) return NaN;
+    var s = String(raw)
+      .replace(',', '.')
+      .replace(/×|·|x/gi,'*')
+      .replace(/\s+/g,'')
+      .replace(/\^/g,'**');
+    if(!s) return NaN;
+    // Solo números, operaciones básicas y paréntesis
+    if(!/^[0-9.+\-*/()]*$/.test(s)){
+      return NaN;
+    }
+    try{
+      var val = Function('"use strict";return ('+s+');')();
+      if(typeof val === 'number' && isFinite(val)){
+        return val;
+      }
+      return NaN;
+    }catch(e){
+      return NaN;
+    }
+  }
+
+  // ====== ÍTEMS: EXPONENTES NEGATIVOS ======
+  function makeNegItem(){
+    var pattern = choice(['int','frac']);
+    var base, n, value, text, explain;
+
+    if(pattern === 'int'){
+      base = randInt(2,9);
+      n    = randInt(1,3);
+      value = Math.pow(base, -n);
+      text = base+'^(-'+n+')';
+      explain =
+        '<div class="box ok"><strong>Ley: exponente negativo</strong><br>'+
+        'a^{-n} = 1 / a^n.<br>'+
+        'Aquí a = '+base+' y n = '+n+'.<br>'+
+        base+'^{-'+n+'} = 1 / '+base+'^'+n+' = 1 / '+Math.pow(base,n)+
+        ' ≈ <strong>'+fixed2(value)+'</strong>.</div>';
+    }else{
+      var num = randInt(2,8);
+      var den = randInt(2,8);
+      n    = choice([1,2]);
+      var baseVal = num/den;
+      value = Math.pow(baseVal, -n);
+      text = '('+num+'/'+den+')^(-'+n+')';
+      explain =
+        '<div class="box ok"><strong>Exponente negativo con fracción</strong><br>'+
+        'a^{-n} = 1 / a^n, también para fracciones.<br>'+
+        'Base = '+num+'/'+den+', n = '+n+'.<br>'+
+        '('+num+'/'+den+')^{-'+n+'} = 1 / ('+num+'/'+den+')^'+n+
+        ' ≈ <strong>'+fixed2(value)+'</strong>.</div>';
+    }
+
+    return {
+      kind:'neg',
+      textHtml:'Simplifica: <strong>'+text+'</strong>',
+      value:value,
+      explain:explain
+    };
+  }
+
+  // ====== ÍTEMS: EXPONENTES FRACCIONARIOS (nivel intermedio) ======
+  function makeFracItem(){
+    var pattern = choice(['raiz_simple','raiz_cubica','potencia_con_raiz']);
+    var base, value, text, explain;
+
+    if(pattern === 'raiz_simple'){
+      base = choice([4,9,16,25,36,49,64,81]);
+      value = Math.sqrt(base);
+      text = base+'^(1/2)';
+      explain =
+        '<div class="box ok"><strong>Exponente fraccionario: 1/2</strong><br>'+
+        'a^{1/2} = √a.<br>'+
+        'Aquí a = '+base+', entonces √'+base+' = <strong>'+value+'</strong>.</div>';
+    }
+    else if(pattern === 'raiz_cubica'){
+      base = choice([8,27,64]);
+      value = Math.cbrt(base);
+      text = base+'^(1/3)';
+      explain =
+        '<div class="box ok"><strong>Exponente fraccionario: 1/3</strong><br>'+
+        'a^{1/3} = raíz cúbica de a.<br>'+
+        'Aquí a = '+base+', entonces ∛'+base+' = <strong>'+value+'</strong>.</div>';
+    }
+    else{ // potencia_con_raiz
+      var option = choice(['4^(3/2)','9^(3/2)','16^(3/2)','8^(2/3)','27^(2/3)']);
+      if(option === '4^(3/2)'){
+        base = 4; value = Math.pow(4,3/2); // 8
+      }else if(option === '9^(3/2)'){
+        base = 9; value = Math.pow(9,3/2); // 27
+      }else if(option === '16^(3/2)'){
+        base = 16; value = Math.pow(16,3/2); // 64
+      }else if(option === '8^(2/3)'){
+        base = 8; value = Math.pow(8,2/3); // 4
+      }else{
+        base = 27; value = Math.pow(27,2/3); // 9
+      }
+      text = option;
+      explain =
+        '<div class="box ok"><strong>Exponente fraccionario: m/n</strong><br>'+
+        'a^{m/n} = (√[n]{a})^m.<br>'+
+        'En este caso, la base es '+base+' y el resultado es <strong>'+value+'</strong>.</div>';
+    }
+
+    return {
+      kind:'frac',
+      textHtml:'Calcula el valor de: <strong>'+text+'</strong>',
+      value:value,
+      explain:explain
+    };
+  }
+
+  function buildItem(mode){
+    if(mode === 'neg')  return makeNegItem();
+    if(mode === 'frac') return makeFracItem();
+    var bucket = choice([makeNegItem, makeFracItem]);
+    return bucket();
+  }
+
+  var state = {
+    items:[],
+    index:0,
+    score:0,
+    streak:0
+  };
+
+  var operationEl = $('#operation');
+  var answerEl    = $('#answer');
+  var feedbackEl  = $('#feedback');
+  var counterEl   = $('#counter');
+  var scoreEl     = $('#score');
+  var streakEl    = $('#streak');
+  var startBtn    = $('#startBtn');
+  var checkBtn    = $('#checkBtn');
+  var nextBtn     = $('#nextBtn');
+
+  function renderCurrent(){
+    var item = state.items[state.index];
+    operationEl.innerHTML = item.textHtml;
+    counterEl.textContent = 'Ítem '+(state.index+1)+'/15';
+    feedbackEl.innerHTML = '';
+    answerEl.value = '';
+    answerEl.focus();
+  }
+
+  function startQuiz(){
+    var mode = document.getElementById('mode').value;
+    state.items = [];
+    for(var i=0;i<15;i++){
+      state.items.push(buildItem(mode));
+    }
+    state.index = 0;
+    state.score = 0;
+    state.streak = 0;
+    scoreEl.textContent  = 'Aciertos 0';
+    streakEl.textContent = 'Racha 0';
+    renderCurrent();
+  }
+
+  function checkAnswer(){
+    if(!state.items.length) return;
+    var raw = answerEl.value;
+    if(!raw){
+      feedbackEl.innerHTML =
+        '<p style="color:#fca5a5">Escribe una respuesta antes de comprobar.</p>';
+      return;
+    }
+    var valUser = evalUserExpression(raw);
+    if(isNaN(valUser)){
+      feedbackEl.innerHTML =
+        '<div class="box error"><strong>No se pudo leer tu expresión.</strong><br>'+
+        'Revisa paréntesis, signos y que solo uses números y operaciones básicas.</div>';
+      return;
+    }
+    var item = state.items[state.index];
+    var correct = item.value;
+    // Tolerancia razonable porque puede haber fracciones/decimales
+    var diff = Math.abs(valUser - correct);
+    var ok = diff <= 1e-3 * Math.max(1, Math.abs(correct));
+
+    if(ok){
+      state.score++;
+      state.streak++;
+      scoreEl.textContent  = 'Aciertos '+state.score;
+      streakEl.textContent = 'Racha '+state.streak;
+      feedbackEl.innerHTML =
+        '<div class="box ok"><strong>¡Muy bien!</strong><br>'+
+        'Tu resultado es equivalente al correcto.</div>'+
+        item.explain;
+    }else{
+      state.streak = 0;
+      streakEl.textContent = 'Racha 0';
+      feedbackEl.innerHTML =
+        '<div class="box error"><strong>Revisa.</strong><br>'+
+        'Valor de referencia ≈ <strong>'+fixed2(correct)+'</strong>.<br>'+
+        'Tu resultado fue '+fixed2(valUser)+'.</div>'+
+        item.explain;
+    }
+  }
+
+  function nextItem(){
+    if(!state.items.length) return;
+    if(state.index < state.items.length-1){
+      state.index++;
+      renderCurrent();
+    }else{
+      operationEl.innerHTML =
+        'Has terminado los 15 ítems. Tu puntaje fue <strong>'+
+        state.score+'</strong> de '+state.items.length+'.';
+      feedbackEl.innerHTML =
+        '<p class="meta">Puedes iniciar de nuevo para seguir practicando exponentes negativos y fraccionarios.</p>';
+    }
+  }
+
+  startBtn.addEventListener('click', startQuiz);
+  checkBtn.addEventListener('click', checkAnswer);
+  nextBtn.addEventListener('click', nextItem);
+  answerEl.addEventListener('keydown', function(ev){
+    if(ev.key === 'Enter'){
+      ev.preventDefault();
+      checkAnswer();
+    }
+  });
+})();
+</script>
+
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('service-worker.js')
+      .then(function(reg){ console.log('SW registrado:', reg.scope); })
+      .catch(function(err){ console.log('Fallo registro de SW:', err); });
+  });
+}
+</script>
+
+</body>
+</html>

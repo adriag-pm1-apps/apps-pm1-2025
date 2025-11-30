@@ -1,0 +1,21 @@
+{
+  "name": "Pensamiento Matemático 1",
+  "short_name": "PM1 Apps",
+  "description": "Herramientas de práctica para Matemáticas I (Razones, Proporciones, MCM, MCD, Regla de Tres y Exponentes) - Mtra. Adriana Arroyo.",
+  "start_url": "pm1_regla_de_tres_OFFLINE.html",
+  "display": "standalone",
+  "background_color": "#0b1117",
+  "theme_color": "#0b1117",
+  "icons": [
+    {
+      "src": "icon_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

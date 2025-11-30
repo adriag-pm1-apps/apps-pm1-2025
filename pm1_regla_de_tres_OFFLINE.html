@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pensamiento Matemático 1 — Regla de Tres — Mtra. Adriana Arroyo</title>
+<link rel="manifest" href="manifest.json">
+<style>
+  :root{--bg:#0b1117;--card:#0f172a;--ink:#f8fafc;--muted:#cbd5e1;--border:#1e293b;--pill:#0b1220;}
+  *{box-sizing:border-box} body{margin:0;padding:16px;background:var(--bg);color:var(--ink);font-family:system-ui,Segoe UI,Roboto,Arial}
+  h1{margin:0 0 6px 0;font-size:22px}
+  .credit{margin:6px 0 12px 0;color:var(--muted);font-size:14px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px;margin-bottom:12px}
+  label{display:block;margin-bottom:6px;color:var(--muted);font-size:14px}
+  input,select,button{width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:#0b1220;color:#f8fafc;font-size:18px}
+  .pill{display:inline-block;padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:var(--pill);margin-right:6px;font-size:14px}
+  .op{font-weight:700;font-size:18px;line-height:1.45;min-height:84px;margin:8px 0 10px 0}
+  .box{background:#0b1320;border:1px solid #1b2b46;border-radius:10px;padding:10px;margin-top:8px}
+  .btns{display:flex;gap:10px;margin-top:10px}.btns button{flex:1}
+  .primary{background:#a78bfa;color:#0a0a12;font-weight:800;border:none;cursor:pointer}
+  .muted{background:#0b1220;color:#e2e8f0;border:1px solid #223049}
+</style>
+</head>
+<body>
+<nav style="padding:10px 0;border-bottom:1px solid var(--border);margin-bottom:12px;display:flex;flex-wrap:wrap;gap:8px;">
+    <a href="pm1_razones_prop_porcent_OFFLINE.html" style="background:#34d399;color:var(--bg);padding:6px 10px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:700;">Razones</a>
+    <a href="pm1_regla_de_tres_OFFLINE.html" style="background:#a78bfa;color:var(--bg);padding:6px 10px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:700;">Regla 3</a>
+    <a href="pm1_mcm_mcd_quiz_OFFLINE.html" style="background:#60a5fa;color:var(--bg);padding:6px 10px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:700;">MCM/MCD</a>
+    <a href="pm1_exponentes_OFFLINE (2).html" style="background:#fbbf24;color:var(--bg);padding:6px 10px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:700;">Exponentes</a>
+    <a href="pm1_exponentes_avanzados_OFFLINE_RESET.html" style="background:#38bdf8;color:var(--bg);padding:6px 10px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:700;">Exp. Avanz</a>
+</nav>
+
+<div class="card">
+  <h1>PENSAMIENTO MATEMÁTICO 1: Regla de Tres (Directa e Inversa)</h1>
+  <p class="credit">by Mtra. Adriana Arroyo • Versión offline (sin internet) • Tap únicamente</p>
+</div>
+<div class="card">
+  <label>Nombre</label><input id="studentName" placeholder="Nombre y apellidos">
+  <label>Grupo</label><input id="studentGroup" placeholder="p. ej., 1°A">
+  <label>Modo</label><select id="mode">
+    <option value="mixed" selected>Mixto (directa + inversa)</option>
+    <option value="direct">Solo directa</option>
+    <option value="inverse">Solo inversa</option>
+  </select>
+  <label>Temporizador (minutos, opcional)</label><select id="timer">
+    <option value="0" selected>Sin tiempo</option><option>5</option><option>8</option><option>10</option>
+  </select>
+  <button id="startBtn" class="primary">Iniciar (10 ítems)</button>
+</div>
+<div class="card">
+  <div id="operation" class="op">—</div>
+  <div class="btns">
+    <button id="btnDirect" class="muted" data-val="direct">Es directa</button>
+    <button id="btnInverse" class="muted" data-val="inverse">Es inversa</button>
+  </div>
+  <input id="answer" type="text" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Escribe la incógnita (número)">
+
+  <div class="btns">
+    <button id="checkBtn" class="primary">Comprobar</button>
+    <button id="nextBtn" class="muted">Siguiente</button>
+  </div>
+  <div id="feedback" style="min-height:110px;margin-top:10px"></div>
+</div>
+<div class="card">
+  <span id="counter" class="pill">Ítem —/10</span>
+  <span id="score" class="pill">Aciertos 0</span>
+  <span id="streak" class="pill">Racha 0</span>
+  <span id="time" class="pill" style="display:none">Tiempo 00:00</span>
+</div>
+
+<script>
+(function(){
+  function $(s){return document.querySelector(s)}
+  function rand(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+  function choice(arr){return arr[rand(0,arr.length-1)]}
+
+  // Generadores de contextos con cantidades amigables (sin calculadora)
+  var contexts = {
+    direct: [
+      function(){var q1=rand(2,6), pU=rand(8,20);var total1=q1*pU;var q2=q1;while(q2===q1){q2=rand(2,8);}var total2=q2*pU;
+        return {story:'En una papelería, '+q1+' cuadernos cuestan $'+total1+'. ¿Cuánto costarán '+q2+' cuadernos?',
+          ask:'Costo para '+q2+' cuadernos = ?',answer:Number(total2.toFixed(2)),
+          steps:'<div class="box"><strong>Directa</strong><br>Unitario = '+total1+'/'+q1+' = $'+pU+'.<br>Total = '+pU+'×'+q2+' = <strong>$'+total2+'</strong>.</div>'};},
+      function(){var por1=rand(2,4), azu=choice([50,60,80,100]);var por2=por1;while(por2===por1){por2=rand(3,6);}var x=Number((azu*por2/por1).toFixed(2));
+        return {story:'Una receta usa '+azu+' g para '+por1+' porciones. ¿Cuántos g para '+por2+' porciones?',
+          ask:'Azúcar para '+por2+' porciones = ? g',answer:x,
+          steps:'<div class="box"><strong>Directa</strong><br>x = ('+azu+'×'+por2+')/'+por1+' = <strong>'+x+' g</strong>.</div>'};}
+    ],
+    inverse: [
+      function(){var w1=rand(3,6), d1=choice([6,8,10,12]);var w2=w1;while(w2===w1){w2=rand(4,9);}var x=Number(((w1*d1)/w2).toFixed(2));
+        return {story:w1+' obreros hacen una obra en '+d1+' días. ¿Cuántos días con '+w2+' obreros?',
+          ask:'Días con '+w2+' obreros = ?',answer:x,
+          steps:'<div class="box"><strong>Inversa</strong><br>Constante = '+w1+'×'+d1+' = '+(w1*d1)+'.<br>x = constante/'+w2+' = <strong>'+x+' días</strong>.</div>'};}
+    ]};
+
+  function buildItem(mode){
+    var realMode = (mode==='mixed') ? (Math.random()<0.5?'direct':'inverse') : mode;
+    var p = choice(contexts[realMode])();
+    return { type:realMode, text:p.story+'<br><strong>'+p.ask+'</strong>', correct:String(p.answer), explain:p.steps };
+  }
+
+  var s={items:[],i:0,score:0,streak:0,sel:'',left:0,timerId:null};
+
+  var op=$('#operation'), ans=$('#answer'), fb=$('#feedback'), counter=$('#counter'), score=$('#score'), streak=$('#streak'), timeEl=$('#time');
+
+  $('#btnDirect').onclick=function(){s.sel='direct'; this.style.outline='2px solid #60a5fa'; $('#btnInverse').style.outline='none';}
+  $('#btnInverse').onclick=function(){s.sel='inverse'; this.style.outline='2px solid #60a5fa'; $('#btnDirect').style.outline='none';}
+
+  function startTimer(mins){
+    if(mins<=0){ timeEl.style.display='none'; return; }
+    s.left = mins*60; timeEl.style.display='inline-block'; tick();
+    s.timerId = setInterval(function(){ s.left--; tick(); if(s.left<=0){ clearInterval(s.timerId); finish(); }}, 1000);
+  }
+  function tick(){
+    var m = Math.max(0, Math.floor(s.left/60));
+    var sec = Math.max(0, s.left%60);
+    timeEl.textContent = 'Tiempo '+String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
+  }
+
+  function gen(){
+    var arr=[], m=$('#mode').value; for(var i=0;i<10;i++) arr.push(buildItem(m));
+    s.items=arr; s.i=0; s.score=0; s.streak=0; s.sel=''; fb.innerHTML=''; ans.value='';
+  }
+  function render(){
+    var it=s.items[s.i]; op.innerHTML=it.text; counter.textContent='Ítem '+(s.i+1)+'/10'; fb.innerHTML=''; ans.value='';
+    $('#checkBtn').disabled=false; it.locked=false;
+  }
+  function check(){
+    var it=s.items[s.i]; if(it.locked) return;
+    if(!s.sel){ fb.innerHTML='<p style="color:#ef4444">Elige directa o inversa.</p>'; return; }
+    var val=String(ans.value).replace(',','.').trim();
+    var nv=parseFloat(val), nc=parseFloat(it.correct);
+    var ok=(!isNaN(nv)&&!isNaN(nc))?(Math.abs(nv-nc)<=0.1):(val===it.correct);
+    var typeOK=(s.sel===it.type);
+    it.locked=true; $('#checkBtn').disabled=true;
+    if(ok && typeOK){ s.score++; s.streak++; fb.innerHTML='<p style="color:#22c55e">¡Bien!</p>'+it.explain; }
+    else{ s.streak=0; fb.innerHTML='<p style="color:#ef4444">Incorrecto.</p><p>Solución: <strong>'+it.correct+'</strong></p>'+it.explain; }
+    score.textContent='Aciertos '+s.score; streak.textContent='Racha '+s.streak;
+  }
+  function next(){
+    if(s.i<s.items.length-1){ s.i++; s.sel=''; render(); }
+    else{ finish(); }
+  }
+  function finish(){
+    if(s.timerId){ clearInterval(s.timerId); s.timerId=null; }
+    fb.innerHTML += '<hr><p><strong>Fin de la sesión.</strong></p>';
+  }
+
+  $('#startBtn').onclick=function(){
+    if(!$('#studentName').value.trim()||!$('#studentGroup').value.trim()){ alert('Escribe tu NOMBRE y tu GRUPO antes de iniciar.'); return; }
+    gen(); render(); startTimer(parseInt($('#timer').value,10));
+  };
+  $('#checkBtn').onclick=check; $('#nextBtn').onclick=next;
+})();
+</script>
+<script>
+  // Registro del Service Worker para modo offline
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => console.log('SW registrado:', registration.scope))
+        .catch(error => console.log('Fallo registro de SW:', error));
+    });
+  }
+</script>
+</body>
+</html>

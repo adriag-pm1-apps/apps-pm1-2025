@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pensamiento Matemático 1 — Razones, proporciones y porcentajes — Mtra. Adriana Arroyo</title>
+<link rel="manifest" href="manifest.json">
+<style>
+  :root{
+    --bg:#0b1117;
+    --card:#0f172a;
+    --ink:#f8fafc;
+    --muted:#cbd5e1;
+    --border:#1e293b;
+    --pill:#0b1220;
+    --accent:#22c55e;
+    --accent-soft:#064e3b;
+    --error:#ef4444;
+    --error-soft:#451a1a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    padding:16px;
+    background:radial-gradient(circle at top,#020617,#0b1117 55%);
+    color:var(--ink);
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  }
+  nav{
+    padding:8px 0 14px 0;
+    border-bottom:1px solid var(--border);
+    margin-bottom:12px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  nav a{
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:#020617;
+    color:var(--muted);
+  }
+  nav a.active{
+    background:#22c55e;
+    color:#020617;
+    border-color:#16a34a;
+  }
+  h1{
+    margin:0 0 6px 0;
+    font-size:22px;
+  }
+  .credit{
+    margin:4px 0 10px 0;
+    color:var(--muted);
+    font-size:14px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:12px;
+    margin-bottom:12px;
+  }
+  label{
+    display:block;
+    margin-bottom:4px;
+    color:var(--muted);
+    font-size:14px;
+  }
+  input,select,button{
+    width:100%;
+    padding:12px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:#020617;
+    color:var(--ink);
+    font-size:16px;
+  }
+  select{cursor:pointer;}
+  input::placeholder{color:#64748b;}
+  button{
+    cursor:pointer;
+    font-weight:600;
+  }
+  button.primary{
+    background:#22c55e;
+    color:#020617;
+    border-color:#16a34a;
+  }
+  button.muted{
+    background:#0b1220;
+    color:var(--muted);
+  }
+  button:disabled{
+    opacity:0.5;
+    cursor:not-allowed;
+  }
+  .pill{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:var(--pill);
+    font-size:13px;
+    margin-right:6px;
+  }
+  /* --- NUEVAS PESTAÑAS UNIFICADAS PARA TODAS LAS APPS --- */
+
+.pill-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.pill-tab {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  border: 1px solid #1f2937;
+  background: #020617;
+  text-decoration: none;
+  color: #e5e7eb;
+}
+
+.pill-tab.active {
+  background: #22c55e;
+  color: #020617;
+  border-color: #22c55e;
+  font-weight: 600;
+}
+
+  .op{
+    font-weight:700;
+    font-size:18px;
+    line-height:1.45;
+    min-height:90px;
+    margin:8px 0 10px 0;
+  }
+  .hint{
+    color:var(--muted);
+    font-size:14px;
+    margin-top:4px;
+  }
+  .btns{
+    display:flex;
+    gap:8px;
+    margin-top:8px;
+  }
+  .btns button{flex:1;}
+  .box{
+    border-radius:12px;
+    padding:10px;
+    margin-top:8px;
+  }
+  .box.ok{
+    background:var(--accent-soft);
+    border:1px solid var(--accent);
+  }
+  .box.error{
+    background:var(--error-soft);
+    border:1px solid var(--error);
+  }
+  .meta{
+    margin-top:6px;
+    color:var(--muted);
+    font-size:13px;
+  }
+  @media (min-width:640px){
+    body{max-width:720px;margin:0 auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="pill-tabs">
+  <a href="pm1_mcm_mcd_quiz_OFFLINE.html" class="pill-tab">
+    PROGRESIÓN 3: MCM / MCD
+  </a>
+  <a href="pm1_fracciones.html" class="pill-tab">
+    PROGRESIÓN 4: FRACCIONES
+  </a>
+  <a href="pm1_razones_prop_porcent_OFFLINE.html" class="pill-tab active">
+    PROGRESIÓN 4: RAZONES, PROPORCIONES Y PORCENTAJES
+  </a>
+  <a href="pm1_regla_de_tres_OFFLINE.html" class="pill-tab">
+    PROGRESIÓN 4: REGLA DE 3
+  </a>
+  <a href="pm1_exponentes_OFFLINE (2).html" class="pill-tab">
+    PROGRESIÓN 5: EXPONENTES BÁSICOS
+  </a>
+  <a href="pm1_exponentes_avanzados_OFFLINE_RESET.html" class="pill-tab">
+    PROGRESIÓN 5: EXPONENTES INTERMEDIOS
+  </a>
+  <a href="pm1_exponentes_especiales_OFFLINE.html" class="pill-tab">
+    PROGRESIÓN 5: EXPONENTES ESPECIALES
+  </a>
+  <a href="operaciones_combinadas.html" class="pill-tab">
+    PROGRESIÓN 6: OPERACIONES COMBINADAS
+  </a>
+</div>
+
+
+<div class="card">
+  <h1>RAZONES, PROPORCIONES Y PORCENTAJES</h1>
+  <p class="credit">
+    by Mtra. Adriana Arroyo • Versión offline • 10 ítems por sesión<br>
+    Practica razón, proporción directa y porcentajes con retroalimentación inmediata.
+  </p>
+</div>
+
+<div class="card">
+  <label>Nombre (opcional)</label>
+  <input id="studentName" placeholder="Nombre y apellidos" type="text" inputmode="text">
+  <label>Grupo (opcional)</label>
+  <input id="studentGroup" placeholder="p. ej., 1°A" type="text" inputmode="text">
+  <label>Modo</label>
+  <select id="mode">
+    <option value="mixed" selected>Mixto (razones, proporciones, porcentajes)</option>
+    <option value="razon">Solo razones</option>
+    <option value="prop">Solo proporciones</option>
+    <option value="pct">Solo porcentajes</option>
+  </select>
+  <button id="startBtn" class="primary">Iniciar (10 ítems)</button>
+  <p class="hint">
+    Escribe solo el número: puede ser entero o decimal.<br>
+    Ejemplos válidos: <code>1.5</code>, <code>0.8</code>, <code>25</code>.
+  </p>
+</div>
+
+<div class="card">
+  <div id="operation" class="op">Da clic en <strong>Iniciar</strong> para comenzar.</div>
+  <input id="answer" type="text" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false"
+         placeholder="Escribe tu respuesta numérica (sin % ni símbolos)">
+  <div class="btns">
+    <button id="checkBtn" class="primary">Comprobar</button>
+    <button id="nextBtn" class="muted">Siguiente</button>
+  </div>
+  <div id="feedback" style="min-height:120px;margin-top:10px;"></div>
+</div>
+
+<div class="card">
+  <span id="counter" class="pill">Ítem —/10</span>
+  <span id="score" class="pill">Aciertos 0</span>
+  <span id="streak" class="pill">Racha 0</span>
+</div>
+
+<script>
+(function(){
+  function $(sel){ return document.querySelector(sel); }
+  function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+  function choice(arr){ return arr[randInt(0,arr.length-1)]; }
+
+  // Evalúa una expresión numérica sencilla (para permitir 1/2, 3*4, etc.)
+  function evalUserExpression(raw){
+    if(!raw) return NaN;
+    var s = String(raw)
+      .replace(',', '.')
+      .replace(/\s+/g,'');
+    if(!s) return NaN;
+    if(!/^[0-9.+\-*/()]*$/.test(s)){
+      return NaN;
+    }
+    try{
+      var val = Function('"use strict";return ('+s+');')();
+      if(typeof val === 'number' && isFinite(val)){
+        return val;
+      }
+      return NaN;
+    }catch(e){
+      return NaN;
+    }
+  }
+
+  // Generadores de ítems
+  function makeRazonItem(){
+    var a = randInt(2,12);
+    var b = randInt(2,12);
+    var context = choice([
+      'En un grupo hay '+a+' niños y '+b+' niñas.',
+      'En una bolsa hay '+a+' canicas rojas y '+b+' azules.',
+      'En una receta usan '+a+' tazas de harina y '+b+' de azúcar.'
+    ]);
+    var value = a / b;
+    var text =
+      context + '<br><br>' +
+      '¿Cuál es la razón <strong>primer dato : segundo dato</strong> en forma decimal?<br>' +
+      'Escribe el valor de <strong>'+a+'/'+b+'</strong> como número decimal.';
+    var explain =
+      '<div class="box ok"><strong>Razón</strong><br>'+
+      'La razón es '+a+':'+b+', que equivale a la fracción '+a+'/'+b+'.<br>'+
+      'Al dividir: '+a+' ÷ '+b+' ≈ <strong>'+value.toFixed(2)+'</strong>.</div>';
+    return {
+      kind:'razon',
+      textHtml:text,
+      value:value,
+      explain:explain,
+      tolerance:0.05
+    };
+  }
+
+  function makePropItem(){
+    var baseQty = choice([2,3,4,5]);
+    var basePrice = choice([30,40,50,60,75,90]);
+    var factor = randInt(2,6);
+    var newQty = baseQty * factor;
+    var value = basePrice * factor;
+    var text =
+      'Si '+baseQty+' artículos cuestan $'+basePrice+
+      ', ¿cuánto costarán '+newQty+' artículos al mismo precio unitario?<br>'+
+      'Escribe solo el costo total (número).';
+    var explain =
+      '<div class="box ok"><strong>Proporción directa</strong><br>'+
+      'El precio es proporcional a la cantidad.<br>'+
+      'Si '+baseQty+' cuestan $'+basePrice+
+      ', entonces el precio unitario es '+basePrice+'/'+baseQty+
+      '.<br>Multiplicamos por '+factor+': '+basePrice+' × '+factor+
+      ' = <strong>$'+value.toFixed(2)+'</strong>.</div>';
+    return {
+      kind:'prop',
+      textHtml:text,
+      value:value,
+      explain:explain,
+      tolerance:0.1
+    };
+  }
+
+  function makePctItem(){
+    var total = choice([40,50,80,100,160,200]);
+    var part = choice([10,15,20,25,30,40]);
+    if(part >= total) part = Math.round(total*0.4);
+    var value = part / total * 100;
+    var text =
+      'En un grupo de <strong>'+total+'</strong> estudiantes, <strong>'+part+
+      '</strong> participan en una actividad.<br>'+
+      '¿Qué porcentaje representan sobre el total?<br>'+
+      'Escribe solo el número (por ejemplo, 25 si es 25%).';
+    var explain =
+      '<div class="box ok"><strong>Porcentaje</strong><br>'+
+      'Usamos: porcentaje = (parte / total) × 100.<br>'+
+      '('+part+' / '+total+') × 100 ≈ <strong>'+value.toFixed(2)+'%</strong>.</div>';
+    return {
+      kind:'pct',
+      textHtml:text,
+      value:value,
+      explain:explain,
+      tolerance:0.2
+    };
+  }
+
+  function buildItem(mode){
+    if(mode === 'razon') return makeRazonItem();
+    if(mode === 'prop') return makePropItem();
+    if(mode === 'pct')  return makePctItem();
+    var bucket = choice([makeRazonItem, makePropItem, makePctItem]);
+    return bucket();
+  }
+
+  var state = {
+    items:[],
+    index:0,
+    score:0,
+    streak:0
+  };
+
+  var operationEl = $('#operation');
+  var answerEl    = $('#answer');
+  var feedbackEl  = $('#feedback');
+  var counterEl   = $('#counter');
+  var scoreEl     = $('#score');
+  var streakEl    = $('#streak');
+  var startBtn    = $('#startBtn');
+  var checkBtn    = $('#checkBtn');
+  var nextBtn     = $('#nextBtn');
+
+  function renderCurrent(){
+    var item = state.items[state.index];
+    operationEl.innerHTML = item.textHtml;
+    counterEl.textContent = 'Ítem '+(state.index+1)+'/10';
+    feedbackEl.innerHTML = '';
+    answerEl.value = '';
+    answerEl.focus();
+  }
+
+  function startQuiz(){
+    var mode = document.getElementById('mode').value;
+    state.items = [];
+    for(var i=0;i<10;i++){
+      state.items.push(buildItem(mode));
+    }
+    state.index = 0;
+    state.score = 0;
+    state.streak = 0;
+    scoreEl.textContent  = 'Aciertos 0';
+    streakEl.textContent = 'Racha 0';
+    renderCurrent();
+  }
+
+  function checkAnswer(){
+    if(!state.items.length) return;
+    var raw = answerEl.value;
+    if(!raw){
+      feedbackEl.innerHTML = '<p style="color:#fca5a5">Escribe una respuesta antes de comprobar.</p>';
+      return;
+    }
+    var valUser = evalUserExpression(raw);
+    if(isNaN(valUser)){
+      feedbackEl.innerHTML =
+        '<div class="box error"><strong>No se pudo leer tu número.</strong><br>'+
+        'Escribe solo un valor numérico (entero o decimal).</div>';
+      return;
+    }
+    var item = state.items[state.index];
+    var correct = item.value;
+    var tol = item.tolerance || 0.1;
+    var diff = Math.abs(valUser - correct);
+    var ok = diff <= tol;
+
+    if(ok){
+      state.score++;
+      state.streak++;
+      scoreEl.textContent  = 'Aciertos '+state.score;
+      streakEl.textContent = 'Racha '+state.streak;
+      feedbackEl.innerHTML =
+        '<div class="box ok"><strong>¡Muy bien!</strong><br>'+
+        'Tu resultado es cercano al valor esperado.</div>'+
+        item.explain;
+    }else{
+      state.streak = 0;
+      streakEl.textContent = 'Racha 0';
+      feedbackEl.innerHTML =
+        '<div class="box error"><strong>Revisa.</strong><br>'+
+        'Valor de referencia ≈ <strong>'+correct.toFixed(2)+'</strong>.<br>'+
+        'Tu resultado fue '+valUser.toFixed(2)+'.</div>'+
+        item.explain;
+    }
+  }
+
+  function nextItem(){
+    if(!state.items.length) return;
+    if(state.index < state.items.length-1){
+      state.index++;
+      renderCurrent();
+    }else{
+      operationEl.innerHTML =
+        'Has terminado los 10 ítems. Tu puntaje fue <strong>'+
+        state.score+'</strong> de '+state.items.length+'.';
+      feedbackEl.innerHTML =
+        '<p class="meta">Puedes iniciar de nuevo para seguir practicando razones, proporciones y porcentajes.</p>';
+    }
+  }
+
+  startBtn.addEventListener('click', startQuiz);
+  checkBtn.addEventListener('click', checkAnswer);
+  nextBtn.addEventListener('click', nextItem);
+  answerEl.addEventListener('keydown', function(ev){
+    if(ev.key === 'Enter'){
+      ev.preventDefault();
+      checkAnswer();
+    }
+  });
+})();
+</script>
+
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('service-worker.js')
+      .then(function(reg){ console.log('SW registrado:', reg.scope); })
+      .catch(function(err){ console.log('Fallo registro de SW:', err); });
+  });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pensamiento Matemático 1 — Operaciones con exponentes — Mtra. Adriana Arroyo</title>
+<link rel="manifest" href="manifest.json">
+<style>
+  :root{
+    --bg:#0b1117;
+    --card:#0f172a;
+    --ink:#f8fafc;
+    --muted:#cbd5e1;
+    --border:#1e293b;
+    --pill:#0b1220;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    padding:16px;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:system-ui,Segoe UI,Roboto,Arial;
+  }
+  h1{margin:0 0 6px 0;font-size:22px}
+  .credit{margin:6px 0 12px 0;color:var(--muted);font-size:14px}
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:12px;
+    margin-bottom:12px;
+  }
+  label{display:block;margin-bottom:6px;color:var(--muted);font-size:14px}
+  input,select,button{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:#0b1220;
+    color:#f8fafc;
+    font-size:18px;
+  }
+  .pill{
+    display:inline-block;
+    padding:6px 10px;
+    border:1px solid var(--border);
+    border-radius:999px;
+    background:var(--pill);
+    margin-right:6px;
+    font-size:14px;
+  }
+  .op{
+    font-weight:700;
+    font-size:18px;
+    line-height:1.45;
+    min-height:84px;
+    margin:8px 0 10px 0;
+  }
+  .hint{
+    color:var(--muted);
+    font-size:14px;
+  }
+  .box{
+    background:#0b1320;
+    border:1px solid #1b2b46;
+    border-radius:10px;
+    padding:10px;
+    margin-top:8px;
+    font-size:14px;
+  }
+  .btns{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+  }
+  .btns button{flex:1}
+  .primary{
+    background:#fbbf24; /* amarillo para exponentes */
+    color:#0a0a12;
+    font-weight:800;
+    border:none;
+    cursor:pointer;
+  }
+  .muted{
+    background:#0b1220;
+    color:#e2e8f0;
+    border:1px solid #223049;
+  }
+</style>
+</head>
+<body>
+<nav style="padding:10px 0;border-bottom:1px solid var(--border);margin-bottom:12px;display:flex;flex-wrap:wrap;gap:8px;">
+    <a href="pm1_razones_prop_porcent_OFFLINE.html" style="background:#34d399;color:var(--bg);padding:6px 10px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:700;">Razones</a>
+    <a href="pm1_regla_de_tres_OFFLINE.html" style="background:#a78bfa;color:var(--bg);padding:6px 10px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:700;">Regla 3</a>
+    <a href="pm1_mcm_mcd_quiz_OFFLINE.html" style="background:#60a5fa;color:var(--bg);padding:6px 10px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:700;">MCM/MCD</a>
+    <a href="pm1_exponentes_OFFLINE (2).html" style="background:#fbbf24;color:var(--bg);padding:6px 10px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:700;">Exponentes</a>
+    <a href="pm1_exponentes_avanzados_OFFLINE_RESET.html" style="background:#38bdf8;color:var(--bg);padding:6px 10px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:700;">Exp. Avanz</a>
+</nav>
+
+<div class="card">
+  <h1>PENSAMIENTO MATEMÁTICO 1: Operaciones con exponentes</h1>
+  <p class="credit">by Mtra. Adriana Arroyo • Versión offline (sin internet) • 15 ítems aleatorios</p>
+</div>
+
+<div class="card">
+  <label>Nombre</label>
+  <input id="studentName" placeholder="Nombre y apellidos">
+  <label>Grupo</label>
+  <input id="studentGroup" placeholder="p. ej., 1°A">
+  <label>Modo</label>
+  <select id="mode">
+    <option value="mixed" selected>Mixto (todas las leyes)</option>
+    <option value="mul">Solo producto (multiplicación)</option>
+    <option value="div">Solo cociente (división)</option>
+    <option value="powpow">Solo potencia de potencia</option>
+    <option value="basics">Solo exponentes 1 y 0</option>
+  </select>
+  <button id="startBtn" class="primary">Iniciar (15 ítems)</button>
+</div>
+
+<div class="card">
+  <div id="operation" class="op">—</div>
+  <p class="hint">
+    Puedes responder en forma de potencia o como número, según el ejercicio.
+    Ejemplos de respuesta válidas: <strong>5^4</strong>, <strong>5**4</strong> o <strong>625</strong>.
+    En los ejercicios de leyes de exponentes se sugiere contestar como potencia (por ejemplo, <strong>5^4</strong>).
+  </p>
+  <input id="answer" type="text" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Escribe la respuesta (por ejemplo 5^4 o 625)">
+
+  <div class="btns">
+    <button id="checkBtn" class="primary">Comprobar</button>
+    <button id="nextBtn" class="muted">Siguiente</button>
+  </div>
+  <div id="feedback" style="min-height:140px;margin-top:10px"></div>
+</div>
+
+<div class="card">
+  <span id="counter" class="pill">Ítem —/15</span>
+  <span id="score" class="pill">Aciertos 0</span>
+  <span id="streak" class="pill">Racha 0</span>
+</div>
+
+<script>
+(function(){
+  function $(s){return document.querySelector(s);}
+  function rand(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+  function choice(arr){return arr[rand(0,arr.length-1)];}
+
+  // Analiza la respuesta del alumno: potencia (base^exponente) o número
+  function parseAnswer(str){
+    if(!str) return null;
+    str = String(str).trim().toLowerCase();
+    if(!str) return null;
+    // quitar espacios
+    str = str.replace(/\s+/g,'');
+    var base = null, exp = null, num = null;
+
+    // Formato a^b o a**b
+    var m = str.match(/^(-?\d+)\^(-?\d+)$/);
+    if(!m){
+      m = str.match(/^(-?\d+)\*\*(-?\d+)$/);
+    }
+    if(m){
+      base = parseInt(m[1],10);
+      exp = parseInt(m[2],10);
+      num = Math.pow(base,exp);
+      return {base:base, exp:exp, num:num};
+    }
+
+    // Intentar como número simple
+    var n = Number(str);
+    if(!isNaN(n)){
+      num = n;
+      return {base:null, exp:null, num:num};
+    }
+
+    return null;
+  }
+
+  // Generadores de ejercicios
+  // 1) Producto de potencias (respuesta esperada: potencia)
+  function makeMul(){
+    var base, e1, e2, expT, val;
+    while(true){
+      base = rand(2,9);
+      e1 = rand(1,3);
+      e2 = rand(1,3);
+      expT = e1 + e2;
+      val = Math.pow(base, expT);
+      if(val <= 1000) break; // operaciones cortas
+    }
+    return {
+      kind:'mul',
+      mode:'exp', // se espera potencia, pero se acepta número correcto
+      base:base,
+      exp:expT,
+      numeric:val,
+      textHtml: base + '<sup>' + e1 + '</sup> × ' +
+                base + '<sup>' + e2 + '</sup> = ?',
+      lawTitle:'Producto de potencias de la misma base',
+      law:'a^m · a^n = a^{m+n}.',
+      explain:'Se conserva la base ('+base+') y se suman los exponentes: '+e1+' + '+e2+' = '+expT+'.'
+    };
+  }
+
+  // 2) Cociente de potencias (respuesta esperada: potencia)
+  function makeDiv(){
+    var base, e1, e2, expR, val;
+    while(true){
+      base = rand(2,9);
+      e1 = rand(2,5);
+      e2 = rand(1, e1); // permite exponente 0 como resultado
+      expR = e1 - e2;
+      val = (expR >= 0) ? Math.pow(base, expR) : 1/Math.pow(base, -expR);
+      if(val <= 1000) break;
+    }
+    return {
+      kind:'div',
+      mode:'exp',
+      base:base,
+      exp:expR,
+      numeric:val,
+      textHtml: base + '<sup>' + e1 + '</sup> ÷ ' +
+                base + '<sup>' + e2 + '</sup> = ?',
+      lawTitle:'Cociente de potencias de la misma base',
+      law:'a^m ÷ a^n = a^{m-n}, a ≠ 0.',
+      explain:'Se conserva la base ('+base+') y se restan los exponentes: '+e1+' - '+e2+' = '+expR+'.'
+    };
+  }
+
+  // 3) Potencia de potencia (respuesta esperada: potencia)
+  function makePowPow(){
+    var base, e1, e2, expT, val;
+    while(true){
+      base = rand(2,5);
+      e1 = rand(2,3);
+      e2 = rand(2,3);
+      expT = e1 * e2;
+      val = Math.pow(base, expT);
+      if(val <= 1000) break;
+    }
+    return {
+      kind:'powpow',
+      mode:'exp',
+      base:base,
+      exp:expT,
+      numeric:val,
+      textHtml:'(' + base + '<sup>' + e1 + '</sup>)<sup>' + e2 + '</sup> = ?',
+      lawTitle:'Potencia de una potencia',
+      law:'(a^m)^n = a^{m·n}.',
+      explain:'Se conserva la base ('+base+') y se multiplican los exponentes: '+e1+' × '+e2+' = '+expT+'.'
+    };
+  }
+
+  // 4) Exponente 1 (acepta potencia o número)
+  function makeBasic1(){
+    var base = rand(2,15);
+    var val = base;
+    return {
+      kind:'basic1',
+      mode:'either', // acepta potencia base^1 o el número
+      base:base,
+      exp:1,
+      numeric:val,
+      textHtml: base + '<sup>1</sup> = ?',
+      lawTitle:'Exponente 1',
+      law:'a^1 = a.',
+      explain:'Elevar un número a la potencia 1 lo deja igual: '+base+'^1 = '+base+'.'
+    };
+  }
+
+  // 5) Exponente 0 (se espera resultado numérico 1, pero se acepta  algo equivalente)
+  function makeBasic0(){
+    var base = rand(2,15);
+    var val = 1;
+    return {
+      kind:'basic0',
+      mode:'num',
+      base:base,
+      exp:0,
+      numeric:val,
+      textHtml: base + '<sup>0</sup> = ?',
+      lawTitle:'Exponente 0',
+      law:'a^0 = 1 (para a ≠ 0).',
+      explain:'Todo número distinto de cero elevado a 0 vale 1: '+base+'^0 = 1.'
+    };
+  }
+
+  // 6) Evaluar potencias pequeñas (solo número, operaciones cortas)
+  function makeEval(){
+    var base, e, val;
+    while(true){
+      base = rand(2,5);
+      e = rand(2,4);
+      val = Math.pow(base,e);
+      if(val <= 200) break; // muy manejable a mano
+    }
+    return {
+      kind:'eval',
+      mode:'num',
+      base:base,
+      exp:e,
+      numeric:val,
+      textHtml: base + '<sup>' + e + '</sup> = ?',
+      lawTitle:'Evaluación de potencia',
+      law:'a^n significa multiplicar a por sí mismo n veces.',
+      explain:'Se multiplica '+base+' por sí mismo '+e+' veces. El resultado es '+val+'.'
+    };
+  }
+
+  function buildItem(mode){
+    var kind;
+    if(mode === 'mixed'){
+      // Damos prioridad a multiplicación, división y potencia de potencia
+      var pool = ['mul','mul','mul','div','div','powpow','powpow','mul','div','powpow','basic1','basic0','eval','eval','mul'];
+      kind = choice(pool);
+    } else if(mode === 'mul'){
+      kind = 'mul';
+    } else if(mode === 'div'){
+      kind = 'div';
+    } else if(mode === 'powpow'){
+      kind = 'powpow';
+    } else if(mode === 'basics'){
+      kind = choice(['basic1','basic0']);
+    } else {
+      kind = 'mul';
+    }
+
+    if(kind === 'mul') return makeMul();
+    if(kind === 'div') return makeDiv();
+    if(kind === 'powpow') return makePowPow();
+    if(kind === 'basic1') return makeBasic1();
+    if(kind === 'basic0') return makeBasic0();
+    return makeEval();
+  }
+
+  var state = {
+    items:[],
+    i:0,
+    score:0,
+    streak:0
+  };
+
+  var op   = $('#operation');
+  var ans  = $('#answer');
+  var fb   = $('#feedback');
+  var cnt  = $('#counter');
+  var sco  = $('#score');
+  var strk = $('#streak');
+
+  function genItems(){
+    var mode = $('#mode').value;
+    var arr = [];
+    for(var i=0; i<15; i++){
+      arr.push(buildItem(mode));
+    }
+    state.items = arr;
+    state.i = 0;
+    state.score = 0;
+    state.streak = 0;
+    sco.textContent = 'Aciertos 0';
+    strk.textContent = 'Racha 0';
+  }
+
+  function render(){
+    var it = state.items[state.i];
+    op.innerHTML = it.textHtml + '<br><strong>Resultado = ?</strong>';
+    cnt.textContent = 'Ítem ' + (state.i+1) + '/15';
+    fb.innerHTML = '';
+    ans.value = '';
+    ans.focus();
+  }
+
+  function check(){
+    var it = state.items[state.i];
+    var raw = ans.value;
+    var parsed = parseAnswer(raw);
+
+    if(!parsed){
+      fb.innerHTML = '<p style="color:#f97316">Escribe la respuesta en formato válido, por ejemplo <strong>5^4</strong> o <strong>625</strong>.</p>';
+      return;
+    }
+
+    var ok = false;
+    var usedExponentForm = (parsed.base !== null && parsed.exp !== null);
+
+    if(it.mode === 'exp'){
+      // Esperamos respuesta en potencia, pero aceptamos el número si es correcto
+      if(usedExponentForm){
+        ok = (parsed.base === it.base && parsed.exp === it.exp);
+      } else if(parsed.num !== null){
+        ok = Math.abs(parsed.num - it.numeric) < 1e-9;
+      }
+    } else if(it.mode === 'num'){
+      // Esperamos número; también aceptamos potencia equivalente
+      if(parsed.num !== null){
+        ok = Math.abs(parsed.num - it.numeric) < 1e-9;
+      }
+    } else if(it.mode === 'either'){
+      // Cualquier forma correcta
+      if(usedExponentForm){
+        ok = (parsed.base === it.base && parsed.exp === it.exp);
+      }
+      if(!ok && parsed.num !== null){
+        ok = Math.abs(parsed.num - it.numeric) < 1e-9;
+      }
+    }
+
+    var correctExpStr = it.base + '^' + it.exp;
+    var correctNumStr = (typeof it.numeric === 'number') ? ' (≈ ' + it.numeric + ')' : '';
+
+    if(ok){
+      state.score++;
+      state.streak++;
+      if(it.mode === 'exp' && !usedExponentForm){
+        fb.innerHTML =
+          '<p style="color:#22c55e">¡Bien! ✔</p>' +
+          '<p>Tu resultado numérico es correcto. Recuerda que en este tipo de ejercicios también puedes escribirlo como potencia: <strong>' +
+          correctExpStr + '</strong>.</p>';
+      } else {
+        fb.innerHTML = '<p style="color:#22c55e">¡Bien! ✔</p>';
+      }
+    } else {
+      state.streak = 0;
+      fb.innerHTML =
+        '<p style="color:#ef4444">Incorrecto.</p>' +
+        '<p>Resultado correcto: <strong>' + correctExpStr + '</strong>' +
+        '</p>' +
+        '<p><strong>' + it.lawTitle + '</strong><br>' + it.law + '</p>' +
+        '<div class="box">' + it.explain + '</div>';
+    }
+
+    sco.textContent = 'Aciertos ' + state.score;
+    strk.textContent = 'Racha ' + state.streak;
+  }
+
+  function next(){
+    if(!state.items.length) return;
+    if(state.i < state.items.length-1){
+      state.i++;
+      render();
+    } else {
+      fb.innerHTML += '<hr><p><strong>Fin de la sesión.</strong></p>';
+    }
+  }
+
+  $('#startBtn').onclick = function(){
+    if(!$('#studentName').value.trim() || !$('#studentGroup').value.trim()){
+      alert('Escribe tu NOMBRE y tu GRUPO antes de iniciar.');
+      return;
+    }
+    genItems();
+    render();
+  };
+
+  $('#checkBtn').onclick = check;
+  $('#nextBtn').onclick  = next;
+})();</script>
+<script>
+  // Registro del Service Worker para modo offline
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => console.log('SW registrado:', registration.scope))
+        .catch(error => console.log('Fallo registro de SW:', error));
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pensamiento Matemático 1 — Quiz MCM y MCD — Mtra. Adriana Arroyo</title>
+<link rel="manifest" href="manifest.json">
+<style>
+  :root{
+    --bg:#0b1117;
+    --card:#0f172a;
+    --ink:#f8fafc;
+    --muted:#cbd5e1;
+    --border:#1e293b;
+    --pill:#0b1220;
+    --accent:#22c55e;
+    --accent-soft:#064e3b;
+    --error:#ef4444;
+    --error-soft:#451a1a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    padding:16px;
+    background:radial-gradient(circle at top,#020617,#0b1117 55%);
+    color:var(--ink);
+    font-family:system-ui, -apple-system, BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  }
+  nav{
+    padding:8px 0 14px 0;
+    border-bottom:1px solid var(--border);
+    margin-bottom:12px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  nav a{
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:#020617;
+    color:var(--muted);
+  }
+  nav a.active{
+    background:#22c55e;
+    color:#020617;
+    border-color:#16a34a;
+  }
+  h1{
+    margin:0 0 6px 0;
+    font-size:22px;
+  }
+  .credit{
+    margin:4px 0 10px 0;
+    color:var(--muted);
+    font-size:14px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:12px;
+    margin-bottom:12px;
+  }
+  label{
+    display:block;
+    margin-bottom:4px;
+    color:var(--muted);
+    font-size:14px;
+  }
+  input,button{
+    width:100%;
+    padding:12px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:#020617;
+    color:var(--ink);
+    font-size:16px;
+  }
+  input::placeholder{color:#64748b;}
+  button{
+    cursor:pointer;
+    font-weight:600;
+  }
+  button.primary{
+    background:#22c55e;
+    color:#020617;
+    border-color:#16a34a;
+  }
+  button.secondary{
+    background:#0b1220;
+    color:var(--muted);
+  }
+  button:disabled{
+    opacity:0.5;
+    cursor:not-allowed;
+  }
+  .pill{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:var(--pill);
+    font-size:13px;
+    margin-right:6px;
+  }
+  .results{
+    font-size:18px;
+    line-height:1.4;
+  }
+  .box{
+    border-radius:12px;
+    padding:10px;
+    margin-top:8px;
+  }
+  .box.ok{
+    background:var(--accent-soft);
+    border:1px solid var(--accent);
+  }
+  .box.error{
+    background:var(--error-soft);
+    border:1px solid var(--error);
+  }
+  .fact-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+    font-size:14px;
+  }
+  .fact-table th,
+  .fact-table td{
+    border:1px solid #1f2933;
+    padding:4px 6px;
+    text-align:center;
+  }
+  .fact-table th{
+    background:#020617;
+    color:var(--muted);
+  }
+  .fact-table td.common{
+    background:#064e3b;
+    color:#bbf7d0;
+    font-weight:600;
+  }
+  .fact-table td.divisor{
+    width:60px;
+  }
+  .hint{
+    color:var(--muted);
+    font-size:14px;
+    margin-top:6px;
+  }
+  .btn-row{
+    display:flex;
+    gap:8px;
+    margin-top:8px;
+  }
+  @media (min-width:640px){
+    body{max-width:720px;margin:0 auto;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="pm1_razones_prop_porcent_OFFLINE.html">Razones</a>
+  <a href="pm1_regla_de_tres_OFFLINE.html">Regla 3</a>
+  <a href="pm1_mcm_mcd_quiz_OFFLINE.html" class="active">MCM/MCD</a>
+  <a href="pm1_exponentes_OFFLINE (2).html">Exponentes</a>
+  <a href="pm1_exponentes_avanzados_OFFLINE_RESET.html">Exp. avanzados</a>
+</nav>
+
+<div class="card">
+  <h1>PENSAMIENTO MATEMÁTICO 1: MCM y MCD</h1>
+  <p class="credit">
+    by Mtra. Adriana Arroyo • Versión offline • 10 ítems por sesión<br>
+    La app propone 2 o 3 números. Tú calculas el MCD y el MCM en tu cuaderno
+    usando factorización simultánea.
+  </p>
+</div>
+
+<div class="card">
+  <label>Nombre (opcional)</label>
+  <input id="studentName" placeholder="Nombre y apellidos">
+  <label>Grupo (opcional)</label>
+  <input id="studentGroup" placeholder="p. ej., 1°A">
+  <button class="primary" onclick="startQuiz()">Iniciar sesión (10 ítems)</button>
+</div>
+
+<div class="card">
+  <div id="problem" class="results">
+    Da clic en <strong>Iniciar sesión</strong> para comenzar.
+  </div>
+  <p class="hint">
+    Calcula primero en tu cuaderno. Después captura tus resultados.<br>
+    La tabla de factorización se mostrará después de dar clic en <strong>Comprobar</strong>.
+  </p>
+  <label>Tu MCD</label>
+  <input id="ansMCD" inputmode="numeric" placeholder="Escribe el MCD">
+  <label>Tu MCM</label>
+  <input id="ansMCM" inputmode="numeric" placeholder="Escribe el MCM">
+  <div class="btn-row">
+    <button class="primary" onclick="checkAnswer()" id="checkBtn">Comprobar</button>
+    <button class="secondary" onclick="nextItem()" id="nextBtn">Siguiente</button>
+  </div>
+  <div id="feedback" class="box"></div>
+  <div id="tableContainer"></div>
+</div>
+
+<div class="card">
+  <span id="counter" class="pill">Ítem —/10</span>
+  <span id="score" class="pill">Aciertos 0</span>
+</div>
+
+<script>
+// =========================
+// Utilidades básicas
+// =========================
+function randInt(min,max){
+  return Math.floor(Math.random()*(max-min+1))+min;
+}
+function choice(arr){
+  return arr[randInt(0,arr.length-1)];
+}
+function gcd2(a,b){
+  a=Math.abs(a); b=Math.abs(b);
+  while(b!==0){ var t=b; b=a%b; a=t; }
+  return a;
+}
+function gcdAll(nums){
+  return nums.reduce(function(g,n){return gcd2(g,n);});
+}
+function lcm2(a,b){
+  return Math.abs(a*b)/gcd2(a,b);
+}
+function lcmAll(nums){
+  return nums.reduce(function(acc,n){return lcm2(acc,n);});
+}
+function factorize(n){
+  var res={};
+  var p=2;
+  while(p*p<=n){
+    while(n%p===0){
+      res[p]=(res[p]||0)+1;
+      n=Math.floor(n/p);
+    }
+    p++;
+  }
+  if(n>1) res[n]=(res[n]||0)+1;
+  return res;
+}
+
+// =========================
+// Generación de ítems
+// =========================
+function generateNumbers(){
+  while(true){
+    var useThree = Math.random()<0.5;
+    var nums=[];
+    nums.push(randInt(12,90));
+    nums.push(randInt(12,90));
+    if(useThree){
+      nums.push(randInt(12,90));
+    }
+    // evitar todos iguales o casos muy triviales
+    var allEqual = nums.every(function(v){return v===nums[0];});
+    if(allEqual) continue;
+    var g = gcdAll(nums);
+    var l = lcmAll(nums);
+    if(g<=1) continue;        // que el MCD no sea 1
+    if(l>5000) continue;      // evitar números gigantes
+    return nums;
+  }
+}
+
+function computeWithTable(nums){
+  var current = nums.slice();
+  var steps = [];
+  var mcm = 1;
+
+  // GCD teórico y sus factores para marcar solo las filas que lo forman
+  var gcdValue = gcdAll(nums);
+  var gcdFac = factorize(gcdValue);
+  var usedCommon = {};
+
+  var max = Math.max.apply(null,current);
+  var prime = 2;
+
+  while(prime <= max){
+    // ¿cuántos son divisibles por este primo?
+    var divisibleCount = 0;
+    for(var i=0;i<current.length;i++){
+      if(current[i] % prime === 0) divisibleCount++;
+    }
+    if(divisibleCount === 0){
+      prime++;
+      continue;
+    }
+
+    var before = current.slice();
+    for(var j=0;j<current.length;j++){
+      if(current[j] % prime === 0){
+        current[j] = current[j] / prime;
+      }
+    }
+    var after = current.slice();
+
+    // Este primo siempre participa en el MCM
+    mcm *= prime;
+
+    // Decidir si esta fila debe marcarse como "común" (para el MCD)
+    var markCommon = false;
+    var fullCommon = (divisibleCount === current.length);
+    if(fullCommon && gcdFac[prime]){
+      usedCommon[prime] = (usedCommon[prime] || 0);
+      if(usedCommon[prime] < gcdFac[prime]){
+        markCommon = true;
+        usedCommon[prime]++;
+      }
+    }
+
+    steps.push({
+      before: before,
+      after: after,
+      prime: prime,
+      common: markCommon
+    });
+
+    max = Math.max.apply(null,current);
+    if(prime > max) break;
+  }
+
+  // reconstruimos el MCD con los factores teóricos
+  var mcd = 1;
+  for(var p in gcdFac){
+    if(gcdFac.hasOwnProperty(p)){
+      mcd *= Math.pow(parseInt(p,10), gcdFac[p]);
+    }
+  }
+
+  return {
+    mcd: mcd,
+    mcm: mcm,
+    steps: steps
+  };
+}
+
+// =========================
+// Estado de la sesión
+// =========================
+var state = {
+  items: [],
+  index: 0,
+  score: 0
+};
+
+// =========================
+// Referencias a elementos
+// =========================
+var problemEl   = document.getElementById('problem');
+var ansMCDEl    = document.getElementById('ansMCD');
+var ansMCMEl    = document.getElementById('ansMCM');
+var feedbackEl  = document.getElementById('feedback');
+var tableEl     = document.getElementById('tableContainer');
+var counterEl   = document.getElementById('counter');
+var scoreEl     = document.getElementById('score');
+var checkBtn    = document.getElementById('checkBtn');
+var nextBtn     = document.getElementById('nextBtn');
+
+// =========================
+// Render de tabla
+// =========================
+function renderTable(nums, steps, mcd, mcm){
+  if(!steps.length){
+    tableEl.innerHTML = '';
+    return;
+  }
+  var cols = nums.length;
+  var html = '<table class="fact-table"><thead><tr>';
+
+  for(var i=0;i<cols;i++){
+    html += '<th>N'+(i+1)+'</th>';
+  }
+  html += '<th>Divisor</th></tr></thead><tbody>';
+
+  steps.forEach(function(step){
+    html += '<tr>';
+    step.after.forEach(function(val){
+      html += '<td>'+val+'</td>';
+    });
+    html += '<td class="divisor'+(step.common?' common':'')+'">'+step.prime+'</td>';
+    html += '</tr>';
+  });
+
+  html += '</tbody></table>';
+  html += '<p class="hint">En <span style="color:#bbf7d0;">verde</span> aparecen solo los divisores que forman el MCD.';
+  html += '<br>MCD = <strong>'+mcd+'</strong>, MCM = <strong>'+mcm+'</strong>.</p>';
+
+  tableEl.innerHTML = html;
+}
+
+// =========================
+// Lógica del quiz
+// =========================
+function buildItem(){
+  var nums = generateNumbers();
+  var res  = computeWithTable(nums);
+  return {
+    nums: nums,
+    mcd: res.mcd,
+    mcm: res.mcm,
+    steps: res.steps
+  };
+}
+
+function startQuiz(){
+  state.items = [];
+  for(var i=0;i<10;i++){
+    state.items.push(buildItem());
+  }
+  state.index = 0;
+  state.score = 0;
+  scoreEl.textContent = 'Aciertos 0';
+  feedbackEl.textContent = '';
+  tableEl.innerHTML = '';
+  ansMCDEl.value = '';
+  ansMCMEl.value = '';
+  checkBtn.disabled = false;
+  nextBtn.disabled = false;
+  renderCurrent();
+}
+
+function renderCurrent(){
+  var item = state.items[state.index];
+  var nums = item.nums;
+  problemEl.innerHTML =
+    'Calcula el <strong>MCD</strong> y el <strong>MCM</strong> de: ' +
+    nums.join(', ') + '.';
+  counterEl.textContent = 'Ítem '+(state.index+1)+'/10';
+  feedbackEl.textContent = '';
+  tableEl.innerHTML = '';
+  ansMCDEl.value = '';
+  ansMCMEl.value = '';
+}
+
+function checkAnswer(){
+  var item = state.items[state.index];
+  var mcdUser = parseInt(ansMCDEl.value,10);
+  var mcmUser = parseInt(ansMCMEl.value,10);
+
+  var okMCD = (mcdUser === item.mcd);
+  var okMCM = (mcmUser === item.mcm);
+
+  var mensaje = '';
+
+  if(okMCD && okMCM){
+    state.score++;
+    scoreEl.textContent = 'Aciertos '+state.score;
+    mensaje = '<div class="box ok"><strong>¡Muy bien!</strong><br>'+
+      'Tus respuestas de MCD y MCM son correctas.</div>';
+  }else{
+    mensaje = '<div class="box error"><strong>Revisa.</strong><br>';
+    if(!okMCD){
+      mensaje += 'MCD correcto: <strong>'+item.mcd+
+                 '</strong> (tú escribiste '+(isNaN(mcdUser)?'—':mcdUser)+').<br>';
+    }else{
+      mensaje += 'MCD correcto: <strong>'+item.mcd+
+                 '</strong> ✔<br>';
+    }
+    if(!okMCM){
+      mensaje += 'MCM correcto: <strong>'+item.mcm+
+                 '</strong> (tú escribiste '+(isNaN(mcmUser)?'—':mcmUser)+').';
+    }else{
+      mensaje += 'MCM correcto: <strong>'+item.mcm+
+                 '</strong> ✔';
+    }
+    mensaje += '</div>';
+  }
+
+  feedbackEl.innerHTML = mensaje;
+  renderTable(item.nums, item.steps, item.mcd, item.mcm);
+}
+
+function nextItem(){
+  if(!state.items.length) return;
+  if(state.index < state.items.length - 1){
+    state.index++;
+    renderCurrent();
+  }else{
+    feedbackEl.innerHTML +=
+      '<p class="hint"><strong>Fin de la sesión.</strong> Puedes iniciar de nuevo para practicar más.</p>';
+  }
+}
+
+// Exponer funciones para los botones inline
+window.startQuiz   = startQuiz;
+window.checkAnswer = checkAnswer;
+window.nextItem    = nextItem;
+</script>
+
+<script>
+// Registro del Service Worker para modo offline (ruta relativa)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('service-worker.js')
+      .then(function(reg){ console.log('SW registrado:', reg.scope); })
+      .catch(function(err){ console.log('Fallo registro de SW:', err); });
+  });
+}
+</script>
+
+</body>
+</html>
