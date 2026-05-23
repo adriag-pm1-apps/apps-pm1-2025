@@ -1,4 +1,4 @@
-const CACHE_NAME = 'regalo-financiero-v1';
+const CACHE_NAME = 'regalo-financiero-v2';
 const ASSETS = [
   './',
   './index.html',

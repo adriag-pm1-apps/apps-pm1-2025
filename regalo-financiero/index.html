@@ -51,7 +51,7 @@
   .pill{display:inline-block;border-radius:999px;padding:3px 8px;font-size:.78rem;background:#e0f2fe;color:#075985}
   .good{color:var(--good);font-weight:bold}
   .bad{color:var(--bad);font-weight:bold}
-  .chartbox{height:300px;border:1px dashed var(--line);border-radius:14px;background:#fff;padding:8px}
+  .chartbox{height:330px;border:1px dashed var(--line);border-radius:14px;background:#fff;padding:8px}
   svg text{font-family:Arial, Helvetica, sans-serif}
   footer{font-size:.82rem;color:var(--muted);text-align:center;max-width:1000px;margin:20px auto 0;line-height:1.45}
   .editable-cell input,.editable-cell select{min-width:92px}
@@ -337,21 +337,35 @@ function renderResumen(data){
   document.getElementById("tablaResumen").innerHTML=`<tr><th class="num">Edad</th><th class="num">Ingreso</th><th class="num">Ahorro mensual</th><th class="num">Liquidez</th><th class="num">Mediano plazo</th><th class="num">Largo plazo</th><th class="num">Patrimonio total</th><th>Estado liquidez</th></tr>${rows}`;
 }
 
+function moneyShort(v){
+  if(v>=1000000) return "$"+(v/1000000).toFixed(1)+" M";
+  if(v>=1000) return "$"+Math.round(v/1000).toLocaleString("es-MX")+" mil";
+  return "$"+Math.round(v).toLocaleString("es-MX");
+}
+function niceMax(v){
+  const steps=[10000,50000,100000,500000,1000000,5000000,10000000];
+  let step=steps.find(s=>v/s<=10) || 10000000;
+  return Math.ceil(v/step)*step;
+}
 function drawChart(data){
   const ages=[18,24,27,35,40,45,55,65];
   const points=ages.map(e=>data.filter(x=>x.edad<=e).pop()||data[0]);
-  const w=760,h=270,pad=46;
-  const max=Math.max(...points.map(p=>p.total))*1.08;
-  const x=(i)=>pad+i*((w-pad*2)/(points.length-1));
-  const y=(v)=>h-pad-(v/max)*(h-pad*2);
+  const w=820,h=300,left=92,right=28,top=38,bottom=44;
+  const max=niceMax(Math.max(...points.map(p=>p.total))*1.01);
+  const x=(i)=>left+i*((w-left-right)/(points.length-1));
+  const y=(v)=>h-bottom-(v/max)*(h-top-bottom);
   const poly=points.map((p,i)=>`${x(i)},${y(p.total)}`).join(" ");
   let circles=points.map((p,i)=>`<circle cx="${x(i)}" cy="${y(p.total)}" r="4" fill="#1d4ed8"><title>${Math.round(p.edad)} años: ${money(p.total)}</title></circle>`).join("");
-  let labels=points.map((p,i)=>`<text x="${x(i)}" y="${h-18}" text-anchor="middle" font-size="11">${ages[i]}</text>`).join("");
+  let xLabels=points.map((p,i)=>`<text x="${x(i)}" y="${h-18}" text-anchor="middle" font-size="11">${ages[i]}</text>`).join("");
+  let pointLabels=points.map((p,i)=>{
+    let yy=Math.max(top+18, y(p.total)-10);
+    return `<text x="${x(i)}" y="${yy}" text-anchor="middle" font-size="10" fill="#0f172a">${moneyShort(p.total)}</text>`;
+  }).join("");
   let yLabels=[0,.25,.5,.75,1].map(t=>{
     const val=max*t;
-    return `<line x1="${pad}" x2="${w-pad}" y1="${y(val)}" y2="${y(val)}" stroke="#e5e7eb"/><text x="${pad-8}" y="${y(val)+4}" text-anchor="end" font-size="10">${money(val).replace(".00","")}</text>`;
+    return `<line x1="${left}" x2="${w-right}" y1="${y(val)}" y2="${y(val)}" stroke="#e5e7eb"/><text x="${left-10}" y="${y(val)+4}" text-anchor="end" font-size="10" fill="#334155">${moneyShort(val)}</text>`;
   }).join("");
-  document.getElementById("chart").innerHTML=`<svg viewBox="0 0 ${w} ${h}" width="100%" height="100%">${yLabels}<polyline points="${poly}" fill="none" stroke="#1d4ed8" stroke-width="3"/>${circles}${labels}<text x="${w/2}" y="16" text-anchor="middle" font-size="13" font-weight="bold">Patrimonio total proyectado</text></svg>`;
+  document.getElementById("chart").innerHTML=`<svg viewBox="0 0 ${w} ${h}" width="100%" height="100%">${yLabels}<polyline points="${poly}" fill="none" stroke="#1d4ed8" stroke-width="3"/>${circles}${pointLabels}${xLabels}<text x="${w/2}" y="16" text-anchor="middle" font-size="13" font-weight="bold">Patrimonio total proyectado</text><text x="${w/2}" y="32" text-anchor="middle" font-size="10" fill="#475569">La línea usa la columna “Patrimonio total” de la tabla superior</text></svg>`;
 }
 
 function renderCapital(){
