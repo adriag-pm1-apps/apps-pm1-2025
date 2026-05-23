@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regalo financiero | Simulador para bachillerato</title>
+<style>
+  :root{
+    --bg:#f6f7fb; --card:#ffffff; --ink:#172033; --muted:#5b6475; --brand:#0f766e;
+    --brand2:#1d4ed8; --soft:#e9f5f3; --warn:#fff3c4; --line:#d7dde8;
+    --good:#166534; --bad:#b91c1c; --shadow:0 12px 30px rgba(15,23,42,.10);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#e9f5f3, #f6f7fb 28%);font-family:Arial, Helvetica, sans-serif;color:var(--ink)}
+  header{padding:28px 18px 18px;text-align:center}
+  header h1{margin:0 auto 8px;font-size:clamp(1.6rem,3.2vw,2.8rem);max-width:1100px}
+  header p{margin:.35rem auto;color:var(--muted);max-width:920px;line-height:1.45}
+  .badge{display:inline-block;background:#0f172a;color:#fff;border-radius:999px;padding:6px 12px;font-size:.86rem;margin-bottom:12px}
+  main{max-width:1180px;margin:0 auto;padding:12px 16px 44px}
+  nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0 22px}
+  nav a{color:#0f172a;text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 12px;box-shadow:0 2px 8px rgba(15,23,42,.06)}
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+  .card{grid-column:span 12;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+  .half{grid-column:span 6}
+  .third{grid-column:span 4}
+  .two-third{grid-column:span 8}
+  @media(max-width:800px){.half,.third,.two-third{grid-column:span 12} table{font-size:12px} .table-wrap{overflow:auto}}
+  h2{margin:0 0 12px;font-size:1.25rem}
+  h3{margin:14px 0 8px;font-size:1rem}
+  .note{background:var(--warn);border-left:5px solid #f59e0b;padding:12px;border-radius:12px;color:#4b3b0b;line-height:1.45}
+  .soft{background:var(--soft);border-left:5px solid var(--brand);padding:12px;border-radius:12px;color:#153832;line-height:1.45}
+  label{display:block;font-size:.88rem;color:var(--muted);margin:10px 0 4px}
+  input,select{width:100%;border:1px solid var(--line);border-radius:10px;padding:8px;background:#fff;color:var(--ink)}
+  input[type="number"]{text-align:right}
+  .percent-input{text-align:right}
+  button{border:0;border-radius:999px;padding:10px 14px;background:var(--brand);color:#fff;font-weight:bold;cursor:pointer}
+  button.secondary{background:#0f172a}
+  button.ghost{background:#fff;color:#0f172a;border:1px solid var(--line)}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:800px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:12px}
+  .kpi small{display:block;color:var(--muted);font-size:.78rem}
+  .kpi strong{display:block;margin-top:4px;font-size:1.1rem}
+  table{border-collapse:collapse;width:100%}
+  th,td{border:1px solid var(--line);padding:8px;vertical-align:top}
+  th{background:#0f172a;color:#fff;text-align:left}
+  td.num, th.num{text-align:right}
+  tr:nth-child(even) td{background:#fbfdff}
+  .mini{font-size:.86rem;color:var(--muted);line-height:1.45}
+  .pill{display:inline-block;border-radius:999px;padding:3px 8px;font-size:.78rem;background:#e0f2fe;color:#075985}
+  .good{color:var(--good);font-weight:bold}
+  .bad{color:var(--bad);font-weight:bold}
+  .chartbox{height:300px;border:1px dashed var(--line);border-radius:14px;background:#fff;padding:8px}
+  svg text{font-family:Arial, Helvetica, sans-serif}
+  footer{font-size:.82rem;color:var(--muted);text-align:center;max-width:1000px;margin:20px auto 0;line-height:1.45}
+  .editable-cell input,.editable-cell select{min-width:92px}
+  .small-input{max-width:110px}
+  .source-list li{margin:.35rem 0}
+  .rate-edit{display:flex;align-items:center;gap:6px;min-width:120px}
+  .rate-edit span{font-size:.78rem;color:var(--muted);font-weight:bold}
+  .rate-edit input{min-width:80px}
+  @media print{
+    body{background:#fff}
+    nav,.actions{display:none}
+    .card{box-shadow:none;break-inside:avoid}
+  }
+</style>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f766e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Regalo financiero">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+<header>
+  <span class="badge">Regalo financiero · funciona sin internet</span>
+  <h1>Simulador financiero para estudiantes de bachillerato</h1>
+  <p class="mini"><strong>MATERIA MAT. APLICADA A LAS FINANZAS By MTRA. ADRIANA ARROYO G, V1</strong></p>
+  <p>Aprende a separar liquidez, fondo de amortización e inversión de largo plazo. Modifica ingresos, porcentajes, tasas e instrumentos para comparar escenarios.</p>
+  <p class="mini">Modelo educativo. No sustituye asesoría financiera personalizada.</p>
+</header>
+<main>
+<nav>
+  <a href="#dashboard">Dashboard</a>
+  <a href="#supuestos">Supuestos</a>
+  <a href="#instrumentos">Instrumentos</a>
+  <a href="#capital">Capital a los 40</a>
+  <a href="#meta">Meta personal</a>
+  <a href="#fuentes">Fuentes</a>
+</nav>
+
+<section id="dashboard" class="grid">
+  <div class="card">
+    <h2>Dashboard del plan</h2>
+    <div class="kpis">
+      <div class="kpi"><small>Edad inicial</small><strong id="kpiEdad">17</strong></div>
+      <div class="kpi"><small>Ingreso inicial</small><strong id="kpiIngreso">$3,000</strong></div>
+      <div class="kpi"><small>Ahorro inicial mensual</small><strong id="kpiAhorro">$600</strong></div>
+      <div class="kpi"><small>Meta de emergencia inicial</small><strong id="kpiEmergencia">$7,200</strong></div>
+    </div>
+    <h3>Resumen por edades clave</h3>
+    <div class="table-wrap"><table id="tablaResumen"></table></div>
+  </div>
+  <div class="card two-third">
+    <h2>Crecimiento del patrimonio</h2>
+    <div class="chartbox" id="chart"></div>
+  </div>
+  <div class="card third">
+    <h2>Idea clave</h2>
+    <div class="soft">
+      Al principio el ahorro parece pequeño. Lo poderoso aparece cuando el hábito se sostiene, los ingresos suben y el capital acumulado se invierte mejor.
+    </div>
+    <p class="mini">Tip de clase: pide a tus estudiantes cambiar una sola variable: tasa, depósito mensual o edad de inicio. Luego comparen qué variable tuvo mayor impacto.</p>
+  </div>
+</section>
+
+<section id="supuestos" class="grid">
+  <div class="card">
+    <h2>Supuestos por etapa</h2>
+    <p class="mini">Puedes cambiar ingresos, porcentaje de ahorro, distribución e instrumentos. Las columnas de tasa se muestran con la palabra <strong>tasa</strong> para que el alumno identifique qué rendimiento se está usando. Ahora los porcentajes se capturan tal cual: por ejemplo, escribe <strong>20%</strong> o <strong>20</strong>, no 0.20. El simulador recalcula automáticamente.</p>
+    <div class="actions">
+      <button onclick="calcular()">Recalcular</button>
+      <button class="secondary" onclick="guardar()">Guardar en este dispositivo</button>
+      <button class="ghost" onclick="cargar()">Cargar guardado</button>
+      <button class="ghost" onclick="restaurar()">Restaurar ejemplo</button>
+    </div>
+    <div class="table-wrap" style="margin-top:12px"><table id="tablaSupuestos"></table></div>
+  </div>
+</section>
+
+<section id="instrumentos" class="grid">
+  <div class="card">
+    <h2>Instrumentos disponibles</h2>
+    <p class="mini">Las columnas de <strong>tasa</strong> son editables. Las tasas son de simulación y se pueden capturar como porcentaje: por ejemplo, <strong>6.5%</strong> o <strong>6.5</strong>. En la vida real cambian con el mercado, inflación, plazo, impuestos y condiciones de cada institución.</p>
+    <div class="table-wrap"><table id="tablaInstrumentos"></table></div>
+  </div>
+</section>
+
+<section id="capital" class="grid">
+  <div class="card half">
+    <h2>Escenario: capital acumulado a los 40</h2>
+    <div class="note">
+      La idea no es “arriesgar más”, sino invertir a mayor escala con riesgo bajo y controlado: revisar plazo, liquidez, garantía, inflación, impuestos y necesidad real de usar ese dinero.
+    </div>
+    <label>Capital inicial</label>
+    <input id="capInicial" type="number" value="450000">
+    <label>Edad de inicio</label>
+    <input id="capEdad" type="number" value="40">
+    <label>Instrumento elegido</label>
+    <select id="capInstrumento"></select>
+    <label>Depósito adicional mensual</label>
+    <input id="capDeposito" type="number" value="0">
+    <label>Horizonte personalizado en años</label>
+    <input id="capAnios" type="number" value="15">
+    <div class="actions"><button onclick="calcular()">Calcular capital</button></div>
+  </div>
+  <div class="card half">
+    <h2>Resultado mayor escala</h2>
+    <div class="kpis">
+      <div class="kpi"><small>Tasa anual</small><strong id="capTasa">-</strong></div>
+      <div class="kpi"><small>Valor futuro</small><strong id="capVF">-</strong></div>
+      <div class="kpi"><small>Rendimiento generado</small><strong id="capGanancia">-</strong></div>
+      <div class="kpi"><small>Edad final</small><strong id="capEdadFinal">-</strong></div>
+    </div>
+    <h3>Comparación rápida</h3>
+    <div class="table-wrap"><table id="tablaCapital"></table></div>
+  </div>
+</section>
+
+<section id="meta" class="grid">
+  <div class="card half">
+    <h2>Calculadora de meta personal</h2>
+    <label>Nombre de la meta</label>
+    <input id="metaNombre" value="Laptop / curso / viaje académico">
+    <label>Monto objetivo</label>
+    <input id="metaMonto" type="number" value="18000">
+    <label>Ahorro inicial</label>
+    <input id="metaInicial" type="number" value="0">
+    <label>Años para lograrla</label>
+    <input id="metaAnios" type="number" value="1.5" step="0.1">
+    <label>Instrumento</label>
+    <select id="metaInstrumento"></select>
+    <div class="actions"><button onclick="calcular()">Calcular depósito</button></div>
+  </div>
+  <div class="card half">
+    <h2>Depósito mensual requerido</h2>
+    <div class="kpis">
+      <div class="kpi"><small>Meta</small><strong id="metaOutNombre">-</strong></div>
+      <div class="kpi"><small>Tasa anual</small><strong id="metaOutTasa">-</strong></div>
+      <div class="kpi"><small>Depósito mensual</small><strong id="metaOutPago">-</strong></div>
+      <div class="kpi"><small>Plazo</small><strong id="metaOutPlazo">-</strong></div>
+    </div>
+    <p class="mini">Pregunta de reflexión: ¿qué conviene más, aumentar el depósito mensual o alargar demasiado el plazo?</p>
+  </div>
+</section>
+
+<section id="fuentes" class="grid">
+  <div class="card">
+    <h2>Fuentes para actualizar y conversar en clase</h2>
+    <ul class="source-list">
+      <li>Banco de México: tasas de CETES y mercado de valores. https://www.banxico.org.mx/tipcamb/llenarTasasInteresAction.do?idioma=sp</li>
+      <li>Cetesdirecto: productos como CETES, BONDDIA, BONDES, UDIBONOS y Bonos. https://www.cetesdirecto.com/sites/portal/productos.cetesdirecto</li>
+      <li>CONSAR: ahorro voluntario para retiro. https://www.gob.mx/consar/acciones-y-programas/todo-sobre-el-ahorro-voluntario-265969</li>
+      <li>IPAB: protección de depósitos bancarios. https://www.gob.mx/ipab/es/articulos/productos-bancarios-protegidos-por-el-ipab</li>
+      <li>CONDUSEF: seguro de depósitos y recomendaciones para ahorradores. https://www.condusef.gob.mx/?idc=837&idcat=1&p=contenido</li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer>
+  <strong>MATERIA MAT. APLICADA A LAS FINANZAS By MTRA. ADRIANA ARROYO G, V1</strong><br>
+  Este simulador es un recurso didáctico. Las proyecciones son nominales y simplificadas: no descuentan inflación futura, impuestos, comisiones ni cambios de tasas. Úsalo para aprender decisiones financieras, no para prometer resultados.
+</footer>
+
+<script>
+const instrumentosDefault = [
+  {nombre:"Cuenta separada / ahorro bancario", objetivo:"Liquidez inmediata", horizonte:"Días", liquidez:"Muy alta", riesgo:"Bajo", tasa:0.0100, comentario:"Separar emergencia de gastos."},
+  {nombre:"BONDDIA", objetivo:"Liquidez con rendimiento diario", horizonte:"Días", liquidez:"Alta", riesgo:"Bajo", tasa:0.0600, comentario:"Dinero disponible mientras genera rendimiento."},
+  {nombre:"CETES 28 días", objetivo:"Corto plazo", horizonte:"1 mes", liquidez:"Alta al vencimiento", riesgo:"Bajo", tasa:0.0645, comentario:"Metas cortas y escalera de vencimientos."},
+  {nombre:"CETES 91/182/364 días", objetivo:"Metas con fecha", horizonte:"3 a 12 meses", liquidez:"Media al vencimiento", riesgo:"Bajo", tasa:0.0670, comentario:"Metas de 3, 6 o 12 meses."},
+  {nombre:"BONDES F", objetivo:"Tasa variable", horizonte:"Mediano plazo", liquidez:"Media", riesgo:"Bajo", tasa:0.0650, comentario:"Permite explicar tasa variable."},
+  {nombre:"UDIBONOS", objetivo:"Proteger poder adquisitivo", horizonte:"Largo plazo", liquidez:"Baja-media", riesgo:"Bajo-medio", tasa:0.0700, comentario:"Conecta inversión e inflación."},
+  {nombre:"Bonos M", objetivo:"Largo plazo tasa fija", horizonte:"3 a 30 años", liquidez:"Baja-media", riesgo:"Bajo-medio", tasa:0.0750, comentario:"Muestra el efecto del largo plazo."},
+  {nombre:"Inversión a plazo / pagaré bancario", objetivo:"Plazo fijo bancario", horizonte:"1 a 12 meses o más", liquidez:"Baja al vencimiento", riesgo:"Bajo si banco regulado", tasa:0.0550, comentario:"Comparar GAT, plazo e IPAB."},
+  {nombre:"Aportación voluntaria AFORE", objetivo:"Retiro", horizonte:"Largo plazo", liquidez:"Limitada", riesgo:"Depende de SIEFORE", tasa:0.0750, comentario:"Conecta ahorro joven con retiro."}
+];
+
+const supuestosDefault = [
+  {desde:17,hasta:23.99,etapa:"Bachillerato / universidad: mesada",ingreso:3000,ahorro:0.20,liq:0.4167,med:0.3333,largo:0.2500,instLiq:"BONDDIA",instMed:"CETES 91/182/364 días",instLargo:"UDIBONOS"},
+  {desde:24,hasta:26.99,etapa:"Primer empleo relacionado con carrera",ingreso:18000,ahorro:0.25,liq:0.1778,med:0.4444,largo:0.3778,instLiq:"BONDDIA",instMed:"CETES 91/182/364 días",instLargo:"Aportación voluntaria AFORE"},
+  {desde:27,hasta:34.99,etapa:"Mayor rango y salario",ingreso:28000,ahorro:0.30,liq:0.1190,med:0.3452,largo:0.5358,instLiq:"BONDDIA",instMed:"BONDES F",instLargo:"UDIBONOS"},
+  {desde:35,hasta:44.99,etapa:"Estabilidad + posible familia",ingreso:45000,ahorro:0.25,liq:0.1067,med:0.3111,largo:0.5822,instLiq:"BONDDIA",instMed:"BONDES F",instLargo:"Bonos M"},
+  {desde:45,hasta:64.99,etapa:"Consolidación patrimonial",ingreso:65000,ahorro:0.25,liq:0.0923,med:0.2308,largo:0.6769,instLiq:"BONDDIA",instMed:"UDIBONOS",instLargo:"Bonos M"},
+  {desde:65,hasta:65,etapa:"Retiro / administración del patrimonio",ingreso:0,ahorro:0,liq:0,med:0,largo:0,instLiq:"Cuenta separada / ahorro bancario",instMed:"BONDDIA",instLargo:"UDIBONOS"}
+];
+
+let instrumentos = JSON.parse(JSON.stringify(instrumentosDefault));
+let supuestos = JSON.parse(JSON.stringify(supuestosDefault));
+
+function money(n){return new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0}).format(isFinite(n)?n:0)}
+function pct(n){return ((isFinite(n)?n:0)*100).toFixed(2)+"%"}
+function pctInput(n){
+  const v=(isFinite(n)?n:0)*100;
+  return (Math.round(v*100)/100).toString().replace(/\.0+$/,'').replace(/(\.\d*?)0+$/,'$1') + "%";
+}
+function parsePct(value){
+  if(typeof value === "string") value = value.replace("%","").trim();
+  const n=parseFloat(value);
+  if(!isFinite(n)) return 0;
+  return n>1 ? n/100 : n;
+}
+function byName(name){return instrumentos.find(x=>x.nombre===name)||instrumentos[0]}
+function tasa(name){return byName(name).tasa || 0}
+function etapaEdad(edad){
+  return supuestos.find(s=>edad>=s.desde && edad<=s.hasta) || supuestos[supuestos.length-1];
+}
+function valorFuturo(capital, deposito, tasaAnual, anios){
+  const i=tasaAnual/12, n=anios*12;
+  if(i===0) return capital + deposito*n;
+  return capital*Math.pow(1+i,n)+deposito*((Math.pow(1+i,n)-1)/i);
+}
+
+function renderSelectOptions(){
+  const opts=instrumentos.map(i=>`<option value="${i.nombre}">${i.nombre}</option>`).join("");
+  ["capInstrumento","metaInstrumento"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.innerHTML=opts;
+  });
+  document.getElementById("capInstrumento").value="Bonos M";
+  document.getElementById("metaInstrumento").value="CETES 91/182/364 días";
+}
+
+function renderInstrumentos(){
+  const rows = instrumentos.map((x,i)=>`
+    <tr>
+      <td>${x.nombre}</td><td>${x.objetivo}</td><td>${x.horizonte}</td><td>${x.liquidez}</td><td>${x.riesgo}</td>
+      <td class="editable-cell"><div class="rate-edit"><span>Tasa</span><input class="percent-input" type="text" value="${pctInput(x.tasa)}" title="Tasa anual simulada" aria-label="Tasa anual simulada de ${x.nombre}" onchange="instrumentos[${i}].tasa=parsePct(this.value); calcular();"></div></td>
+      <td>${x.comentario}</td>
+    </tr>`).join("");
+  document.getElementById("tablaInstrumentos").innerHTML=`<tr><th>Instrumento</th><th>Objetivo</th><th>Horizonte</th><th>Liquidez</th><th>Riesgo</th><th>Tasa anual simulada editable</th><th>Comentario didáctico</th></tr>${rows}`;
+}
+
+function instrumentSelect(value, row, prop){
+  return `<select onchange="supuestos[${row}].${prop}=this.value; calcular();">${instrumentos.map(i=>`<option ${i.nombre===value?"selected":""}>${i.nombre}</option>`).join("")}</select>`;
+}
+function renderSupuestos(){
+  const rows=supuestos.map((s,i)=>`
+    <tr>
+      <td><input type="number" step="0.01" value="${s.desde}" onchange="supuestos[${i}].desde=parseFloat(this.value)||0; calcular();"></td>
+      <td><input type="number" step="0.01" value="${s.hasta}" onchange="supuestos[${i}].hasta=parseFloat(this.value)||0; calcular();"></td>
+      <td><input value="${s.etapa}" onchange="supuestos[${i}].etapa=this.value; calcular();"></td>
+      <td><input type="number" value="${s.ingreso}" onchange="supuestos[${i}].ingreso=parseFloat(this.value)||0; calcular();"></td>
+      <td><input class="percent-input" type="text" value="${pctInput(s.ahorro)}" onchange="supuestos[${i}].ahorro=parsePct(this.value); calcular();"></td>
+      <td><input class="percent-input" type="text" value="${pctInput(s.liq)}" onchange="supuestos[${i}].liq=parsePct(this.value); calcular();"></td>
+      <td><input class="percent-input" type="text" value="${pctInput(s.med)}" onchange="supuestos[${i}].med=parsePct(this.value); calcular();"></td>
+      <td><input class="percent-input" type="text" value="${pctInput(s.largo)}" onchange="supuestos[${i}].largo=parsePct(this.value); calcular();"></td>
+      <td>${instrumentSelect(s.instLiq,i,"instLiq")}</td>
+      <td>${instrumentSelect(s.instMed,i,"instMed")}</td>
+      <td>${instrumentSelect(s.instLargo,i,"instLargo")}</td>
+      <td class="num">${pct(tasa(s.instLiq))}</td>
+      <td class="num">${pct(tasa(s.instMed))}</td>
+      <td class="num">${pct(tasa(s.instLargo))}</td>
+      <td>${Math.abs((s.liq+s.med+s.largo)-1)<.002 || s.ahorro===0 ? '<span class="good">OK</span>' : '<span class="bad">Revisar</span>'}</td>
+    </tr>`).join("");
+  document.getElementById("tablaSupuestos").innerHTML=`<tr><th>Desde</th><th>Hasta</th><th>Etapa</th><th>Ingreso mensual</th><th>% ahorro</th><th>% liquidez</th><th>% mediano</th><th>% largo</th><th>Inst. liquidez</th><th>Inst. mediano</th><th>Inst. largo</th><th class="num">Tasa liquidez</th><th class="num">Tasa mediano</th><th class="num">Tasa largo</th><th>Revisión</th></tr>${rows}`;
+}
+
+function simular(){
+  let saldoL=0, saldoM=0, saldoG=0;
+  const data=[];
+  const edadInicial=17, edadFinal=65;
+  const meses=(edadFinal-edadInicial)*12+1;
+  for(let m=1;m<=meses;m++){
+    const edad=edadInicial+(m-1)/12;
+    const s=etapaEdad(edad);
+    const ahorro=s.ingreso*s.ahorro;
+    const depL=ahorro*s.liq, depM=ahorro*s.med, depG=ahorro*s.largo;
+    saldoL=(saldoL+depL)*(1+tasa(s.instLiq)/12);
+    saldoM=(saldoM+depM)*(1+tasa(s.instMed)/12);
+    saldoG=(saldoG+depG)*(1+tasa(s.instLargo)/12);
+    data.push({mes:m, edad, etapa:s.etapa, ingreso:s.ingreso, ahorro, saldoL, saldoM, saldoG, total:saldoL+saldoM+saldoG, inst:`${s.instLiq} / ${s.instMed} / ${s.instLargo}`});
+  }
+  return data;
+}
+
+function renderResumen(data){
+  const edades=[18,24,27,35,40,45,55,65];
+  const rows=edades.map(e=>{
+    let row=data.filter(x=>x.edad<=e).pop() || data[0];
+    const emergencia=row.ingreso*.8*3;
+    return `<tr><td class="num">${e}</td><td class="num">${money(row.ingreso)}</td><td class="num">${money(row.ahorro)}</td><td class="num">${money(row.saldoL)}</td><td class="num">${money(row.saldoM)}</td><td class="num">${money(row.saldoG)}</td><td class="num"><strong>${money(row.total)}</strong></td><td>${row.saldoL>=emergencia?'<span class="good">Cubierto</span>':'En construcción'}</td></tr>`;
+  }).join("");
+  document.getElementById("tablaResumen").innerHTML=`<tr><th class="num">Edad</th><th class="num">Ingreso</th><th class="num">Ahorro mensual</th><th class="num">Liquidez</th><th class="num">Mediano plazo</th><th class="num">Largo plazo</th><th class="num">Patrimonio total</th><th>Estado liquidez</th></tr>${rows}`;
+}
+
+function drawChart(data){
+  const ages=[18,24,27,35,40,45,55,65];
+  const points=ages.map(e=>data.filter(x=>x.edad<=e).pop()||data[0]);
+  const w=760,h=270,pad=46;
+  const max=Math.max(...points.map(p=>p.total))*1.08;
+  const x=(i)=>pad+i*((w-pad*2)/(points.length-1));
+  const y=(v)=>h-pad-(v/max)*(h-pad*2);
+  const poly=points.map((p,i)=>`${x(i)},${y(p.total)}`).join(" ");
+  let circles=points.map((p,i)=>`<circle cx="${x(i)}" cy="${y(p.total)}" r="4" fill="#1d4ed8"><title>${Math.round(p.edad)} años: ${money(p.total)}</title></circle>`).join("");
+  let labels=points.map((p,i)=>`<text x="${x(i)}" y="${h-18}" text-anchor="middle" font-size="11">${ages[i]}</text>`).join("");
+  let yLabels=[0,.25,.5,.75,1].map(t=>{
+    const val=max*t;
+    return `<line x1="${pad}" x2="${w-pad}" y1="${y(val)}" y2="${y(val)}" stroke="#e5e7eb"/><text x="${pad-8}" y="${y(val)+4}" text-anchor="end" font-size="10">${money(val).replace(".00","")}</text>`;
+  }).join("");
+  document.getElementById("chart").innerHTML=`<svg viewBox="0 0 ${w} ${h}" width="100%" height="100%">${yLabels}<polyline points="${poly}" fill="none" stroke="#1d4ed8" stroke-width="3"/>${circles}${labels}<text x="${w/2}" y="16" text-anchor="middle" font-size="13" font-weight="bold">Patrimonio total proyectado</text></svg>`;
+}
+
+function renderCapital(){
+  const cap=parseFloat(document.getElementById("capInicial").value)||0;
+  const edad=parseFloat(document.getElementById("capEdad").value)||40;
+  const inst=document.getElementById("capInstrumento").value;
+  const dep=parseFloat(document.getElementById("capDeposito").value)||0;
+  const anios=parseFloat(document.getElementById("capAnios").value)||0;
+  const t=tasa(inst);
+  const vf=valorFuturo(cap,dep,t,anios);
+  const gan=vf-cap-dep*anios*12;
+  document.getElementById("capTasa").innerText=pct(t);
+  document.getElementById("capVF").innerText=money(vf);
+  document.getElementById("capGanancia").innerText=money(gan);
+  document.getElementById("capEdadFinal").innerText=(edad+anios).toFixed(0)+" años";
+  const quick=[["10","BONDES F"],["10","UDIBONOS"],["10","Bonos M"],["15","BONDES F"],["15","UDIBONOS"],["15","Bonos M"]];
+  const rows=quick.map(q=>{
+    const a=parseFloat(q[0]), tt=tasa(q[1]), out=valorFuturo(cap,0,tt,a);
+    return `<tr><td class="num">${a}</td><td>${q[1]}</td><td class="num">${pct(tt)}</td><td class="num">${money(out)}</td><td class="num">${money(out-cap)}</td><td class="num">${edad+a}</td></tr>`;
+  }).join("");
+  document.getElementById("tablaCapital").innerHTML=`<tr><th class="num">Años</th><th>Instrumento</th><th class="num">Tasa</th><th class="num">Valor futuro</th><th class="num">Rendimiento</th><th class="num">Edad final</th></tr>${rows}`;
+}
+function renderMeta(){
+  const nombre=document.getElementById("metaNombre").value;
+  const monto=parseFloat(document.getElementById("metaMonto").value)||0;
+  const inicial=parseFloat(document.getElementById("metaInicial").value)||0;
+  const anios=parseFloat(document.getElementById("metaAnios").value)||0;
+  const inst=document.getElementById("metaInstrumento").value;
+  const i=tasa(inst)/12, n=anios*12;
+  let pago=0;
+  if(n>0){
+    if(i===0) pago=(monto-inicial)/n;
+    else pago=(monto-inicial*Math.pow(1+i,n))*(i/(Math.pow(1+i,n)-1));
+  }
+  document.getElementById("metaOutNombre").innerText=nombre;
+  document.getElementById("metaOutTasa").innerText=pct(tasa(inst));
+  document.getElementById("metaOutPago").innerText=money(Math.max(0,pago));
+  document.getElementById("metaOutPlazo").innerText=anios+" años";
+}
+
+function calcular(){
+  renderInstrumentos();
+  renderSupuestos();
+  renderSelectOptionsPreserve();
+  const data=simular();
+  document.getElementById("kpiEdad").innerText="17";
+  document.getElementById("kpiIngreso").innerText=money(supuestos[0].ingreso);
+  document.getElementById("kpiAhorro").innerText=money(supuestos[0].ingreso*supuestos[0].ahorro);
+  document.getElementById("kpiEmergencia").innerText=money(supuestos[0].ingreso*.8*3);
+  renderResumen(data);
+  drawChart(data);
+  renderCapital();
+  renderMeta();
+}
+function renderSelectOptionsPreserve(){
+  const oldCap=document.getElementById("capInstrumento").value || "Bonos M";
+  const oldMeta=document.getElementById("metaInstrumento").value || "CETES 91/182/364 días";
+  const opts=instrumentos.map(i=>`<option value="${i.nombre}">${i.nombre}</option>`).join("");
+  document.getElementById("capInstrumento").innerHTML=opts;
+  document.getElementById("metaInstrumento").innerHTML=opts;
+  document.getElementById("capInstrumento").value=oldCap;
+  document.getElementById("metaInstrumento").value=oldMeta;
+}
+function guardar(){
+  localStorage.setItem("regaloFinanciero", JSON.stringify({instrumentos,supuestos}));
+  alert("Listo. Tus cambios quedaron guardados en este dispositivo.");
+}
+function cargar(){
+  const raw=localStorage.getItem("regaloFinanciero");
+  if(!raw){alert("No hay cambios guardados todavía."); return;}
+  const obj=JSON.parse(raw);
+  instrumentos=obj.instrumentos||instrumentosDefault;
+  supuestos=obj.supuestos||supuestosDefault;
+  calcular();
+}
+function restaurar(){
+  if(confirm("¿Restaurar el ejemplo original?")){
+    instrumentos=JSON.parse(JSON.stringify(instrumentosDefault));
+    supuestos=JSON.parse(JSON.stringify(supuestosDefault));
+    calcular();
+  }
+}
+renderSelectOptions();
+calcular();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(() => console.log('Simulador listo para uso sin conexión después de la primera carga.'))
+      .catch((err) => console.log('No se pudo registrar el modo sin conexión:', err));
+  });
+}
+</script>
+</body>
+</html>
