@@ -3,463 +3,482 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Regalo financiero | Simulador para bachillerato</title>
-<style>
-  :root{
-    --bg:#f6f7fb; --card:#ffffff; --ink:#172033; --muted:#5b6475; --brand:#0f766e;
-    --brand2:#1d4ed8; --soft:#e9f5f3; --warn:#fff3c4; --line:#d7dde8;
-    --good:#166534; --bad:#b91c1c; --shadow:0 12px 30px rgba(15,23,42,.10);
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:linear-gradient(180deg,#e9f5f3, #f6f7fb 28%);font-family:Arial, Helvetica, sans-serif;color:var(--ink)}
-  header{padding:28px 18px 18px;text-align:center}
-  header h1{margin:0 auto 8px;font-size:clamp(1.6rem,3.2vw,2.8rem);max-width:1100px}
-  header p{margin:.35rem auto;color:var(--muted);max-width:920px;line-height:1.45}
-  .badge{display:inline-block;background:#0f172a;color:#fff;border-radius:999px;padding:6px 12px;font-size:.86rem;margin-bottom:12px}
-  main{max-width:1180px;margin:0 auto;padding:12px 16px 44px}
-  nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0 22px}
-  nav a{color:#0f172a;text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 12px;box-shadow:0 2px 8px rgba(15,23,42,.06)}
-  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-  .card{grid-column:span 12;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
-  .half{grid-column:span 6}
-  .third{grid-column:span 4}
-  .two-third{grid-column:span 8}
-  @media(max-width:800px){.half,.third,.two-third{grid-column:span 12} table{font-size:12px} .table-wrap{overflow:auto}}
-  h2{margin:0 0 12px;font-size:1.25rem}
-  h3{margin:14px 0 8px;font-size:1rem}
-  .note{background:var(--warn);border-left:5px solid #f59e0b;padding:12px;border-radius:12px;color:#4b3b0b;line-height:1.45}
-  .soft{background:var(--soft);border-left:5px solid var(--brand);padding:12px;border-radius:12px;color:#153832;line-height:1.45}
-  label{display:block;font-size:.88rem;color:var(--muted);margin:10px 0 4px}
-  input,select{width:100%;border:1px solid var(--line);border-radius:10px;padding:8px;background:#fff;color:var(--ink)}
-  input[type="number"]{text-align:right}
-  .percent-input{text-align:right}
-  button{border:0;border-radius:999px;padding:10px 14px;background:var(--brand);color:#fff;font-weight:bold;cursor:pointer}
-  button.secondary{background:#0f172a}
-  button.ghost{background:#fff;color:#0f172a;border:1px solid var(--line)}
-  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  @media(max-width:800px){.kpis{grid-template-columns:repeat(2,1fr)}}
-  .kpi{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:12px}
-  .kpi small{display:block;color:var(--muted);font-size:.78rem}
-  .kpi strong{display:block;margin-top:4px;font-size:1.1rem}
-  table{border-collapse:collapse;width:100%}
-  th,td{border:1px solid var(--line);padding:8px;vertical-align:top}
-  th{background:#0f172a;color:#fff;text-align:left}
-  td.num, th.num{text-align:right}
-  tr:nth-child(even) td{background:#fbfdff}
-  .mini{font-size:.86rem;color:var(--muted);line-height:1.45}
-  .pill{display:inline-block;border-radius:999px;padding:3px 8px;font-size:.78rem;background:#e0f2fe;color:#075985}
-  .good{color:var(--good);font-weight:bold}
-  .bad{color:var(--bad);font-weight:bold}
-  .chartbox{height:330px;border:1px dashed var(--line);border-radius:14px;background:#fff;padding:8px}
-  svg text{font-family:Arial, Helvetica, sans-serif}
-  footer{font-size:.82rem;color:var(--muted);text-align:center;max-width:1000px;margin:20px auto 0;line-height:1.45}
-  .editable-cell input,.editable-cell select{min-width:92px}
-  .small-input{max-width:110px}
-  .source-list li{margin:.35rem 0}
-  .rate-edit{display:flex;align-items:center;gap:6px;min-width:120px}
-  .rate-edit span{font-size:.78rem;color:var(--muted);font-weight:bold}
-  .rate-edit input{min-width:80px}
-  @media print{
-    body{background:#fff}
-    nav,.actions{display:none}
-    .card{box-shadow:none;break-inside:avoid}
-  }
-</style>
-
-<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0f766e">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Regalo financiero">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="apple-touch-icon" href="icon-192.png">
+<title>Regalo financiero | Simulador por etapas</title>
+
+<style>
+:root{
+  --bg:#f6f7fb; --card:#ffffff; --ink:#0f172a; --muted:#5b6475; --brand:#0f766e; --brand2:#14b8a6;
+  --soft:#e8f7f4; --line:#dbe2ee; --dark:#0b1020; --good:#166534; --warn:#92400e; --bad:#991b1b;
+  --accent:#fffbeb; --shadow:0 14px 35px rgba(15,23,42,.10); --r:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,#eef9f7 0,#f7f8fc 22%,#f7f8fc 100%);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+header{padding:28px 18px 18px;text-align:center;background:radial-gradient(circle at top left,#dff7ef,#f6f7fb 58%)}
+.brandline{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-weight:700;color:#334155;box-shadow:0 2px 10px rgba(15,23,42,.05)}
+.badge{display:inline-block;background:var(--brand);color:white;border-radius:999px;padding:6px 12px;font-size:.85rem;font-weight:700}
+h1{margin:14px auto 8px;font-size:clamp(1.7rem,4vw,3.2rem);line-height:1.05;max-width:900px}
+header p{max-width:850px;margin:8px auto;color:var(--muted);font-size:1.05rem;line-height:1.5}
+.author{font-weight:800;color:#0f172a;margin-top:10px;font-size:.95rem;letter-spacing:.02em}
+main{max-width:1160px;margin:0 auto;padding:14px 16px 54px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px}.full{grid-column:span 12}.half{grid-column:span 6}.third{grid-column:span 4}.twoThird{grid-column:span 8}
+@media(max-width:880px){.half,.third,.twoThird{grid-column:span 12} main{padding:10px 10px 44px}.card{padding:14px;border-radius:18px}}
+nav.sticky{position:sticky;top:0;z-index:10;background:rgba(246,247,251,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:10px 8px;margin:0 -8px 12px}.tabs{display:flex;gap:8px;overflow:auto;padding:4px}.tab{white-space:nowrap;border:1px solid var(--line);background:#fff;color:#0f172a;border-radius:999px;padding:10px 13px;font-weight:700;cursor:pointer}.tab.active{background:var(--dark);color:#fff;border-color:var(--dark)}.tab.small{font-size:.9rem}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0}.btn{appearance:none;border:0;border-radius:999px;padding:11px 16px;font-weight:800;cursor:pointer;background:var(--brand);color:#fff;box-shadow:0 5px 14px rgba(15,118,110,.18)}.btn.secondary{background:#fff;color:#0f172a;border:1px solid var(--line);box-shadow:none}.btn.dark{background:var(--dark)}.btn.ghost{background:transparent;color:var(--brand);border:1px solid var(--brand);box-shadow:none}.btn:focus,.tab:focus,input:focus,select:focus{outline:3px solid rgba(20,184,166,.28);outline-offset:2px}.note{background:var(--soft);border-left:6px solid var(--brand);border-radius:14px;padding:12px 14px;color:#134e4a;line-height:1.45}.warn{background:#fff7ed;border-left-color:#f59e0b;color:#7c2d12}.tiny{font-size:.86rem;color:var(--muted);line-height:1.45}.muted{color:var(--muted)}.center{text-align:center}.hide{display:none!important}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}.kpi{border:1px solid var(--line);border-radius:16px;padding:12px;background:#fff}.kpi .label{font-size:.78rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em}.kpi .val{font-size:1.25rem;font-weight:900;margin-top:4px}.kpi.highlight{background:#effdf9;border-color:#99f6e4}.kpi.warning{background:#fff7ed;border-color:#fed7aa}@media(max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}.kpi .val{font-size:1.05rem}}
+.stageHero{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:stretch}.stageTitle{font-size:clamp(1.4rem,3vw,2.2rem);margin:0 0 6px}.stageAge{font-size:1rem;color:#0f766e;font-weight:900}.stageMsg{font-size:1.05rem;line-height:1.55;color:#334155}.moneySplit{display:grid;gap:10px}.split{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:11px 12px;border-radius:14px;background:#f8fafc;border:1px solid var(--line)}.split strong{font-size:1.05rem}.split .pill{border-radius:999px;padding:5px 9px;background:#e2e8f0;font-weight:800;color:#334155;font-size:.8rem}.split.liq{background:#eff6ff}.split.mid{background:#f5f3ff}.split.long{background:#ecfdf5}.visual{background:linear-gradient(135deg,#0f766e,#14b8a6);border-radius:20px;padding:18px;color:white;display:flex;flex-direction:column;justify-content:space-between;min-height:260px}.visual .big{font-size:2rem;font-weight:900}.visual .sub{opacity:.95;line-height:1.4}.progressWrap{height:14px;background:rgba(255,255,255,.28);border-radius:999px;overflow:hidden}.progress{height:100%;background:#fff;border-radius:999px;width:0}.status{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:8px 10px;font-weight:900;background:#fff;color:#0f766e;margin-top:8px}.status.build{color:#92400e}.status.cover{color:#166534}@media(max-width:980px){.stageHero{grid-template-columns:1fr}.visual{min-height:200px}}
+.stepControls{display:flex;justify-content:space-between;gap:10px;margin-top:14px}.stepControls .btn{min-width:130px}.modeSwitch{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.toggle{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px;display:inline-flex;gap:4px}.toggle button{border:0;background:transparent;border-radius:999px;padding:8px 12px;font-weight:800;cursor:pointer}.toggle button.active{background:var(--brand);color:#fff}.formgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.field label{display:block;font-size:.78rem;color:var(--muted);font-weight:800;margin-bottom:5px}.field input,.field select{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff;color:#111827;font-size:1rem}.field input[type=number]{appearance:textfield}@media(max-width:900px){.formgrid{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.formgrid{grid-template-columns:1fr}.stepControls{flex-direction:column}.stepControls .btn{width:100%}}
+.helpGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.help{border:1px solid var(--line);background:#fff;border-radius:16px;padding:12px}.help h4{margin:0 0 4px}.help p{margin:0;color:var(--muted);line-height:1.4}@media(max-width:900px){.helpGrid{grid-template-columns:1fr}}
+.tableWrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:#fff}table{border-collapse:collapse;width:100%;min-width:780px}th{background:#0b1020;color:#fff;text-align:left;padding:11px;font-size:.9rem}td{padding:10px 11px;border-bottom:1px solid var(--line);white-space:nowrap}td.money,th.money{text-align:right}tr:nth-child(even) td{background:#f8fafc}.good{color:var(--good);font-weight:900}.bad{color:var(--bad);font-weight:900}.chartBox{height:330px;border:1px dashed #cbd5e1;border-radius:18px;padding:10px;background:#fff}canvas{width:100%;height:100%}
+details{border:1px solid var(--line);border-radius:16px;padding:12px;background:#fff}details+details{margin-top:8px}summary{cursor:pointer;font-weight:900}.miniLink{color:#0f766e;font-weight:900;text-decoration:none}.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#0b1020;color:#fff;padding:12px 16px;border-radius:999px;box-shadow:var(--shadow);font-weight:800;z-index:20;opacity:0;pointer-events:none;transition:.25s}.toast.show{opacity:1}.footer{margin-top:22px;text-align:center;color:#64748b;font-size:.88rem;line-height:1.5}.editCallout{background:linear-gradient(135deg,#ecfeff,#f0fdf4);border:1px solid #99f6e4;border-radius:18px;padding:14px;margin:14px 0;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}.editCallout strong{display:block;font-size:1.05rem}.editCallout span{color:var(--muted);font-size:.92rem;line-height:1.35}.editIcon{font-size:1.7rem}.quickEdit{border:2px solid #0f766e;background:#f0fdfa}.quickEdit h3{margin-top:0}.printOnly{display:none}@media print{nav.sticky,.actions,.stepControls,.btn,.toggle{display:none!important}.card{box-shadow:none;break-inside:avoid}.printOnly{display:block}.hide{display:block!important}}
+
+.bridgePanel{margin-top:14px;border:2px solid #d9f99d;background:linear-gradient(135deg,#f7fee7,#ecfeff);border-radius:18px;padding:14px}.bridgePanel h3{margin:0 0 6px}.bridgeGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}.bridgeMini{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}.bridgeMini .label{font-size:.75rem;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.04em}.bridgeMini .val{font-size:1.05rem;font-weight:900;margin-top:4px}.bridgeControls{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px}.inputHint{font-size:.78rem;color:#0f766e;font-weight:800;margin-top:4px}.field input.editing,.bridgeControls input.editing{border-color:#0f766e;box-shadow:0 0 0 3px rgba(15,118,110,.12)}
+@media(max-width:900px){.bridgeGrid,.bridgeControls{grid-template-columns:1fr 1fr}}@media(max-width:520px){.bridgeGrid,.bridgeControls{grid-template-columns:1fr}}
+
+</style>
 </head>
 <body>
 <header>
-  <span class="badge">Regalo financiero · funciona sin internet</span>
-  <h1>Simulador financiero para estudiantes de bachillerato</h1>
-  <p class="mini"><strong>MATERIA MAT. APLICADA A LAS FINANZAS By MTRA. ADRIANA ARROYO G, V1</strong></p>
-  <p>Aprende a separar liquidez, fondo de amortización e inversión de largo plazo. Modifica ingresos, porcentajes, tasas e instrumentos para comparar escenarios.</p>
-  <p class="mini">Modelo educativo. No sustituye asesoría financiera personalizada.</p>
+  <div class="brandline">🎁 Regalo financiero · Simulador offline</div>
+  <h1>Tu plan financiero por etapas de vida</h1>
+  <p>Recorre paso a paso cómo una persona puede pasar de una mesada a un plan de ahorro, liquidez e inversión de largo plazo. Puedes cambiar ingresos, porcentajes, instrumentos y tasas.</p>
+  <div class="author">MATERIA MAT. APLICADA A LAS FINANZAS · By MTRA. ADRIANA ARROYO G · V6</div>
 </header>
 <main>
-<nav>
-  <a href="#dashboard">Dashboard</a>
-  <a href="#supuestos">Supuestos</a>
-  <a href="#instrumentos">Instrumentos</a>
-  <a href="#capital">Capital a los 40</a>
-  <a href="#meta">Meta personal</a>
-  <a href="#fuentes">Fuentes</a>
-</nav>
+  <nav class="sticky">
+    <div class="tabs" id="tabs"></div>
+  </nav>
 
-<section id="dashboard" class="grid">
-  <div class="card">
-    <h2>Dashboard del plan</h2>
-    <div class="kpis">
-      <div class="kpi"><small>Edad inicial</small><strong id="kpiEdad">17</strong></div>
-      <div class="kpi"><small>Ingreso inicial</small><strong id="kpiIngreso">$3,000</strong></div>
-      <div class="kpi"><small>Ahorro inicial mensual</small><strong id="kpiAhorro">$600</strong></div>
-      <div class="kpi"><small>Meta de emergencia inicial</small><strong id="kpiEmergencia">$7,200</strong></div>
+  <section id="welcome" class="grid view">
+    <div class="card twoThird">
+      <span class="badge">Modo recorrido</span>
+      <h2>Primero entiende la historia, luego revisa los números.</h2>
+      <p class="stageMsg">Este simulador está dividido por edades para que no tengas que interpretar una tabla enorme desde el inicio. En cada etapa verás cuánto ingresa, cuánto ahorra, cómo divide su ahorro y qué instrumento podría usar según el horizonte.</p>
+      <div class="note"><strong>Idea clave:</strong> al principio el ahorro parece pequeño. Lo poderoso aparece cuando el hábito se sostiene, los ingresos suben y el capital acumulado se invierte mejor.</div>
+      <div class="actions">
+        <button class="btn" onclick="goStage(0)">Empezar recorrido</button>
+        <button class="btn dark" onclick="personalizePlan()">Personalizar mi plan</button>
+        <button class="btn secondary" onclick="showView('summary')">Ver resumen completo</button>
+        <button class="btn ghost" onclick="showView('help')">Ver conceptos rápidos</button>
+      </div>
+      <div class="editCallout">
+        <div><strong>¿Quieres cambiar los datos?</strong><span>Usa <b>Personalizar mi plan</b> para editar cantidades, porcentajes, instrumentos y tasas por etapa.</span></div>
+        <button class="btn" onclick="personalizePlan()">Personalizar mi plan</button>
+      </div>
     </div>
-    <h3>Resumen por edades clave</h3>
-    <div class="table-wrap"><table id="tablaResumen"></table></div>
-  </div>
-  <div class="card two-third">
-    <h2>Crecimiento del patrimonio</h2>
-    <div class="chartbox" id="chart"></div>
-  </div>
-  <div class="card third">
-    <h2>Idea clave</h2>
-    <div class="soft">
-      Al principio el ahorro parece pequeño. Lo poderoso aparece cuando el hábito se sostiene, los ingresos suben y el capital acumulado se invierte mejor.
+    <div class="card third">
+      <h3>¿Cómo usarlo?</h3>
+      <p class="tiny">1. Recorre las etapas con los botones.</p>
+      <p class="tiny">2. Si quieres usar tus propios datos, toca <strong>Personalizar mi plan</strong>.</p>
+      <p class="tiny">3. Cambia ingreso, ahorro, instrumentos o tasas.</p>
+      <p class="tiny">4. Observa cómo cambia el patrimonio proyectado y guarda tu escenario.</p>
+      <div class="note warn"><strong>Importante:</strong> es una simulación educativa, no una recomendación financiera personalizada.</div>
     </div>
-    <p class="mini">Tip de clase: pide a tus estudiantes cambiar una sola variable: tasa, depósito mensual o edad de inicio. Luego comparen qué variable tuvo mayor impacto.</p>
-  </div>
-</section>
+  </section>
 
-<section id="supuestos" class="grid">
-  <div class="card">
-    <h2>Supuestos por etapa</h2>
-    <p class="mini">Puedes cambiar ingresos, porcentaje de ahorro, distribución e instrumentos. Las columnas de tasa se muestran con la palabra <strong>tasa</strong> para que el alumno identifique qué rendimiento se está usando. Ahora los porcentajes se capturan tal cual: por ejemplo, escribe <strong>20%</strong> o <strong>20</strong>, no 0.20. El simulador recalcula automáticamente.</p>
-    <div class="actions">
-      <button onclick="calcular()">Recalcular</button>
-      <button class="secondary" onclick="guardar()">Guardar en este dispositivo</button>
-      <button class="ghost" onclick="cargar()">Cargar guardado</button>
-      <button class="ghost" onclick="restaurar()">Restaurar ejemplo</button>
-    </div>
-    <div class="table-wrap" style="margin-top:12px"><table id="tablaSupuestos"></table></div>
-  </div>
-</section>
+  <section id="stage" class="grid view hide">
+    <div class="card full">
+      <div class="modeSwitch">
+        <span class="badge" id="stageBadge">Etapa</span>
+        <div class="toggle" aria-label="Cambiar modo">
+          <button id="simpleBtn" class="active" onclick="setMode('simple')">Simple</button>
+          <button id="completeBtn" onclick="setMode('complete')">Completo</button>
+        </div>
+        <button class="btn dark" onclick="setMode('complete')">Personalizar esta etapa</button>
+        <button class="btn secondary" onclick="saveState()">Guardar en este dispositivo</button>
+        <button class="btn secondary" onclick="loadState()">Cargar guardado</button>
+        <button class="btn secondary" onclick="resetAll()">Restaurar ejemplo</button>
+      </div>
+      <div class="stageHero">
+        <div>
+          <div class="stageAge" id="stageAge"></div>
+          <h2 class="stageTitle" id="stageTitle"></h2>
+          <p class="stageMsg" id="stageText"></p>
+          <div class="kpis">
+            <div class="kpi"><div class="label">Ingreso mensual</div><div class="val" id="kpiIncome"></div></div>
+            <div class="kpi highlight"><div class="label">Ahorro mensual</div><div class="val" id="kpiSave"></div></div>
+            <div class="kpi"><div class="label">Al final de etapa</div><div class="val" id="kpiEndTotal"></div></div>
+            <div class="kpi"><div class="label">Liquidez</div><div class="val" id="kpiStatus"></div></div>
+          </div>
+          <h3>¿A dónde se va el ahorro mensual?</h3>
+          <div class="moneySplit" id="moneySplit"></div>
+          <div id="simpleEditCallout" class="editCallout">
+            <div><strong>¿Quieres probar tu propio escenario?</strong><span>Cambia ingreso, ahorro mensual, porcentajes, instrumentos y tasas de esta etapa.</span></div>
+            <button class="btn" onclick="setMode('complete')">Personalizar esta etapa</button>
+          </div>
+          <div class="note" id="stageTip"></div>
+          <div id="bridgePanel" class="bridgePanel"></div>
+        </div>
+        <div class="visual">
+          <div>
+            <div class="sub">Meta de liquidez sugerida</div>
+            <div class="big" id="visualTarget"></div>
+            <div class="sub">Equivale a 3 meses de gastos estimados en esta etapa.</div>
+          </div>
+          <div>
+            <div class="progressWrap"><div class="progress" id="liqProgress"></div></div>
+            <div class="status" id="visualStatus"></div>
+          </div>
+        </div>
+      </div>
 
-<section id="instrumentos" class="grid">
-  <div class="card">
-    <h2>Instrumentos disponibles</h2>
-    <p class="mini">Las columnas de <strong>tasa</strong> son editables. Las tasas son de simulación y se pueden capturar como porcentaje: por ejemplo, <strong>6.5%</strong> o <strong>6.5</strong>. En la vida real cambian con el mercado, inflación, plazo, impuestos y condiciones de cada institución.</p>
-    <div class="table-wrap"><table id="tablaInstrumentos"></table></div>
-  </div>
-</section>
-
-<section id="capital" class="grid">
-  <div class="card half">
-    <h2>Escenario: capital acumulado a los 40</h2>
-    <div class="note">
-      La idea no es “arriesgar más”, sino invertir a mayor escala con riesgo bajo y controlado: revisar plazo, liquidez, garantía, inflación, impuestos y necesidad real de usar ese dinero.
+      <div id="completePanel" class="hide">
+        <div class="quickEdit card" style="box-shadow:none;margin-top:14px">
+        <h3>Personalizar mi plan: datos de esta etapa</h3>
+        <p class="tiny">Aquí sí puedes cambiar cantidades, porcentajes, instrumentos y tasas. Puedes escribir porcentajes como <strong>20%</strong> o como <strong>20</strong>. Las columnas de tasa están marcadas con la palabra <strong>Tasa</strong>.</p>
+        <div class="formgrid" id="stageForm"></div>
+        <div class="tiny" id="reviewMsg"></div>
+        <div class="actions"><button class="btn secondary" onclick="setMode('simple')">Volver a vista simple</button><button class="btn" onclick="showView('summary')">Ver resultado en resumen</button></div>
+        </div>
+      </div>
+      <div class="stepControls">
+        <button class="btn secondary" onclick="prevStage()">← Anterior</button>
+        <button class="btn" onclick="nextStage()">Siguiente →</button>
+      </div>
     </div>
-    <label>Capital inicial</label>
-    <input id="capInicial" type="number" value="450000">
-    <label>Edad de inicio</label>
-    <input id="capEdad" type="number" value="40">
-    <label>Instrumento elegido</label>
-    <select id="capInstrumento"></select>
-    <label>Depósito adicional mensual</label>
-    <input id="capDeposito" type="number" value="0">
-    <label>Horizonte personalizado en años</label>
-    <input id="capAnios" type="number" value="15">
-    <div class="actions"><button onclick="calcular()">Calcular capital</button></div>
-  </div>
-  <div class="card half">
-    <h2>Resultado mayor escala</h2>
-    <div class="kpis">
-      <div class="kpi"><small>Tasa anual</small><strong id="capTasa">-</strong></div>
-      <div class="kpi"><small>Valor futuro</small><strong id="capVF">-</strong></div>
-      <div class="kpi"><small>Rendimiento generado</small><strong id="capGanancia">-</strong></div>
-      <div class="kpi"><small>Edad final</small><strong id="capEdadFinal">-</strong></div>
-    </div>
-    <h3>Comparación rápida</h3>
-    <div class="table-wrap"><table id="tablaCapital"></table></div>
-  </div>
-</section>
+  </section>
 
-<section id="meta" class="grid">
-  <div class="card half">
-    <h2>Calculadora de meta personal</h2>
-    <label>Nombre de la meta</label>
-    <input id="metaNombre" value="Laptop / curso / viaje académico">
-    <label>Monto objetivo</label>
-    <input id="metaMonto" type="number" value="18000">
-    <label>Ahorro inicial</label>
-    <input id="metaInicial" type="number" value="0">
-    <label>Años para lograrla</label>
-    <input id="metaAnios" type="number" value="1.5" step="0.1">
-    <label>Instrumento</label>
-    <select id="metaInstrumento"></select>
-    <div class="actions"><button onclick="calcular()">Calcular depósito</button></div>
-  </div>
-  <div class="card half">
-    <h2>Depósito mensual requerido</h2>
-    <div class="kpis">
-      <div class="kpi"><small>Meta</small><strong id="metaOutNombre">-</strong></div>
-      <div class="kpi"><small>Tasa anual</small><strong id="metaOutTasa">-</strong></div>
-      <div class="kpi"><small>Depósito mensual</small><strong id="metaOutPago">-</strong></div>
-      <div class="kpi"><small>Plazo</small><strong id="metaOutPlazo">-</strong></div>
+  <section id="summary" class="grid view hide">
+    <div class="card full">
+      <span class="badge">Resumen final</span>
+      <h2>Tabla general del plan</h2>
+      <p class="tiny">Esta tabla aparece al final porque resume todo el recorrido. La columna <strong>Patrimonio total</strong> es la que se muestra en la gráfica.</p>
+      <div class="tableWrap"><table id="summaryTable"></table></div>
+      <h3>Decisiones entre etapas</h3>
+      <p class="tiny">Aquí se muestra si decidiste usar una parte del capital para una meta o mover una parte hacia largo plazo al cambiar de etapa.</p>
+      <div class="tableWrap"><table id="decisionTable"></table></div>
     </div>
-    <p class="mini">Pregunta de reflexión: ¿qué conviene más, aumentar el depósito mensual o alargar demasiado el plazo?</p>
-  </div>
-</section>
+    <div class="card twoThird">
+      <h2>Crecimiento del patrimonio</h2>
+      <p class="tiny">La gráfica usa la columna <strong>Patrimonio total</strong> de la tabla superior.</p>
+      <div class="chartBox"><canvas id="chart"></canvas></div>
+    </div>
+    <div class="card third">
+      <h2>Idea clave</h2>
+      <div class="note">Al principio el ahorro crece lento. Después, el ingreso sube, los depósitos aumentan y el interés compuesto empieza a notarse más.</div>
+      <p class="tiny">Tip de clase: cambia una sola variable, por ejemplo la tasa anual o el porcentaje de ahorro. Luego observa cuál cambio tuvo mayor impacto.</p>
+      <div class="actions"><button class="btn" onclick="showView('capital')">Ver escenario de capital a los 40</button><button class="btn secondary" onclick="personalizePlan()">Personalizar mi plan</button></div>
+    </div>
+  </section>
 
-<section id="fuentes" class="grid">
-  <div class="card">
-    <h2>Fuentes para actualizar y conversar en clase</h2>
-    <ul class="source-list">
-      <li>Banco de México: tasas de CETES y mercado de valores. https://www.banxico.org.mx/tipcamb/llenarTasasInteresAction.do?idioma=sp</li>
-      <li>Cetesdirecto: productos como CETES, BONDDIA, BONDES, UDIBONOS y Bonos. https://www.cetesdirecto.com/sites/portal/productos.cetesdirecto</li>
-      <li>CONSAR: ahorro voluntario para retiro. https://www.gob.mx/consar/acciones-y-programas/todo-sobre-el-ahorro-voluntario-265969</li>
-      <li>IPAB: protección de depósitos bancarios. https://www.gob.mx/ipab/es/articulos/productos-bancarios-protegidos-por-el-ipab</li>
-      <li>CONDUSEF: seguro de depósitos y recomendaciones para ahorradores. https://www.condusef.gob.mx/?idc=837&idcat=1&p=contenido</li>
-    </ul>
-  </div>
-</section>
+  <section id="capital" class="grid view hide">
+    <div class="card half">
+      <span class="badge">Escenario especial</span>
+      <h2>¿Qué pasa si a los 40 años ya tienes capital?</h2>
+      <p class="stageMsg">Una vez que existe un capital considerable, la pregunta cambia: ya no es solo “¿cuánto ahorro al mes?”, sino “¿cómo hago trabajar ese capital con riesgo bajo y controlado?”.</p>
+      <div class="formgrid" style="grid-template-columns:repeat(2,1fr)">
+        <div class="field"><label>Capital inicial</label><input id="capInitial" value="450000" oninput="renderCapital()"></div>
+        <div class="field"><label>Instrumento</label><select id="capInstrument" onchange="setCapRateFromInstrument();renderCapital()"></select></div>
+        <div class="field"><label>Tasa anual simulada</label><input id="capRate" value="7.5%" oninput="renderCapital()"></div>
+        <div class="field"><label>Depósito adicional mensual</label><input id="capMonthly" value="0" oninput="renderCapital()"></div>
+      </div>
+      <div class="note warn" style="margin-top:12px">Riesgo bajo no significa “sin riesgo”. Siempre revisa plazo, liquidez, inflación, impuestos, comisiones y condiciones.</div>
+    </div>
+    <div class="card half">
+      <h2>Resultado aproximado</h2>
+      <div class="kpis">
+        <div class="kpi highlight"><div class="label">En 10 años</div><div class="val" id="cap10"></div></div>
+        <div class="kpi highlight"><div class="label">En 15 años</div><div class="val" id="cap15"></div></div>
+        <div class="kpi"><div class="label">Ganancia 10 años</div><div class="val" id="gain10"></div></div>
+        <div class="kpi"><div class="label">Ganancia 15 años</div><div class="val" id="gain15"></div></div>
+      </div>
+      <p class="tiny">Cálculo con capitalización mensual, solo para fines educativos.</p>
+      <div class="actions"><button class="btn secondary" onclick="showView('summary')">Volver al resumen</button></div>
+    </div>
+  </section>
+
+  <section id="instruments" class="grid view hide">
+    <div class="card full">
+      <span class="badge">Instrumentos disponibles</span>
+      <h2>Tasas simuladas editables</h2>
+      <p class="tiny">Las tasas son de simulación. En la vida real cambian con el mercado, la inflación, el plazo, impuestos y condiciones de cada institución.</p>
+      <div class="tableWrap"><table id="instrumentTable"></table></div>
+    </div>
+  </section>
+
+  <section id="help" class="grid view hide">
+    <div class="card full">
+      <span class="badge">Conceptos rápidos</span>
+      <h2>Mini glosario para no depender de la explicación de la profe</h2>
+      <div class="helpGrid">
+        <div class="help"><h4>Liquidez</h4><p>Dinero que puedes usar con facilidad si surge una emergencia.</p></div>
+        <div class="help"><h4>Mediano plazo</h4><p>Dinero para metas de 1 a 5 años, como laptop, cursos, viaje de estudios o herramientas.</p></div>
+        <div class="help"><h4>Largo plazo</h4><p>Dinero que se deja crecer más tiempo para construir patrimonio o retiro.</p></div>
+        <div class="help"><h4>Fondo de emergencia</h4><p>Reserva para imprevistos. En este simulador se usa como referencia 3 meses de gastos.</p></div>
+        <div class="help"><h4>Tasa anual</h4><p>Porcentaje de rendimiento usado para estimar cuánto puede crecer el dinero en un año.</p></div>
+        <div class="help"><h4>Interés compuesto</h4><p>Ocurre cuando el dinero genera rendimiento y ese rendimiento también empieza a generar más rendimiento.</p></div>
+      </div>
+      <h3>Instrumentos, en palabras simples</h3>
+      <details open><summary>BONDDIA</summary><p class="tiny">Instrumento de liquidez. Sirve para tener dinero disponible o casi disponible, sin mezclarlo con el gasto diario.</p></details>
+      <details><summary>CETES</summary><p class="tiny">Instrumentos de deuda gubernamental de corto o mediano plazo. Se pueden usar para metas con fecha más cercana.</p></details>
+      <details><summary>UDIBONOS</summary><p class="tiny">Instrumentos de largo plazo ligados a inflación. Ayudan a pensar en conservar el poder adquisitivo.</p></details>
+      <details><summary>Bonos M</summary><p class="tiny">Instrumentos de mayor plazo. Pueden ser útiles para entender inversión patrimonial a largo plazo.</p></details>
+      <details><summary>Inversión a plazo / pagaré bancario</summary><p class="tiny">Producto bancario donde el dinero se deja por un plazo definido a cambio de una tasa acordada.</p></details>
+    </div>
+  </section>
+
+  <div class="footer">MATERIA MAT. APLICADA A LAS FINANZAS · By MTRA. ADRIANA ARROYO G · V6<br>Simulador educativo. No sustituye asesoría financiera profesional.</div>
 </main>
-
-<footer>
-  <strong>MATERIA MAT. APLICADA A LAS FINANZAS By MTRA. ADRIANA ARROYO G, V1</strong><br>
-  Este simulador es un recurso didáctico. Las proyecciones son nominales y simplificadas: no descuentan inflación futura, impuestos, comisiones ni cambios de tasas. Úsalo para aprender decisiones financieras, no para prometer resultados.
-</footer>
-
+<div class="toast" id="toast">Guardado</div>
 <script>
-const instrumentosDefault = [
-  {nombre:"Cuenta separada / ahorro bancario", objetivo:"Liquidez inmediata", horizonte:"Días", liquidez:"Muy alta", riesgo:"Bajo", tasa:0.0100, comentario:"Separar emergencia de gastos."},
-  {nombre:"BONDDIA", objetivo:"Liquidez con rendimiento diario", horizonte:"Días", liquidez:"Alta", riesgo:"Bajo", tasa:0.0600, comentario:"Dinero disponible mientras genera rendimiento."},
-  {nombre:"CETES 28 días", objetivo:"Corto plazo", horizonte:"1 mes", liquidez:"Alta al vencimiento", riesgo:"Bajo", tasa:0.0645, comentario:"Metas cortas y escalera de vencimientos."},
-  {nombre:"CETES 91/182/364 días", objetivo:"Metas con fecha", horizonte:"3 a 12 meses", liquidez:"Media al vencimiento", riesgo:"Bajo", tasa:0.0670, comentario:"Metas de 3, 6 o 12 meses."},
-  {nombre:"BONDES F", objetivo:"Tasa variable", horizonte:"Mediano plazo", liquidez:"Media", riesgo:"Bajo", tasa:0.0650, comentario:"Permite explicar tasa variable."},
-  {nombre:"UDIBONOS", objetivo:"Proteger poder adquisitivo", horizonte:"Largo plazo", liquidez:"Baja-media", riesgo:"Bajo-medio", tasa:0.0700, comentario:"Conecta inversión e inflación."},
-  {nombre:"Bonos M", objetivo:"Largo plazo tasa fija", horizonte:"3 a 30 años", liquidez:"Baja-media", riesgo:"Bajo-medio", tasa:0.0750, comentario:"Muestra el efecto del largo plazo."},
-  {nombre:"Inversión a plazo / pagaré bancario", objetivo:"Plazo fijo bancario", horizonte:"1 a 12 meses o más", liquidez:"Baja al vencimiento", riesgo:"Bajo si banco regulado", tasa:0.0550, comentario:"Comparar GAT, plazo e IPAB."},
-  {nombre:"Aportación voluntaria AFORE", objetivo:"Retiro", horizonte:"Largo plazo", liquidez:"Limitada", riesgo:"Depende de SIEFORE", tasa:0.0750, comentario:"Conecta ahorro joven con retiro."}
+const DEFAULT_INSTRUMENTS = [
+  {name:'Cuenta separada / ahorro bancario', objective:'Liquidez inmediata', horizon:'Días', liquidity:'Muy alta', risk:'Bajo', rate:0.01, comment:'Separar emergencia de gastos diarios.'},
+  {name:'BONDDIA', objective:'Liquidez con rendimiento', horizon:'Días', liquidity:'Alta', risk:'Bajo', rate:0.06, comment:'Útil para fondo de emergencia.'},
+  {name:'CETES 28 días', objective:'Corto plazo', horizon:'1 mes', liquidity:'Media-alta', risk:'Bajo', rate:0.065, comment:'Metas cercanas con vencimiento corto.'},
+  {name:'CETES 91/182/364 días', objective:'Mediano plazo', horizon:'3 a 12 meses', liquidity:'Media', risk:'Bajo', rate:0.067, comment:'Metas con fecha definida.'},
+  {name:'BONDES F', objective:'Mediano plazo', horizon:'1 a 5 años', liquidity:'Media', risk:'Bajo', rate:0.065, comment:'Alternativa para plazo medio.'},
+  {name:'UDIBONOS', objective:'Proteger poder adquisitivo', horizon:'Largo plazo', liquidity:'Media-baja', risk:'Bajo-medio', rate:0.07, comment:'Ayudan a pensar en inflación.'},
+  {name:'Bonos M', objective:'Patrimonio largo plazo', horizon:'Largo plazo', liquidity:'Media-baja', risk:'Bajo-medio', rate:0.075, comment:'Para consolidación patrimonial.'},
+  {name:'Inversión a plazo / pagaré bancario', objective:'Plazo fijo bancario', horizon:'Meses-años', liquidity:'Baja hasta vencimiento', risk:'Bajo si aplica protección', rate:0.055, comment:'Revisar plazo, tasa y condiciones.'},
+  {name:'Aportación voluntaria AFORE', objective:'Retiro', horizon:'Largo plazo', liquidity:'Baja', risk:'Medio', rate:0.075, comment:'Pensada para fortalecer retiro.'}
 ];
-
-const supuestosDefault = [
-  {desde:17,hasta:23.99,etapa:"Bachillerato / universidad: mesada",ingreso:3000,ahorro:0.20,liq:0.4167,med:0.3333,largo:0.2500,instLiq:"BONDDIA",instMed:"CETES 91/182/364 días",instLargo:"UDIBONOS"},
-  {desde:24,hasta:26.99,etapa:"Primer empleo relacionado con carrera",ingreso:18000,ahorro:0.25,liq:0.1778,med:0.4444,largo:0.3778,instLiq:"BONDDIA",instMed:"CETES 91/182/364 días",instLargo:"Aportación voluntaria AFORE"},
-  {desde:27,hasta:34.99,etapa:"Mayor rango y salario",ingreso:28000,ahorro:0.30,liq:0.1190,med:0.3452,largo:0.5358,instLiq:"BONDDIA",instMed:"BONDES F",instLargo:"UDIBONOS"},
-  {desde:35,hasta:44.99,etapa:"Estabilidad + posible familia",ingreso:45000,ahorro:0.25,liq:0.1067,med:0.3111,largo:0.5822,instLiq:"BONDDIA",instMed:"BONDES F",instLargo:"Bonos M"},
-  {desde:45,hasta:64.99,etapa:"Consolidación patrimonial",ingreso:65000,ahorro:0.25,liq:0.0923,med:0.2308,largo:0.6769,instLiq:"BONDDIA",instMed:"UDIBONOS",instLargo:"Bonos M"},
-  {desde:65,hasta:65,etapa:"Retiro / administración del patrimonio",ingreso:0,ahorro:0,liq:0,med:0,largo:0,instLiq:"Cuenta separada / ahorro bancario",instMed:"BONDDIA",instLargo:"UDIBONOS"}
+const DEFAULT_STAGES = [
+ {from:18,to:23,short:'Bachillerato',title:'Bachillerato y primeros años', income:3000, savePct:.20, dist:{liq:.4167,mid:.3333,long:.25}, inst:{liq:'BONDDIA',mid:'CETES 91/182/364 días',long:'UDIBONOS'}, text:'En esta etapa lo más importante no es ahorrar mucho, sino aprender a separar dinero antes de gastarlo. El hábito vale más que la cantidad inicial.', tip:'Reto: prueba cambiar el ahorro de 20% a 25% y observa la diferencia al terminar la etapa.'},
+ {from:24,to:26,short:'Primer empleo',title:'Primer empleo relacionado con la carrera', income:18000, savePct:.25, dist:{liq:.1778,mid:.4444,long:.3778}, inst:{liq:'BONDDIA',mid:'CETES 91/182/364 días',long:'Aportación voluntaria AFORE'}, text:'Con un ingreso más estable, el ahorro puede crecer. La prioridad es completar el fondo de emergencia adulto y evitar que todo aumento de ingreso se convierta en gasto.', tip:'Reto: conserva un estilo de vida moderado mientras sube tu ingreso.'},
+ {from:27,to:34,short:'Mayor rango',title:'Mayor rango y mejor salario', income:28000, savePct:.30, dist:{liq:.1190,mid:.3452,long:.5358}, inst:{liq:'BONDDIA',mid:'BONDES F',long:'UDIBONOS'}, text:'Aquí el plan empieza a ganar fuerza: el ahorro mensual es mayor y una parte más grande puede ir a largo plazo.', tip:'Reto: no subas tus gastos al mismo ritmo que sube tu salario.'},
+ {from:35,to:44,short:'Estabilidad',title:'Estabilidad profesional y familiar', income:45000, savePct:.25, dist:{liq:.1067,mid:.3111,long:.5822}, inst:{liq:'BONDDIA',mid:'BONDES F',long:'Bonos M'}, text:'Puede haber pareja, hijos, vivienda o mayores responsabilidades. Por eso el ahorro debe ser más intencional: proteger a la familia y construir patrimonio.', tip:'Reto: revisa seguros, liquidez, deudas y metas familiares.'},
+ {from:45,to:64,short:'Consolidación',title:'Consolidación patrimonial', income:65000, savePct:.25, dist:{liq:.0923,mid:.2308,long:.6769}, inst:{liq:'BONDDIA',mid:'UDIBONOS',long:'Bonos M'}, text:'Cuando ya hay capital, el objetivo no es solo ahorrar: es invertir mejor y sostener una estrategia de riesgo bajo y controlado.', tip:'Reto: observa qué pasa si un capital acumulado se deja crecer 10 o 15 años.'},
+ {from:65,to:65,short:'Retiro',title:'Retiro y administración del patrimonio', income:0, savePct:0, dist:{liq:0,mid:0,long:0}, inst:{liq:'Cuenta separada / ahorro bancario',mid:'BONDDIA',long:'UDIBONOS'}, text:'En esta etapa la prioridad ya no es acumular al mismo ritmo, sino administrar el patrimonio para conservar estabilidad y liquidez.', tip:'Reto: piensa en retiro como administración del patrimonio, no solo como dejar de trabajar.'}
 ];
-
-let instrumentos = JSON.parse(JSON.stringify(instrumentosDefault));
-let supuestos = JSON.parse(JSON.stringify(supuestosDefault));
-
-function money(n){return new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0}).format(isFinite(n)?n:0)}
-function pct(n){return ((isFinite(n)?n:0)*100).toFixed(2)+"%"}
-function pctInput(n){
-  const v=(isFinite(n)?n:0)*100;
-  return (Math.round(v*100)/100).toString().replace(/\.0+$/,'').replace(/(\.\d*?)0+$/,'$1') + "%";
+const DEFAULT_TRANSITIONS = DEFAULT_STAGES.map((s, idx)=>({spend:0, moveToLong:0, note:''}));
+let instruments = JSON.parse(JSON.stringify(DEFAULT_INSTRUMENTS));
+let stages = JSON.parse(JSON.stringify(DEFAULT_STAGES));
+let transitions = JSON.parse(JSON.stringify(DEFAULT_TRANSITIONS));
+let currentStage = 0;
+let mode = 'simple';
+const views = ['welcome','stage','summary','capital','instruments','help'];
+function money(n){return Number(n||0).toLocaleString('es-MX',{style:'currency',currency:'MXN',maximumFractionDigits:0});}
+function plainMoney(n){return Math.round(Number(n||0)).toString();}
+function pct(n){return (Number(n||0)*100).toLocaleString('es-MX',{maximumFractionDigits:2})+'%';}
+function plainPct(n){return (Number(n||0)*100).toLocaleString('es-MX',{maximumFractionDigits:2}).replace(/\.00$/,'')+'%';}
+function parsePct(v){ if(typeof v==='number') return v>1?v/100:v; v=String(v||'0').trim().replace('%','').replace(',','.'); let x=parseFloat(v); if(!isFinite(x)) return 0; return x>1?x/100:x; }
+function parseMoney(v){ v=String(v||'0').replace(/[$,\s]/g,''); let x=parseFloat(v); return isFinite(x)?x:0; }
+function instRate(name){ let i=instruments.find(x=>x.name===name); return i?i.rate:0; }
+function stageForAge(age){return stages.findIndex(s=>age>=s.from && age<=s.to+0.999)}
+function deductFrom(balance, amount, order){
+  let left = Math.max(0, Number(amount||0));
+  order.forEach(k=>{ let take = Math.min(balance[k], left); balance[k] -= take; left -= take; });
+  return amount-left;
 }
-function parsePct(value){
-  if(typeof value === "string") value = value.replace("%","").trim();
-  const n=parseFloat(value);
-  if(!isFinite(n)) return 0;
-  return n>1 ? n/100 : n;
+function applyTransitionToBalance(balance, idx){
+  let tr = transitions[idx] || {spend:0, moveToLong:0};
+  let before = balance.liq + balance.mid + balance.long;
+  // Primero se pagan metas con el dinero más disponible: liquidez, luego mediano plazo y solo al final largo plazo.
+  let spendApplied = deductFrom(balance, tr.spend, ['liq','mid','long']);
+  let movableBefore = balance.liq + balance.mid;
+  // Reinvertir significa mover dinero que todavía está en liquidez/mediano hacia largo plazo.
+  // Si el remanente ya estaba en largo plazo, no cuenta como movimiento nuevo, pero sí se conserva como patrimonio.
+  let moveApplied = deductFrom(balance, tr.moveToLong, ['mid','liq']);
+  balance.long += moveApplied;
+  let after = balance.liq + balance.mid + balance.long;
+  return {before, spendApplied, moveApplied, movableBefore, remainingLong: balance.long, remainingLiq: balance.liq, remainingMid: balance.mid, after};
 }
-function byName(name){return instrumentos.find(x=>x.nombre===name)||instrumentos[0]}
-function tasa(name){return byName(name).tasa || 0}
-function etapaEdad(edad){
-  return supuestos.find(s=>edad>=s.desde && edad<=s.hasta) || supuestos[supuestos.length-1];
+function simulatedAfterTransition(balance, idx){
+  let b = {liq:balance.liq||0, mid:balance.mid||0, long:balance.long||0};
+  let movement = applyTransitionToBalance(b, idx);
+  return {...b, total:b.liq+b.mid+b.long, movement};
 }
-function valorFuturo(capital, deposito, tasaAnual, anios){
-  const i=tasaAnual/12, n=anios*12;
-  if(i===0) return capital + deposito*n;
-  return capital*Math.pow(1+i,n)+deposito*((Math.pow(1+i,n)-1)/i);
-}
-
-function renderSelectOptions(){
-  const opts=instrumentos.map(i=>`<option value="${i.nombre}">${i.nombre}</option>`).join("");
-  ["capInstrumento","metaInstrumento"].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.innerHTML=opts;
-  });
-  document.getElementById("capInstrumento").value="Bonos M";
-  document.getElementById("metaInstrumento").value="CETES 91/182/364 días";
-}
-
-function renderInstrumentos(){
-  const rows = instrumentos.map((x,i)=>`
-    <tr>
-      <td>${x.nombre}</td><td>${x.objetivo}</td><td>${x.horizonte}</td><td>${x.liquidez}</td><td>${x.riesgo}</td>
-      <td class="editable-cell"><div class="rate-edit"><span>Tasa</span><input class="percent-input" type="text" value="${pctInput(x.tasa)}" title="Tasa anual simulada" aria-label="Tasa anual simulada de ${x.nombre}" onchange="instrumentos[${i}].tasa=parsePct(this.value); calcular();"></div></td>
-      <td>${x.comentario}</td>
-    </tr>`).join("");
-  document.getElementById("tablaInstrumentos").innerHTML=`<tr><th>Instrumento</th><th>Objetivo</th><th>Horizonte</th><th>Liquidez</th><th>Riesgo</th><th>Tasa anual simulada editable</th><th>Comentario didáctico</th></tr>${rows}`;
-}
-
-function instrumentSelect(value, row, prop){
-  return `<select onchange="supuestos[${row}].${prop}=this.value; calcular();">${instrumentos.map(i=>`<option ${i.nombre===value?"selected":""}>${i.nombre}</option>`).join("")}</select>`;
-}
-function renderSupuestos(){
-  const rows=supuestos.map((s,i)=>`
-    <tr>
-      <td><input type="number" step="0.01" value="${s.desde}" onchange="supuestos[${i}].desde=parseFloat(this.value)||0; calcular();"></td>
-      <td><input type="number" step="0.01" value="${s.hasta}" onchange="supuestos[${i}].hasta=parseFloat(this.value)||0; calcular();"></td>
-      <td><input value="${s.etapa}" onchange="supuestos[${i}].etapa=this.value; calcular();"></td>
-      <td><input type="number" value="${s.ingreso}" onchange="supuestos[${i}].ingreso=parseFloat(this.value)||0; calcular();"></td>
-      <td><input class="percent-input" type="text" value="${pctInput(s.ahorro)}" onchange="supuestos[${i}].ahorro=parsePct(this.value); calcular();"></td>
-      <td><input class="percent-input" type="text" value="${pctInput(s.liq)}" onchange="supuestos[${i}].liq=parsePct(this.value); calcular();"></td>
-      <td><input class="percent-input" type="text" value="${pctInput(s.med)}" onchange="supuestos[${i}].med=parsePct(this.value); calcular();"></td>
-      <td><input class="percent-input" type="text" value="${pctInput(s.largo)}" onchange="supuestos[${i}].largo=parsePct(this.value); calcular();"></td>
-      <td>${instrumentSelect(s.instLiq,i,"instLiq")}</td>
-      <td>${instrumentSelect(s.instMed,i,"instMed")}</td>
-      <td>${instrumentSelect(s.instLargo,i,"instLargo")}</td>
-      <td class="num">${pct(tasa(s.instLiq))}</td>
-      <td class="num">${pct(tasa(s.instMed))}</td>
-      <td class="num">${pct(tasa(s.instLargo))}</td>
-      <td>${Math.abs((s.liq+s.med+s.largo)-1)<.002 || s.ahorro===0 ? '<span class="good">OK</span>' : '<span class="bad">Revisar</span>'}</td>
-    </tr>`).join("");
-  document.getElementById("tablaSupuestos").innerHTML=`<tr><th>Desde</th><th>Hasta</th><th>Etapa</th><th>Ingreso mensual</th><th>% ahorro</th><th>% liquidez</th><th>% mediano</th><th>% largo</th><th>Inst. liquidez</th><th>Inst. mediano</th><th>Inst. largo</th><th class="num">Tasa liquidez</th><th class="num">Tasa mediano</th><th class="num">Tasa largo</th><th>Revisión</th></tr>${rows}`;
-}
-
-function simular(){
-  let saldoL=0, saldoM=0, saldoG=0;
-  const data=[];
-  const edadInicial=17, edadFinal=65;
-  const meses=(edadFinal-edadInicial)*12+1;
-  for(let m=1;m<=meses;m++){
-    const edad=edadInicial+(m-1)/12;
-    const s=etapaEdad(edad);
-    const ahorro=s.ingreso*s.ahorro;
-    const depL=ahorro*s.liq, depM=ahorro*s.med, depG=ahorro*s.largo;
-    saldoL=(saldoL+depL)*(1+tasa(s.instLiq)/12);
-    saldoM=(saldoM+depM)*(1+tasa(s.instMed)/12);
-    saldoG=(saldoG+depG)*(1+tasa(s.instLargo)/12);
-    data.push({mes:m, edad, etapa:s.etapa, ingreso:s.ingreso, ahorro, saldoL, saldoM, saldoG, total:saldoL+saldoM+saldoG, inst:`${s.instLiq} / ${s.instMed} / ${s.instLargo}`});
+function projection(options={}){
+  const skipTransition = options.skipTransition;
+  let b={liq:0,mid:0,long:0}; let snapshots={}; let decisions=[];
+  let endAge=65; let startAge=18; let months=(endAge-startAge+1)*12;
+  for(let m=0;m<months;m++){
+    let age=startAge + m/12; let idx=stageForAge(age); if(idx<0) idx=stages.length-1; let s=stages[idx];
+    let rates={liq:instRate(s.inst.liq)/12, mid:instRate(s.inst.mid)/12, long:instRate(s.inst.long)/12};
+    b.liq *= (1+rates.liq); b.mid *= (1+rates.mid); b.long *= (1+rates.long);
+    let save = s.income*s.savePct;
+    b.liq += save*s.dist.liq; b.mid += save*s.dist.mid; b.long += save*s.dist.long;
+    let nextAge = startAge + (m+1)/12;
+    let boundaryIdx = stages.findIndex(ss => ss.to < 65 && Math.abs(nextAge-(ss.to+1)) < 0.00001);
+    if(boundaryIdx >= 0 && boundaryIdx !== skipTransition){
+      let before = {liq:b.liq, mid:b.mid, long:b.long, total:b.liq+b.mid+b.long};
+      let movement = applyTransitionToBalance(b, boundaryIdx);
+      decisions.push({stageIndex:boundaryIdx, age:stages[boundaryIdx].to+1, before, after:{liq:b.liq,mid:b.mid,long:b.long,total:b.liq+b.mid+b.long}, movement});
+    }
+    let rounded = Math.round(nextAge*100000)/100000;
+    [24,27,35,40,45,55,65,66].forEach(a=>{ if(!snapshots[a] && rounded>=a) snapshots[a]={age:a, liq:b.liq, mid:b.mid, long:b.long, total:b.liq+b.mid+b.long}; });
   }
-  return data;
+  return {balances:b, snapshots, decisions};
 }
-
-function renderResumen(data){
-  const edades=[18,24,27,35,40,45,55,65];
-  const rows=edades.map(e=>{
-    let row=data.filter(x=>x.edad<=e).pop() || data[0];
-    const emergencia=row.ingreso*.8*3;
-    return `<tr><td class="num">${e}</td><td class="num">${money(row.ingreso)}</td><td class="num">${money(row.ahorro)}</td><td class="num">${money(row.saldoL)}</td><td class="num">${money(row.saldoM)}</td><td class="num">${money(row.saldoG)}</td><td class="num"><strong>${money(row.total)}</strong></td><td>${row.saldoL>=emergencia?'<span class="good">Cubierto</span>':'En construcción'}</td></tr>`;
-  }).join("");
-  document.getElementById("tablaResumen").innerHTML=`<tr><th class="num">Edad</th><th class="num">Ingreso</th><th class="num">Ahorro mensual</th><th class="num">Liquidez</th><th class="num">Mediano plazo</th><th class="num">Largo plazo</th><th class="num">Patrimonio total</th><th>Estado liquidez</th></tr>${rows}`;
+function projectToAge(targetAge, options={}){ return projection(options).snapshots[targetAge] || {liq:0,mid:0,long:0,total:0}; }
+function endOfStageSnapshot(i, options={}){ let age = stages[i].to+1; if(age>65) age=65; return projectToAge(age, options); }
+function showView(id){ views.forEach(v=>document.getElementById(v).classList.toggle('hide',v!==id)); renderTabs(id); if(id==='summary') renderSummary(); if(id==='instruments') renderInstruments(); if(id==='capital') renderCapital(); if(id==='stage') renderStage(true); window.scrollTo({top:0,behavior:'smooth'}); }
+function renderTabs(active){
+ const labels=[['welcome','Inicio'],['stage','Recorrido por etapas'],['summary','Resumen'],['capital','Capital a los 40'],['instruments','Instrumentos'],['help','Ayuda']];
+ document.getElementById('tabs').innerHTML=labels.map(([id,label])=>`<button class="tab small ${active===id?'active':''}" onclick="showView('${id}')">${label}</button>`).join('');
 }
-
-function moneyShort(v){
-  if(v>=1000000) return "$"+(v/1000000).toFixed(1)+" M";
-  if(v>=1000) return "$"+Math.round(v/1000).toLocaleString("es-MX")+" mil";
-  return "$"+Math.round(v).toLocaleString("es-MX");
+function personalizePlan(){ mode='complete'; currentStage=0; showView('stage'); toast('Ahora puedes personalizar cantidades, porcentajes, instrumentos y tasas'); }
+function goStage(i){currentStage=i;showView('stage');renderStage(true);}
+function prevStage(){ if(currentStage>0){currentStage--; renderStage(true);} else showView('welcome'); }
+function nextStage(){ if(currentStage<stages.length-1){currentStage++; renderStage(true);} else showView('summary'); }
+function setMode(m){ mode=m; document.getElementById('simpleBtn').classList.toggle('active',m==='simple'); document.getElementById('completeBtn').classList.toggle('active',m==='complete'); renderStage(true); }
+function updateStageComputed(){
+ const s=stages[currentStage]; const endBefore=endOfStageSnapshot(currentStage,{skipTransition:currentStage}); const save=s.income*s.savePct; const gastos=Math.max(0,s.income-save); const target=gastos*3; const ratio=target>0?Math.min(1,endBefore.liq/target):1; const status=target===0?'Administración':(endBefore.liq>=target?'Cubierto':'En construcción');
+ document.getElementById('stageBadge').textContent=`Etapa ${currentStage+1} de ${stages.length}`;
+ document.getElementById('stageAge').textContent=`De ${s.from} a ${s.to} años`;
+ document.getElementById('stageTitle').textContent=s.title;
+ document.getElementById('stageText').textContent=s.text;
+ document.getElementById('kpiIncome').textContent=money(s.income);
+ document.getElementById('kpiSave').textContent=money(save);
+ document.getElementById('kpiEndTotal').textContent=money(endBefore.total);
+ document.getElementById('kpiStatus').innerHTML=status==='Cubierto'?'<span class="good">Cubierto</span>':status;
+ document.getElementById('visualTarget').textContent=target?money(target):'No aplica';
+ document.getElementById('liqProgress').style.width=(ratio*100)+'%';
+ let vs=document.getElementById('visualStatus'); vs.className='status '+(status==='Cubierto'?'cover':'build'); vs.textContent=status;
+ document.getElementById('stageTip').innerHTML=`<strong>Tip de esta etapa:</strong> ${s.tip}`;
+ let rows=[['liq','Liquidez / emergencia',s.dist.liq,s.inst.liq],['mid','Mediano plazo',s.dist.mid,s.inst.mid],['long','Largo plazo',s.dist.long,s.inst.long]];
+ document.getElementById('moneySplit').innerHTML=rows.map(([cls,label,d,inst])=>`<div class="split ${cls}"><div><strong>${label}</strong><br><span class="tiny">${inst}</span></div><div class="center"><span class="pill">${pct(d)}</span><br><strong>${money(save*d)}</strong></div></div>`).join('');
+ updateReviewMsg();
+ renderBridge(true);
 }
-function niceMax(v){
-  const steps=[10000,50000,100000,500000,1000000,5000000,10000000];
-  let step=steps.find(s=>v/s<=10) || 10000000;
-  return Math.ceil(v/step)*step;
+function renderStage(refreshForm=true){
+ updateStageComputed();
+ document.getElementById('completePanel').classList.toggle('hide',mode!=='complete');
+ const callout=document.getElementById('simpleEditCallout'); if(callout) callout.classList.toggle('hide', mode!=='simple');
+ if(refreshForm) renderStageForm();
 }
-function drawChart(data){
-  const ages=[18,24,27,35,40,45,55,65];
-  const points=ages.map(e=>data.filter(x=>x.edad<=e).pop()||data[0]);
-  const w=820,h=300,left=92,right=28,top=38,bottom=44;
-  const max=niceMax(Math.max(...points.map(p=>p.total))*1.01);
-  const x=(i)=>left+i*((w-left-right)/(points.length-1));
-  const y=(v)=>h-bottom-(v/max)*(h-top-bottom);
-  const poly=points.map((p,i)=>`${x(i)},${y(p.total)}`).join(" ");
-  let circles=points.map((p,i)=>`<circle cx="${x(i)}" cy="${y(p.total)}" r="4" fill="#1d4ed8"><title>${Math.round(p.edad)} años: ${money(p.total)}</title></circle>`).join("");
-  let xLabels=points.map((p,i)=>`<text x="${x(i)}" y="${h-18}" text-anchor="middle" font-size="11">${ages[i]}</text>`).join("");
-  let pointLabels=points.map((p,i)=>{
-    let yy=Math.max(top+18, y(p.total)-10);
-    return `<text x="${x(i)}" y="${yy}" text-anchor="middle" font-size="10" fill="#0f172a">${moneyShort(p.total)}</text>`;
-  }).join("");
-  let yLabels=[0,.25,.5,.75,1].map(t=>{
-    const val=max*t;
-    return `<line x1="${left}" x2="${w-right}" y1="${y(val)}" y2="${y(val)}" stroke="#e5e7eb"/><text x="${left-10}" y="${y(val)+4}" text-anchor="end" font-size="10" fill="#334155">${moneyShort(val)}</text>`;
-  }).join("");
-  document.getElementById("chart").innerHTML=`<svg viewBox="0 0 ${w} ${h}" width="100%" height="100%">${yLabels}<polyline points="${poly}" fill="none" stroke="#1d4ed8" stroke-width="3"/>${circles}${pointLabels}${xLabels}<text x="${w/2}" y="16" text-anchor="middle" font-size="13" font-weight="bold">Patrimonio total proyectado</text><text x="${w/2}" y="32" text-anchor="middle" font-size="10" fill="#475569">La línea usa la columna “Patrimonio total” de la tabla superior</text></svg>`;
+function renderStageForm(){
+ const s=stages[currentStage]; const opts=instruments.map(i=>`<option value="${i.name}">${i.name}</option>`).join('');
+ const f=[
+ ['Ingreso mensual','income',plainMoney(s.income),'money'], ['% ahorro','savePct',plainPct(s.savePct),'pct'],
+ ['% liquidez','dist.liq',plainPct(s.dist.liq),'pct'], ['% mediano','dist.mid',plainPct(s.dist.mid),'pct'], ['% largo','dist.long',plainPct(s.dist.long),'pct'],
+ ['Inst. liquidez','inst.liq',s.inst.liq,'select'], ['Inst. mediano','inst.mid',s.inst.mid,'select'], ['Inst. largo','inst.long',s.inst.long,'select'],
+ ['Tasa liquidez', 'rate.liq', plainPct(instRate(s.inst.liq)), 'rate'], ['Tasa mediano','rate.mid',plainPct(instRate(s.inst.mid)),'rate'], ['Tasa largo','rate.long',plainPct(instRate(s.inst.long)),'rate']
+ ];
+ document.getElementById('stageForm').innerHTML=f.map(x=>{
+  const [label,key,val,type]=x;
+  if(type==='select') return `<div class="field"><label>${label}</label><select onchange="updateStage('${key}',this.value,true)">${opts}</select></div>`;
+  return `<div class="field"><label>${label}</label><input value="${val}" onfocus="this.select();this.classList.add('editing')" onblur="formatStageInput(this,'${key}');this.classList.remove('editing')" oninput="updateStage('${key}',this.value,false)"><div class="inputHint">Toca el número y escribe el nuevo valor completo.</div></div>`;
+ }).join('');
+ let selects=document.querySelectorAll('#stageForm select'); selects[0].value=s.inst.liq; selects[1].value=s.inst.mid; selects[2].value=s.inst.long;
+ updateReviewMsg();
 }
-
+function updateReviewMsg(){
+ let s=stages[currentStage]; let el=document.getElementById('reviewMsg'); if(!el) return;
+ const sum=s.dist.liq+s.dist.mid+s.dist.long; el.innerHTML = Math.abs(sum-1)<.005?'<span class="good">Revisión: OK. La distribución suma 100%.</span>':'<span class="bad">Revisión: ajusta liquidez + mediano + largo para que sumen 100%.</span>';
+}
+function updateStage(key,val,refreshForm){
+ const s=stages[currentStage];
+ if(key==='income') s.income=parseMoney(val); else if(key==='savePct') s.savePct=parsePct(val);
+ else if(key==='dist.liq') s.dist.liq=parsePct(val); else if(key==='dist.mid') s.dist.mid=parsePct(val); else if(key==='dist.long') s.dist.long=parsePct(val);
+ else if(key==='inst.liq') s.inst.liq=val; else if(key==='inst.mid') s.inst.mid=val; else if(key==='inst.long') s.inst.long=val;
+ else if(key.startsWith('rate.')){ let which=key.split('.')[1]; let name=s.inst[which]; let ins=instruments.find(i=>i.name===name); if(ins) ins.rate=parsePct(val); }
+ if(refreshForm) renderStage(true); else updateStageComputed();
+}
+function formatStageInput(el,key){
+ if(key==='income') el.value=plainMoney(parseMoney(el.value));
+ else if(key.includes('Pct') || key.includes('dist') || key.startsWith('rate')) el.value=plainPct(parsePct(el.value));
+ updateStage(key, el.value, false);
+}
+function renderBridge(refreshInputs=false){
+ const panel=document.getElementById('bridgePanel'); if(!panel) return;
+ if(currentStage>=stages.length-1){ panel.innerHTML='<h3>Puente entre etapas</h3><p class="tiny">En la etapa de retiro ya no hay una siguiente etapa en este recorrido. La prioridad es administrar el patrimonio.</p>'; return; }
+ const before=endOfStageSnapshot(currentStage,{skipTransition:currentStage});
+ const tr=transitions[currentStage] || {spend:0, moveToLong:0};
+ const after=simulatedAfterTransition(before,currentStage);
+ if(refreshInputs){
+ panel.innerHTML=`
+   <h3>Puente entre etapas: ¿qué harás con el capital acumulado?</h3>
+   <p class="tiny">El simulador <strong>no supone que te gastas el dinero</strong>. Por defecto lo arrastra a la siguiente etapa. Aquí puedes decidir si usas una parte para una meta o si mueves una parte hacia largo plazo.</p>
+   <div class="bridgeGrid">
+     <div class="bridgeMini"><div class="label">Capital al cierre</div><div class="val">${money(before.total)}</div></div>
+     <div class="bridgeMini"><div class="label">Liquidez</div><div class="val">${money(before.liq)}</div></div>
+     <div class="bridgeMini"><div class="label">Mediano plazo</div><div class="val">${money(before.mid)}</div></div>
+     <div class="bridgeMini"><div class="label">Largo plazo</div><div class="val">${money(before.long)}</div></div>
+   </div>
+   <div class="bridgeControls">
+     <div class="field"><label>Usar para una meta al pasar de etapa</label><input id="bridgeSpend" value="${plainMoney(tr.spend)}" onfocus="this.select();this.classList.add('editing')" onblur="formatBridgeInput(this,'spend');this.classList.remove('editing')" oninput="updateTransition('spend',this.value)"><div class="inputHint">Ejemplo: laptop, inscripción, mudanza, certificación.</div></div>
+     <div class="field"><label>Mover a largo plazo / reinvertir</label><input id="bridgeMove" value="${plainMoney(tr.moveToLong)}" onfocus="this.select();this.classList.add('editing')" onblur="formatBridgeInput(this,'moveToLong');this.classList.remove('editing')" oninput="updateTransition('moveToLong',this.value)"><div class="inputHint">Solo mueve lo que quede en liquidez o mediano plazo. Si ya está en largo plazo, se conserva ahí.</div></div>
+   </div>
+   <div class="bridgeGrid" style="margin-top:10px">
+     <div class="bridgeMini"><div class="label">Capital restante</div><div class="val" id="bridgeAfterTotal"></div></div>
+     <div class="bridgeMini"><div class="label">Usado en meta</div><div class="val" id="bridgeSpendApplied"></div></div>
+     <div class="bridgeMini"><div class="label">Movido a largo plazo</div><div class="val" id="bridgeMoveApplied"></div></div>
+     <div class="bridgeMini"><div class="label">Queda en largo plazo</div><div class="val" id="bridgeLongRemaining"></div></div>
+   </div>
+   <p class="tiny" id="bridgeWarn"></p>`;
+ }
+ updateBridgeOutcome();
+}
+function updateBridgeOutcome(){
+ const before=endOfStageSnapshot(currentStage,{skipTransition:currentStage});
+ const after=simulatedAfterTransition(before,currentStage);
+ const ids=['bridgeAfterTotal','bridgeSpendApplied','bridgeMoveApplied','bridgeLongRemaining','bridgeWarn'];
+ if(!ids.every(id=>document.getElementById(id))) return;
+ document.getElementById('bridgeAfterTotal').textContent=money(after.total);
+ document.getElementById('bridgeSpendApplied').textContent=money(after.movement.spendApplied);
+ document.getElementById('bridgeMoveApplied').textContent=money(after.movement.moveApplied);
+ document.getElementById('bridgeLongRemaining').textContent=money(after.long);
+ let tr=transitions[currentStage]||{spend:0, moveToLong:0};
+ let spendTooHigh = tr.spend > before.total + 0.5;
+ let moveTooHigh = tr.moveToLong > after.movement.moveApplied + 0.5;
+ if(spendTooHigh){
+   document.getElementById('bridgeWarn').innerHTML='<span class="bad">La meta pedida supera el capital disponible. El simulador usó solo lo posible.</span>';
+ } else if(moveTooHigh && after.movement.movableBefore<=0 && after.long>0){
+   document.getElementById('bridgeWarn').innerHTML='<span class="good">El capital restante ya quedó en largo plazo; por eso no fue necesario moverlo otra vez.</span>';
+ } else if(moveTooHigh){
+   document.getElementById('bridgeWarn').innerHTML='<span class="bad">Solo se pudo mover a largo plazo el dinero disponible en liquidez o mediano plazo.</span>';
+ } else {
+   document.getElementById('bridgeWarn').innerHTML='<span class="good">Decisión aplicada al inicio de la siguiente etapa. El capital no usado se conserva.</span>';
+ }
+}
+function updateTransition(key,val){
+ let tr=transitions[currentStage]; if(!tr) return;
+ tr[key]=Math.max(0,parseMoney(val));
+ updateBridgeOutcome();
+}
+function formatBridgeInput(el,key){
+ el.value=plainMoney(parseMoney(el.value));
+ updateTransition(key, el.value);
+ renderSummaryIfVisible();
+}
+function renderSummaryIfVisible(){ if(!document.getElementById('summary').classList.contains('hide')) renderSummary(); }
+function renderSummary(){
+ const p=projection(); const ages=[24,27,35,40,45,55,65];
+ let rows=ages.map(a=>p.snapshots[a]||{age:a,liq:0,mid:0,long:0,total:0});
+ let html='<tr><th>Edad</th><th class="money">Liquidez</th><th class="money">Mediano plazo</th><th class="money">Largo plazo</th><th class="money">Patrimonio total</th><th>Estado liquidez</th></tr>';
+ rows.forEach(r=>{ let idx=stageForAge(r.age-.01); let s=stages[Math.max(0,idx)]; let save=s.income*s.savePct; let target=Math.max(0,(s.income-save)*3); let status=target===0?'Administración':(r.liq>=target?'Cubierto':'En construcción'); html+=`<tr><td>${r.age}</td><td class="money">${money(r.liq)}</td><td class="money">${money(r.mid)}</td><td class="money">${money(r.long)}</td><td class="money"><strong>${money(r.total)}</strong></td><td class="${status==='Cubierto'?'good':''}">${status}</td></tr>`; });
+ document.getElementById('summaryTable').innerHTML=html; drawChart(rows); renderDecisionTable();
+}
+function renderDecisionTable(){
+ let html='<tr><th>Al llegar a edad</th><th>Desde etapa</th><th class="money">Capital antes</th><th class="money">Usado para meta</th><th class="money">Movido a largo plazo</th><th class="money">Queda en largo plazo</th><th class="money">Capital después</th></tr>';
+ let any=false;
+ for(let i=0;i<stages.length-1;i++){
+   let before=endOfStageSnapshot(i,{skipTransition:i});
+   let after=simulatedAfterTransition(before,i);
+   let tr=transitions[i];
+   if((tr.spend||0)>0 || (tr.moveToLong||0)>0){ any=true; html+=`<tr><td>${stages[i].to+1}</td><td>${stages[i].short}</td><td class="money">${money(before.total)}</td><td class="money">${money(after.movement.spendApplied)}</td><td class="money">${money(after.movement.moveApplied)}</td><td class="money">${money(after.long)}</td><td class="money"><strong>${money(after.total)}</strong></td></tr>`; }
+ }
+ if(!any) html+='<tr><td colspan="7">Sin movimientos especiales. El capital acumulado se arrastra completo a las siguientes etapas.</td></tr>';
+ document.getElementById('decisionTable').innerHTML=html;
+}
+function drawChart(rows){
+ const c=document.getElementById('chart'), ctx=c.getContext('2d'), dpr=window.devicePixelRatio||1; const box=c.parentElement.getBoundingClientRect(); c.width=box.width*dpr; c.height=box.height*dpr; ctx.scale(dpr,dpr); const w=box.width,h=box.height; ctx.clearRect(0,0,w,h); const pad={l:74,r:18,t:24,b:42}; const max=Math.max(...rows.map(r=>r.total),1); const yMax=Math.ceil(max/5000000)*5000000; ctx.font='12px Arial'; ctx.strokeStyle='#e2e8f0'; ctx.lineWidth=1; ctx.fillStyle='#64748b';
+ for(let i=0;i<=4;i++){let val=yMax*i/4; let y=h-pad.b-(h-pad.t-pad.b)*(val/yMax); ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke(); ctx.fillText(val>=1000000?'$'+(val/1000000).toFixed(1)+' M':money(val),8,y+4);}
+ const x=(idx)=>pad.l+(w-pad.l-pad.r)*(idx/(rows.length-1)); const y=(val)=>h-pad.b-(h-pad.t-pad.b)*(val/yMax);
+ ctx.strokeStyle='#2563eb'; ctx.lineWidth=3; ctx.beginPath(); rows.forEach((r,i)=>{ if(i===0)ctx.moveTo(x(i),y(r.total)); else ctx.lineTo(x(i),y(r.total));}); ctx.stroke();
+ rows.forEach((r,i)=>{ctx.fillStyle='#2563eb';ctx.beginPath();ctx.arc(x(i),y(r.total),4,0,Math.PI*2);ctx.fill(); ctx.fillStyle='#0f172a'; ctx.fillText(r.age,x(i)-8,h-16);});
+ ctx.fillStyle='#0f172a'; ctx.font='bold 13px Arial'; ctx.fillText('Patrimonio total proyectado', pad.l, 16);
+}
+function renderInstruments(){
+ let html='<tr><th>Instrumento</th><th>Objetivo</th><th>Horizonte</th><th>Liquidez</th><th>Riesgo</th><th>Tasa anual simulada editable</th><th>Comentario</th></tr>';
+ instruments.forEach((i,idx)=>{html+=`<tr><td>${i.name}</td><td>${i.objective}</td><td>${i.horizon}</td><td>${i.liquidity}</td><td>${i.risk}</td><td><input value="${plainPct(i.rate)}" onfocus="this.select()" onblur="this.value=plainPct(parsePct(this.value));updateInstrumentRate(${idx},this.value)" oninput="updateInstrumentRate(${idx},this.value)" style="width:90px;border:1px solid #dbe2ee;border-radius:10px;padding:7px"></td><td>${i.comment}</td></tr>`});
+ document.getElementById('instrumentTable').innerHTML=html;
+}
+function updateInstrumentRate(idx,val){ instruments[idx].rate=parsePct(val); updateStageComputed(); }
+function setCapRateFromInstrument(){ let name=document.getElementById('capInstrument').value; document.getElementById('capRate').value=pct(instRate(name)); }
+function fv(cap,rate,monthly,years){ let i=rate/12,n=years*12; if(i===0) return cap + monthly*n; return cap*Math.pow(1+i,n)+monthly*((Math.pow(1+i,n)-1)/i); }
 function renderCapital(){
-  const cap=parseFloat(document.getElementById("capInicial").value)||0;
-  const edad=parseFloat(document.getElementById("capEdad").value)||40;
-  const inst=document.getElementById("capInstrumento").value;
-  const dep=parseFloat(document.getElementById("capDeposito").value)||0;
-  const anios=parseFloat(document.getElementById("capAnios").value)||0;
-  const t=tasa(inst);
-  const vf=valorFuturo(cap,dep,t,anios);
-  const gan=vf-cap-dep*anios*12;
-  document.getElementById("capTasa").innerText=pct(t);
-  document.getElementById("capVF").innerText=money(vf);
-  document.getElementById("capGanancia").innerText=money(gan);
-  document.getElementById("capEdadFinal").innerText=(edad+anios).toFixed(0)+" años";
-  const quick=[["10","BONDES F"],["10","UDIBONOS"],["10","Bonos M"],["15","BONDES F"],["15","UDIBONOS"],["15","Bonos M"]];
-  const rows=quick.map(q=>{
-    const a=parseFloat(q[0]), tt=tasa(q[1]), out=valorFuturo(cap,0,tt,a);
-    return `<tr><td class="num">${a}</td><td>${q[1]}</td><td class="num">${pct(tt)}</td><td class="num">${money(out)}</td><td class="num">${money(out-cap)}</td><td class="num">${edad+a}</td></tr>`;
-  }).join("");
-  document.getElementById("tablaCapital").innerHTML=`<tr><th class="num">Años</th><th>Instrumento</th><th class="num">Tasa</th><th class="num">Valor futuro</th><th class="num">Rendimiento</th><th class="num">Edad final</th></tr>${rows}`;
+ let sel=document.getElementById('capInstrument'); if(sel.options.length===0){sel.innerHTML=instruments.map(i=>`<option value="${i.name}">${i.name}</option>`).join(''); sel.value='Bonos M'; document.getElementById('capRate').value=pct(instRate(sel.value));}
+ let cap=parseMoney(document.getElementById('capInitial').value), rate=parsePct(document.getElementById('capRate').value), monthly=parseMoney(document.getElementById('capMonthly').value); let v10=fv(cap,rate,monthly,10), v15=fv(cap,rate,monthly,15); document.getElementById('cap10').textContent=money(v10); document.getElementById('cap15').textContent=money(v15); document.getElementById('gain10').textContent=money(v10-cap-monthly*120); document.getElementById('gain15').textContent=money(v15-cap-monthly*180);
 }
-function renderMeta(){
-  const nombre=document.getElementById("metaNombre").value;
-  const monto=parseFloat(document.getElementById("metaMonto").value)||0;
-  const inicial=parseFloat(document.getElementById("metaInicial").value)||0;
-  const anios=parseFloat(document.getElementById("metaAnios").value)||0;
-  const inst=document.getElementById("metaInstrumento").value;
-  const i=tasa(inst)/12, n=anios*12;
-  let pago=0;
-  if(n>0){
-    if(i===0) pago=(monto-inicial)/n;
-    else pago=(monto-inicial*Math.pow(1+i,n))*(i/(Math.pow(1+i,n)-1));
-  }
-  document.getElementById("metaOutNombre").innerText=nombre;
-  document.getElementById("metaOutTasa").innerText=pct(tasa(inst));
-  document.getElementById("metaOutPago").innerText=money(Math.max(0,pago));
-  document.getElementById("metaOutPlazo").innerText=anios+" años";
-}
-
-function calcular(){
-  renderInstrumentos();
-  renderSupuestos();
-  renderSelectOptionsPreserve();
-  const data=simular();
-  document.getElementById("kpiEdad").innerText="17";
-  document.getElementById("kpiIngreso").innerText=money(supuestos[0].ingreso);
-  document.getElementById("kpiAhorro").innerText=money(supuestos[0].ingreso*supuestos[0].ahorro);
-  document.getElementById("kpiEmergencia").innerText=money(supuestos[0].ingreso*.8*3);
-  renderResumen(data);
-  drawChart(data);
-  renderCapital();
-  renderMeta();
-}
-function renderSelectOptionsPreserve(){
-  const oldCap=document.getElementById("capInstrumento").value || "Bonos M";
-  const oldMeta=document.getElementById("metaInstrumento").value || "CETES 91/182/364 días";
-  const opts=instrumentos.map(i=>`<option value="${i.nombre}">${i.nombre}</option>`).join("");
-  document.getElementById("capInstrumento").innerHTML=opts;
-  document.getElementById("metaInstrumento").innerHTML=opts;
-  document.getElementById("capInstrumento").value=oldCap;
-  document.getElementById("metaInstrumento").value=oldMeta;
-}
-function guardar(){
-  localStorage.setItem("regaloFinanciero", JSON.stringify({instrumentos,supuestos}));
-  alert("Listo. Tus cambios quedaron guardados en este dispositivo.");
-}
-function cargar(){
-  const raw=localStorage.getItem("regaloFinanciero");
-  if(!raw){alert("No hay cambios guardados todavía."); return;}
-  const obj=JSON.parse(raw);
-  instrumentos=obj.instrumentos||instrumentosDefault;
-  supuestos=obj.supuestos||supuestosDefault;
-  calcular();
-}
-function restaurar(){
-  if(confirm("¿Restaurar el ejemplo original?")){
-    instrumentos=JSON.parse(JSON.stringify(instrumentosDefault));
-    supuestos=JSON.parse(JSON.stringify(supuestosDefault));
-    calcular();
-  }
-}
-renderSelectOptions();
-calcular();
-</script>
-
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js')
-      .then(() => console.log('Simulador listo para uso sin conexión después de la primera carga.'))
-      .catch((err) => console.log('No se pudo registrar el modo sin conexión:', err));
-  });
-}
+function saveState(){ localStorage.setItem('regaloFinancieroV6', JSON.stringify({stages,instruments,transitions,currentStage})); toast('Escenario guardado en este dispositivo'); }
+function loadState(){ let s=localStorage.getItem('regaloFinancieroV6') || localStorage.getItem('regaloFinancieroV5') || localStorage.getItem('regaloFinancieroV3'); if(!s){toast('No hay escenario guardado todavía');return;} try{let data=JSON.parse(s); stages=data.stages||stages; instruments=data.instruments||instruments; transitions=data.transitions||transitions; currentStage=data.currentStage||0; toast('Escenario cargado'); renderStage(true);}catch(e){toast('No se pudo cargar');}}
+function resetAll(){ stages=JSON.parse(JSON.stringify(DEFAULT_STAGES)); instruments=JSON.parse(JSON.stringify(DEFAULT_INSTRUMENTS)); transitions=JSON.parse(JSON.stringify(DEFAULT_TRANSITIONS)); localStorage.removeItem('regaloFinancieroV6'); localStorage.removeItem('regaloFinancieroV5'); localStorage.removeItem('regaloFinancieroV3'); toast('Ejemplo restaurado'); renderStage(true); }
+function toast(msg){let t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+window.addEventListener('resize',()=>{if(!document.getElementById('summary').classList.contains('hide')) renderSummary();});
+renderTabs('welcome'); renderCapital();
+if('serviceWorker' in navigator){ window.addEventListener('load',()=>{ navigator.serviceWorker.register('./service-worker.js').then(reg=>reg.update()).catch(()=>{}); }); }
 </script>
 </body>
 </html>

@@ -1,25 +1,21 @@
 {
-  "name": "Regalo financiero | Simulador para bachillerato",
+  "name": "Regalo financiero | Simulador por etapas",
   "short_name": "Regalo financiero",
-  "description": "Simulador financiero educativo para Matemática Aplicada a las Finanzas.",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f6f7fb",
   "theme_color": "#0f766e",
-  "lang": "es-MX",
+  "description": "Simulador educativo de ahorro, liquidez, inversión y decisiones entre etapas de vida, con edición sencilla de cantidades, porcentajes, instrumentos y tasas.",
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
