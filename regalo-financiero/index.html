@@ -42,7 +42,7 @@ details{border:1px solid var(--line);border-radius:16px;padding:12px;background:
   <div class="brandline">🎁 Regalo financiero · Simulador offline</div>
   <h1>Tu plan financiero por etapas de vida</h1>
   <p>Recorre paso a paso cómo una persona puede pasar de una mesada a un plan de ahorro, liquidez e inversión de largo plazo. Puedes cambiar ingresos, porcentajes, instrumentos y tasas.</p>
-  <div class="author">MATERIA MAT. APLICADA A LAS FINANZAS · By MTRA. ADRIANA ARROYO G · V6</div>
+  <div class="author">MATERIA MAT. APLICADA A LAS FINANZAS · By MTRA. ADRIANA ARROYO G · V7</div>
 </header>
 <main>
   <nav class="sticky">
@@ -202,7 +202,7 @@ details{border:1px solid var(--line);border-radius:16px;padding:12px;background:
       <h2>Mini glosario para no depender de la explicación de la profe</h2>
       <div class="helpGrid">
         <div class="help"><h4>Liquidez</h4><p>Dinero que puedes usar con facilidad si surge una emergencia.</p></div>
-        <div class="help"><h4>Mediano plazo</h4><p>Dinero para metas de 1 a 5 años, como laptop, cursos, viaje de estudios o herramientas.</p></div>
+        <div class="help"><h4>Mediano plazo</h4><p>Dinero para metas de 1 a 5 años. Las metas cambian con la edad: laptop, auto usado, enganche, viaje, educación de hijos, salud o vivienda.</p></div>
         <div class="help"><h4>Largo plazo</h4><p>Dinero que se deja crecer más tiempo para construir patrimonio o retiro.</p></div>
         <div class="help"><h4>Fondo de emergencia</h4><p>Reserva para imprevistos. En este simulador se usa como referencia 3 meses de gastos.</p></div>
         <div class="help"><h4>Tasa anual</h4><p>Porcentaje de rendimiento usado para estimar cuánto puede crecer el dinero en un año.</p></div>
@@ -217,7 +217,7 @@ details{border:1px solid var(--line);border-radius:16px;padding:12px;background:
     </div>
   </section>
 
-  <div class="footer">MATERIA MAT. APLICADA A LAS FINANZAS · By MTRA. ADRIANA ARROYO G · V6<br>Simulador educativo. No sustituye asesoría financiera profesional.</div>
+  <div class="footer">MATERIA MAT. APLICADA A LAS FINANZAS · By MTRA. ADRIANA ARROYO G · V7<br>Simulador educativo. No sustituye asesoría financiera profesional.</div>
 </main>
 <div class="toast" id="toast">Guardado</div>
 <script>
@@ -233,12 +233,12 @@ const DEFAULT_INSTRUMENTS = [
   {name:'Aportación voluntaria AFORE', objective:'Retiro', horizon:'Largo plazo', liquidity:'Baja', risk:'Medio', rate:0.075, comment:'Pensada para fortalecer retiro.'}
 ];
 const DEFAULT_STAGES = [
- {from:18,to:23,short:'Bachillerato',title:'Bachillerato y primeros años', income:3000, savePct:.20, dist:{liq:.4167,mid:.3333,long:.25}, inst:{liq:'BONDDIA',mid:'CETES 91/182/364 días',long:'UDIBONOS'}, text:'En esta etapa lo más importante no es ahorrar mucho, sino aprender a separar dinero antes de gastarlo. El hábito vale más que la cantidad inicial.', tip:'Reto: prueba cambiar el ahorro de 20% a 25% y observa la diferencia al terminar la etapa.'},
- {from:24,to:26,short:'Primer empleo',title:'Primer empleo relacionado con la carrera', income:18000, savePct:.25, dist:{liq:.1778,mid:.4444,long:.3778}, inst:{liq:'BONDDIA',mid:'CETES 91/182/364 días',long:'Aportación voluntaria AFORE'}, text:'Con un ingreso más estable, el ahorro puede crecer. La prioridad es completar el fondo de emergencia adulto y evitar que todo aumento de ingreso se convierta en gasto.', tip:'Reto: conserva un estilo de vida moderado mientras sube tu ingreso.'},
- {from:27,to:34,short:'Mayor rango',title:'Mayor rango y mejor salario', income:28000, savePct:.30, dist:{liq:.1190,mid:.3452,long:.5358}, inst:{liq:'BONDDIA',mid:'BONDES F',long:'UDIBONOS'}, text:'Aquí el plan empieza a ganar fuerza: el ahorro mensual es mayor y una parte más grande puede ir a largo plazo.', tip:'Reto: no subas tus gastos al mismo ritmo que sube tu salario.'},
- {from:35,to:44,short:'Estabilidad',title:'Estabilidad profesional y familiar', income:45000, savePct:.25, dist:{liq:.1067,mid:.3111,long:.5822}, inst:{liq:'BONDDIA',mid:'BONDES F',long:'Bonos M'}, text:'Puede haber pareja, hijos, vivienda o mayores responsabilidades. Por eso el ahorro debe ser más intencional: proteger a la familia y construir patrimonio.', tip:'Reto: revisa seguros, liquidez, deudas y metas familiares.'},
- {from:45,to:64,short:'Consolidación',title:'Consolidación patrimonial', income:65000, savePct:.25, dist:{liq:.0923,mid:.2308,long:.6769}, inst:{liq:'BONDDIA',mid:'UDIBONOS',long:'Bonos M'}, text:'Cuando ya hay capital, el objetivo no es solo ahorrar: es invertir mejor y sostener una estrategia de riesgo bajo y controlado.', tip:'Reto: observa qué pasa si un capital acumulado se deja crecer 10 o 15 años.'},
- {from:65,to:65,short:'Retiro',title:'Retiro y administración del patrimonio', income:0, savePct:0, dist:{liq:0,mid:0,long:0}, inst:{liq:'Cuenta separada / ahorro bancario',mid:'BONDDIA',long:'UDIBONOS'}, text:'En esta etapa la prioridad ya no es acumular al mismo ritmo, sino administrar el patrimonio para conservar estabilidad y liquidez.', tip:'Reto: piensa en retiro como administración del patrimonio, no solo como dejar de trabajar.'}
+ {from:18,to:23,short:'Bachillerato',title:'Bachillerato y primeros años', income:3000, savePct:.20, dist:{liq:.4167,mid:.3333,long:.25}, inst:{liq:'BONDDIA',mid:'CETES 91/182/364 días',long:'UDIBONOS'}, goals:'laptop, inscripción universitaria, curso, certificación, transporte, emergencia escolar o familiar pequeña', text:'En esta etapa lo más importante no es ahorrar mucho, sino aprender a separar dinero antes de gastarlo. El hábito vale más que la cantidad inicial.', tip:'Reto: prueba cambiar el ahorro de 20% a 25% y observa la diferencia al terminar la etapa.'},
+ {from:24,to:26,short:'Primer empleo',title:'Primer empleo relacionado con la carrera', income:18000, savePct:.25, dist:{liq:.1778,mid:.4444,long:.3778}, inst:{liq:'BONDDIA',mid:'CETES 91/182/364 días',long:'Aportación voluntaria AFORE'}, goals:'auto usado, mudanza, herramientas de trabajo, diplomado, fondo para independizarse o emergencia personal', text:'Con un ingreso más estable, el ahorro puede crecer. La prioridad es completar el fondo de emergencia adulto y evitar que todo aumento de ingreso se convierta en gasto.', tip:'Reto: conserva un estilo de vida moderado mientras sube tu ingreso.'},
+ {from:27,to:34,short:'Mayor rango',title:'Mayor rango y mejor salario', income:28000, savePct:.30, dist:{liq:.1190,mid:.3452,long:.5358}, inst:{liq:'BONDDIA',mid:'BONDES F',long:'UDIBONOS'}, goals:'enganche de auto nuevo, maestría, emprendimiento, viaje importante, fondo de emergencia adulto o mobiliario para vivienda', text:'Aquí el plan empieza a ganar fuerza: el ahorro mensual es mayor y una parte más grande puede ir a largo plazo.', tip:'Reto: no subas tus gastos al mismo ritmo que sube tu salario.'},
+ {from:35,to:44,short:'Estabilidad',title:'Estabilidad profesional y familiar', income:45000, savePct:.25, dist:{liq:.1067,mid:.3111,long:.5822}, inst:{liq:'BONDDIA',mid:'BONDES F',long:'Bonos M'}, goals:'enganche de casa, remodelación, nacimiento de hijos, educación inicial, seguro, emergencia médica o viaje familiar', text:'Puede haber pareja, hijos, vivienda o mayores responsabilidades. Por eso el ahorro debe ser más intencional: proteger a la familia y construir patrimonio.', tip:'Reto: revisa seguros, liquidez, deudas y metas familiares.'},
+ {from:45,to:64,short:'Consolidación',title:'Consolidación patrimonial', income:65000, savePct:.25, dist:{liq:.0923,mid:.2308,long:.6769}, inst:{liq:'BONDDIA',mid:'UDIBONOS',long:'Bonos M'}, goals:'universidad de hijos, XV años, viaje familiar, liquidar deuda, fondo médico, mejorar vivienda o fortalecer retiro', text:'Cuando ya hay capital, el objetivo no es solo ahorrar: es invertir mejor y sostener una estrategia de riesgo bajo y controlado.', tip:'Reto: observa qué pasa si un capital acumulado se deja crecer 10 o 15 años.'},
+ {from:65,to:65,short:'Retiro',title:'Retiro y administración del patrimonio', income:0, savePct:0, dist:{liq:0,mid:0,long:0}, inst:{liq:'Cuenta separada / ahorro bancario',mid:'BONDDIA',long:'UDIBONOS'}, goals:'salud, mantenimiento del hogar, apoyo familiar, viajes tranquilos, cuidados, liquidez y administración del patrimonio', text:'En esta etapa la prioridad ya no es acumular al mismo ritmo, sino administrar el patrimonio para conservar estabilidad y liquidez.', tip:'Reto: piensa en retiro como administración del patrimonio, no solo como dejar de trabajar.'}
 ];
 const DEFAULT_TRANSITIONS = DEFAULT_STAGES.map((s, idx)=>({spend:0, moveToLong:0, note:''}));
 let instruments = JSON.parse(JSON.stringify(DEFAULT_INSTRUMENTS));
@@ -254,6 +254,8 @@ function plainPct(n){return (Number(n||0)*100).toLocaleString('es-MX',{maximumFr
 function parsePct(v){ if(typeof v==='number') return v>1?v/100:v; v=String(v||'0').trim().replace('%','').replace(',','.'); let x=parseFloat(v); if(!isFinite(x)) return 0; return x>1?x/100:x; }
 function parseMoney(v){ v=String(v||'0').replace(/[$,\s]/g,''); let x=parseFloat(v); return isFinite(x)?x:0; }
 function instRate(name){ let i=instruments.find(x=>x.name===name); return i?i.rate:0; }
+function goalExamples(idx){ return (stages[idx] && stages[idx].goals) ? stages[idx].goals : 'una meta importante de tu etapa de vida'; }
+function nextStageName(idx){ return stages[idx+1] ? stages[idx+1].short.toLowerCase() : 'siguiente etapa'; }
 function stageForAge(age){return stages.findIndex(s=>age>=s.from && age<=s.to+0.999)}
 function deductFrom(balance, amount, order){
   let left = Math.max(0, Number(amount||0));
@@ -325,7 +327,7 @@ function updateStageComputed(){
  document.getElementById('visualTarget').textContent=target?money(target):'No aplica';
  document.getElementById('liqProgress').style.width=(ratio*100)+'%';
  let vs=document.getElementById('visualStatus'); vs.className='status '+(status==='Cubierto'?'cover':'build'); vs.textContent=status;
- document.getElementById('stageTip').innerHTML=`<strong>Tip de esta etapa:</strong> ${s.tip}`;
+ document.getElementById('stageTip').innerHTML=`<strong>Tip de esta etapa:</strong> ${s.tip}<br><strong>Metas posibles:</strong> ${goalExamples(currentStage)}.`;
  let rows=[['liq','Liquidez / emergencia',s.dist.liq,s.inst.liq],['mid','Mediano plazo',s.dist.mid,s.inst.mid],['long','Largo plazo',s.dist.long,s.inst.long]];
  document.getElementById('moneySplit').innerHTML=rows.map(([cls,label,d,inst])=>`<div class="split ${cls}"><div><strong>${label}</strong><br><span class="tiny">${inst}</span></div><div class="center"><span class="pill">${pct(d)}</span><br><strong>${money(save*d)}</strong></div></div>`).join('');
  updateReviewMsg();
@@ -379,7 +381,7 @@ function renderBridge(refreshInputs=false){
  if(refreshInputs){
  panel.innerHTML=`
    <h3>Puente entre etapas: ¿qué harás con el capital acumulado?</h3>
-   <p class="tiny">El simulador <strong>no supone que te gastas el dinero</strong>. Por defecto lo arrastra a la siguiente etapa. Aquí puedes decidir si usas una parte para una meta o si mueves una parte hacia largo plazo.</p>
+   <p class="tiny">El simulador <strong>no supone que te gastas el dinero</strong>. Por defecto lo arrastra a la siguiente etapa. Las metas cambian con la edad: al pasar a <strong>${nextStageName(currentStage)}</strong> puedes decidir si usas una parte para una meta realista de esa etapa o si mueves una parte hacia largo plazo.</p>
    <div class="bridgeGrid">
      <div class="bridgeMini"><div class="label">Capital al cierre</div><div class="val">${money(before.total)}</div></div>
      <div class="bridgeMini"><div class="label">Liquidez</div><div class="val">${money(before.liq)}</div></div>
@@ -387,7 +389,7 @@ function renderBridge(refreshInputs=false){
      <div class="bridgeMini"><div class="label">Largo plazo</div><div class="val">${money(before.long)}</div></div>
    </div>
    <div class="bridgeControls">
-     <div class="field"><label>Usar para una meta al pasar de etapa</label><input id="bridgeSpend" value="${plainMoney(tr.spend)}" onfocus="this.select();this.classList.add('editing')" onblur="formatBridgeInput(this,'spend');this.classList.remove('editing')" oninput="updateTransition('spend',this.value)"><div class="inputHint">Ejemplo: laptop, inscripción, mudanza, certificación.</div></div>
+     <div class="field"><label>Usar para una meta al pasar de etapa</label><input id="bridgeSpend" value="${plainMoney(tr.spend)}" onfocus="this.select();this.classList.add('editing')" onblur="formatBridgeInput(this,'spend');this.classList.remove('editing')" oninput="updateTransition('spend',this.value)"><div class="inputHint"><strong>Ejemplos para esta edad:</strong> ${goalExamples(currentStage)}.</div></div>
      <div class="field"><label>Mover a largo plazo / reinvertir</label><input id="bridgeMove" value="${plainMoney(tr.moveToLong)}" onfocus="this.select();this.classList.add('editing')" onblur="formatBridgeInput(this,'moveToLong');this.classList.remove('editing')" oninput="updateTransition('moveToLong',this.value)"><div class="inputHint">Solo mueve lo que quede en liquidez o mediano plazo. Si ya está en largo plazo, se conserva ahí.</div></div>
    </div>
    <div class="bridgeGrid" style="margin-top:10px">
@@ -474,7 +476,7 @@ function renderCapital(){
 }
 function saveState(){ localStorage.setItem('regaloFinancieroV6', JSON.stringify({stages,instruments,transitions,currentStage})); toast('Escenario guardado en este dispositivo'); }
 function loadState(){ let s=localStorage.getItem('regaloFinancieroV6') || localStorage.getItem('regaloFinancieroV5') || localStorage.getItem('regaloFinancieroV3'); if(!s){toast('No hay escenario guardado todavía');return;} try{let data=JSON.parse(s); stages=data.stages||stages; instruments=data.instruments||instruments; transitions=data.transitions||transitions; currentStage=data.currentStage||0; toast('Escenario cargado'); renderStage(true);}catch(e){toast('No se pudo cargar');}}
-function resetAll(){ stages=JSON.parse(JSON.stringify(DEFAULT_STAGES)); instruments=JSON.parse(JSON.stringify(DEFAULT_INSTRUMENTS)); transitions=JSON.parse(JSON.stringify(DEFAULT_TRANSITIONS)); localStorage.removeItem('regaloFinancieroV6'); localStorage.removeItem('regaloFinancieroV5'); localStorage.removeItem('regaloFinancieroV3'); toast('Ejemplo restaurado'); renderStage(true); }
+function resetAll(){ stages=JSON.parse(JSON.stringify(DEFAULT_STAGES)); instruments=JSON.parse(JSON.stringify(DEFAULT_INSTRUMENTS)); transitions=JSON.parse(JSON.stringify(DEFAULT_TRANSITIONS)); localStorage.removeItem('regaloFinancieroV7'); localStorage.removeItem('regaloFinancieroV6'); localStorage.removeItem('regaloFinancieroV5'); localStorage.removeItem('regaloFinancieroV3'); toast('Ejemplo restaurado'); renderStage(true); }
 function toast(msg){let t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
 window.addEventListener('resize',()=>{if(!document.getElementById('summary').classList.contains('hide')) renderSummary();});
 renderTabs('welcome'); renderCapital();

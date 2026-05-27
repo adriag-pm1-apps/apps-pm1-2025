@@ -5,7 +5,7 @@
   "display": "standalone",
   "background_color": "#f6f7fb",
   "theme_color": "#0f766e",
-  "description": "Simulador educativo de ahorro, liquidez, inversión y decisiones entre etapas de vida, con edición sencilla de cantidades, porcentajes, instrumentos y tasas.",
+  "description": "Simulador educativo de ahorro, liquidez, inversión y decisiones entre etapas de vida, con metas que cambian según la edad y edición sencilla de cantidades, porcentajes, instrumentos y tasas.",
   "icons": [
     {
       "src": "icon-192.png",

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'regalo-financiero-v6-puentes-claros-20260527';
+const CACHE_NAME = 'regalo-financiero-v7-metas-por-etapa-20260527';
 const ASSETS = ['./','./index.html','./manifest.json','./service-worker.js','./icon-192.png','./icon-512.png'];
 self.addEventListener('install', event => {
   self.skipWaiting();
